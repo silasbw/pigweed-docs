@@ -1,0 +1,1213 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_metric &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_minimal_cpp_stdlib" href="../pw_minimal_cpp_stdlib/docs.html" />
+    <link rel="prev" title="pw_log_tokenized" href="../pw_log_tokenized/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_metric</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-instrumenting-a-single-object">Example: Instrumenting a single object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-instrumenting-a-legacy-codebase">Example: Instrumenting a legacy codebase</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-not-just-use-simple-counter-variables">Why not just use simple counter variables?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics-api-reference">Metrics API reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#metric">Metric</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#group">Group</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macros">Macros</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#usage-best-practices">Usage &amp; Best Practices</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#use-the-init-pattern-for-static-objects-with-metrics">Use the Init() pattern for static objects with metrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metric-member-order-matters-in-objects">Metric member order matters in objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#thread-safety">Thread safety</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lifecycle">Lifecycle</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#exporting-metrics">Exporting metrics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rpc-service-setup">RPC service setup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#size-report">Size report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#design-tradeoffs">Design tradeoffs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roadmap-status">Roadmap &amp; Status</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_metric</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-metric">
+<h1>pw_metric<a class="headerlink" href="#pw-metric" title="Permalink to this headline">¶</a></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This module is <strong>not yet production ready</strong>; ask us if you are interested in
+using it out or have ideas about how to improve it.</p>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed’s metric module is a <strong>lightweight manual instrumentation system</strong> for
+tracking system health metrics like counts or set values. For example,
+<code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> could help with tracking the number of I2C bus writes, or the
+number of times a buffer was filled before it could drain in time, or safely
+incrementing counters from ISRs.</p>
+<p>Key features of <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Tokenized names</strong> - Names are tokenized using the <code class="docutils literal notranslate"><span class="pre">pw_tokenizer</span></code> enabling
+long metric names that don’t bloat your binary.</p></li>
+<li><p><strong>Tree structure</strong> - Metrics can form a tree, enabling grouping of related
+metrics for clearer organization.</p></li>
+<li><p><strong>Per object collection</strong> - Metrics and groups can live on object instances
+and be flexibly combined with metrics from other instances.</p></li>
+<li><p><strong>Global registration</strong> - For legacy code bases or just because it’s easier,
+<code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> supports automatic aggregation of metrics. This is optional but
+convenient in many cases.</p></li>
+<li><p><strong>Simple design</strong> - There are only two core data structures: <code class="docutils literal notranslate"><span class="pre">Metric</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Group</span></code>, which are both simple to understand and use. The only type of
+metric supported is <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code>. This module does not support
+complicated aggregations like running average or min/max.</p></li>
+</ul>
+<div class="section" id="example-instrumenting-a-single-object">
+<h3>Example: Instrumenting a single object<a class="headerlink" href="#example-instrumenting-a-single-object" title="Permalink to this headline">¶</a></h3>
+<p>The below example illustrates what instrumenting a class with a metric group
+and metrics might look like. In this case, the object’s
+<code class="docutils literal notranslate"><span class="pre">MySubsystem::metrics()</span></code> member is not globally registered; the user is on
+their own for combining this subsystem’s metrics with others.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">MySubsystem</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">attempts_</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ActionSucceeds</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">successes_</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;my_subsystem&quot;</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">attempts_</span><span class="p">,</span> <span class="s">&quot;attempts&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">successes_</span><span class="p">,</span> <span class="s">&quot;successes&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The metrics subsystem has no canonical output format at this time, but a JSON
+dump might look something like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;my_subsystem&quot; : {
+    &quot;successes&quot; : 1000,
+    &quot;attempts&quot; : 1200,
+  }
+}
+</pre></div>
+</div>
+<p>In this case, every instance of <code class="docutils literal notranslate"><span class="pre">MySubsystem</span></code> will have unique counters.</p>
+</div>
+<div class="section" id="example-instrumenting-a-legacy-codebase">
+<h3>Example: Instrumenting a legacy codebase<a class="headerlink" href="#example-instrumenting-a-legacy-codebase" title="Permalink to this headline">¶</a></h3>
+<p>A common situation in embedded development is <strong>debugging legacy code</strong> or code
+which is hard to change; where it is perhaps impossible to plumb metrics
+objects around with dependency injection. The alternative to plumbing metrics
+is to register the metrics through a global mechanism. <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> supports
+this use case. For example:</p>
+<p><strong>Before instrumenting:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This code was passed down from generations of developers before; no one</span>
+<span class="c1">// knows what it does or how it works. But it needs to be fixed!</span>
+<span class="kt">void</span> <span class="nf">OldCodeThatDoesntWorkButWeDontKnowWhy</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">some_variable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DoSomething</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">DoSomethingElse</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>After instrumenting:</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">legacy_do_something</span><span class="p">,</span> <span class="s">&quot;legacy_do_something&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">legacy_do_something_else</span><span class="p">,</span> <span class="s">&quot;legacy_do_something_else&quot;</span><span class="p">);</span>
+
+<span class="c1">// This code was passed down from generations of developers before; no one</span>
+<span class="c1">// knows what it does or how it works. But it needs to be fixed!</span>
+<span class="kt">void</span> <span class="nf">OldCodeThatDoesntWorkButWeDontKnowWhy</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">some_variable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">legacy_do_something</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+    <span class="n">DoSomething</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">legacy_do_something_else</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+    <span class="n">DoSomethingElse</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this case, the developer merely had to add the metrics header, define some
+metrics, and then start incrementing them. These metrics will be available
+globally through the <code class="docutils literal notranslate"><span class="pre">pw::metric::global_metrics</span></code> object defined in
+<code class="docutils literal notranslate"><span class="pre">pw_metric/global.h</span></code>.</p>
+</div>
+<div class="section" id="why-not-just-use-simple-counter-variables">
+<h3>Why not just use simple counter variables?<a class="headerlink" href="#why-not-just-use-simple-counter-variables" title="Permalink to this headline">¶</a></h3>
+<p>One might wonder what the point of leveraging a metric library is when it is
+trivial to make some global variables and print them out. There are a few
+reasons:</p>
+<ul class="simple">
+<li><p><strong>Metrics offload</strong> - To make it easy to get metrics off-device by sharing
+the infrastructure for offloading.</p></li>
+<li><p><strong>Consistent format</strong> - To get the metrics in a consistent format (e.g.
+protobuf or JSON) for analysis</p></li>
+<li><p><strong>Uncoordinated collection</strong> - To provide a simple and reliable way for
+developers on a team to all collect metrics for their subsystems, without
+having to coordinate to offload. This could extend to code in libraries
+written by other teams.</p></li>
+<li><p><strong>Pre-boot or interrupt visibility</strong> - Some of the most challenging bugs come
+from early system boot when not all system facilities are up (e.g. logging or
+UART). In those cases, metrics provide a low-overhead approach to understand
+what is happening. During early boot, metrics can be incremented, then after
+boot dumping the metrics provides insights into what happened. While basic
+counter variables can work in these contexts to, one still has to deal with
+the offloading problem; which the library handles.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="metrics-api-reference">
+<h2>Metrics API reference<a class="headerlink" href="#metrics-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>The metrics API consists of just a few components:</p>
+<ul class="simple">
+<li><p>The core data structures <code class="docutils literal notranslate"><span class="pre">pw::metric::Metric</span></code> and <code class="docutils literal notranslate"><span class="pre">pw::metric::Group</span></code></p></li>
+<li><p>The macros for scoped metrics and groups <code class="docutils literal notranslate"><span class="pre">PW_METRIC</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PW_METRIC_GROUP</span></code></p></li>
+<li><p>The macros for globally registered metrics and groups
+<code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> and <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GROUP_GLOBAL</span></code></p></li>
+<li><p>The global groups and metrics list: <code class="docutils literal notranslate"><span class="pre">pw::metric::global_groups</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pw::metric::global_metrics</span></code>.</p></li>
+</ul>
+<div class="section" id="metric">
+<h3>Metric<a class="headerlink" href="#metric" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw::metric::Metric</span></code> provides:</p>
+<ul class="simple">
+<li><p>A 31-bit tokenized name</p></li>
+<li><p>A 1-bit discriminator for int or float</p></li>
+<li><p>A 32-bit payload (int or float)</p></li>
+<li><p>A 32-bit next pointer (intrusive list)</p></li>
+</ul>
+<p>The metric object is 12 bytes on 32-bit platforms.</p>
+<dl class="class">
+<dt id="_CPPv4N2pw6metric6MetricE">
+<span id="_CPPv3N2pw6metric6MetricE"></span><span id="_CPPv2N2pw6metric6MetricE"></span><span id="pw::metric::Metric"></span><em class="property">class </em><code class="sig-prename descclassname">pw::metric<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Metric</code><a class="headerlink" href="#_CPPv4N2pw6metric6MetricE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="function">
+<dt id="_CPPv4N2pw6metric6Metric9IncrementE8uint32_t">
+<span id="_CPPv3N2pw6metric6Metric9IncrementE8uint32_t"></span><span id="_CPPv2N2pw6metric6Metric9IncrementE8uint32_t"></span><span id="pw::metric::Metric::Increment__uint32_t"></span><code class="sig-name descname">Increment</code><span class="sig-paren">(</span>uint32_t <em>amount</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw6metric6Metric9IncrementE8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Increment the metric by the given amount. Results in undefined behaviour if
+the metric is not of type int.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N2pw6metric6Metric3SetE8uint32_t">
+<span id="_CPPv3N2pw6metric6Metric3SetE8uint32_t"></span><span id="_CPPv2N2pw6metric6Metric3SetE8uint32_t"></span><span id="pw::metric::Metric::Set__uint32_t"></span><code class="sig-name descname">Set</code><span class="sig-paren">(</span>uint32_t <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw6metric6Metric3SetE8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the metric to the given value. Results in undefined behaviour if the
+metric is not of type int.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N2pw6metric6Metric3SetEf">
+<span id="_CPPv3N2pw6metric6Metric3SetEf"></span><span id="_CPPv2N2pw6metric6Metric3SetEf"></span><span id="pw::metric::Metric::Set__float"></span><code class="sig-name descname">Set</code><span class="sig-paren">(</span>float <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw6metric6Metric3SetEf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the metric to the given value. Results in undefined behaviour if the
+metric is not of type float.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="group">
+<h3>Group<a class="headerlink" href="#group" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw::metric::Group</span></code> object is simply:</p>
+<ul class="simple">
+<li><p>A name for the group</p></li>
+<li><p>A list of children groups</p></li>
+<li><p>A list of leaf metrics groups</p></li>
+<li><p>A 32-bit next pointer (intrusive list)</p></li>
+</ul>
+<p>The group object is 16 bytes on 32-bit platforms.</p>
+<dl class="class">
+<dt id="_CPPv4N2pw6metric5GroupE">
+<span id="_CPPv3N2pw6metric5GroupE"></span><span id="_CPPv2N2pw6metric5GroupE"></span><span id="pw::metric::Group"></span><em class="property">class </em><code class="sig-prename descclassname">pw::metric<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Group</code><a class="headerlink" href="#_CPPv4N2pw6metric5GroupE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="function">
+<dt id="_CPPv4N2pw6metric5Group4DumpEi">
+<span id="_CPPv3N2pw6metric5Group4DumpEi"></span><span id="_CPPv2N2pw6metric5Group4DumpEi"></span><span id="pw::metric::Group::Dump__i"></span><code class="sig-name descname">Dump</code><span class="sig-paren">(</span>int <em>indent_level</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw6metric5Group4DumpEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Recursively dump a metrics group to <code class="docutils literal notranslate"><span class="pre">pw_log</span></code>. Produces output like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;$6doqFw==&quot;: {
+  &quot;$05OCZw==&quot;: {
+    &quot;$VpPfzg==&quot;: 1,
+    &quot;$LGPMBQ==&quot;: 1.000000,
+    &quot;$+iJvUg==&quot;: 5,
+  }
+  &quot;$9hPNxw==&quot;: 65,
+  &quot;$oK7HmA==&quot;: 13,
+  &quot;$FCM4qQ==&quot;: 0,
+}
+</pre></div>
+</div>
+<p>Note the metric names are tokenized with base64. Decoding requires using
+the Pigweed detokenizer. With a detokenizing-enabled logger, you could get
+something like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;i2c_1&quot;: {
+  &quot;gyro&quot;: {
+    &quot;num_sampleses&quot;: 1,
+    &quot;init_time_us&quot;: 1.000000,
+    &quot;initialized&quot;: 5,
+  }
+  &quot;bus_errors&quot;: 65,
+  &quot;transactions&quot;: 13,
+  &quot;bytes_sent&quot;: 0,
+}
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="macros">
+<h3>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h3>
+<p>The <strong>macros are the primary mechanism for creating metrics</strong>, and should be
+used instead of directly constructing metrics or groups. The macros handle
+tokenizing the metric and group names.</p>
+<dl class="function">
+<dt id="_CPPv49PW_METRIC10identifier4name5value">
+<span id="_CPPv39PW_METRIC10identifier4name5value"></span><span id="_CPPv29PW_METRIC10identifier4name5value"></span><span id="PW_METRIC__identifier.name.value"></span><code class="sig-name descname">PW_METRIC</code><span class="sig-paren">(</span>identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49PW_METRIC10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv49PW_METRIC5group10identifier4name5value">
+<span id="_CPPv39PW_METRIC5group10identifier4name5value"></span><span id="_CPPv29PW_METRIC5group10identifier4name5value"></span><span id="PW_METRIC__group.identifier.name.value"></span><code class="sig-name descname">PW_METRIC</code><span class="sig-paren">(</span>group, identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49PW_METRIC5group10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_METRIC_STATIC10identifier4name5value">
+<span id="_CPPv316PW_METRIC_STATIC10identifier4name5value"></span><span id="_CPPv216PW_METRIC_STATIC10identifier4name5value"></span><span id="PW_METRIC_STATIC__identifier.name.value"></span><code class="sig-name descname">PW_METRIC_STATIC</code><span class="sig-paren">(</span>identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_METRIC_STATIC10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_METRIC_STATIC5group10identifier4name5value">
+<span id="_CPPv316PW_METRIC_STATIC5group10identifier4name5value"></span><span id="_CPPv216PW_METRIC_STATIC5group10identifier4name5value"></span><span id="PW_METRIC_STATIC__group.identifier.name.value"></span><code class="sig-name descname">PW_METRIC_STATIC</code><span class="sig-paren">(</span>group, identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_METRIC_STATIC5group10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Declare a metric, optionally adding it to a group.</p>
+<ul class="simple">
+<li><p><strong>identifier</strong> - An identifier name for the created variable or member.
+For example: <code class="docutils literal notranslate"><span class="pre">i2c_transactions</span></code> might be used as a local or global
+metric; inside a class, could be named according to members
+(<code class="docutils literal notranslate"><span class="pre">i2c_transactions_</span></code> for Google’s C++ style).</p></li>
+<li><p><strong>name</strong> - The string name for the metric. This will be tokenized. There
+are no restrictions on the contents of the name; however, consider
+restricting these to be valid C++ identifiers to ease integration with
+other systems.</p></li>
+<li><p><strong>value</strong> - The initial value for the metric. Must be either a floating
+point value (e.g. <code class="docutils literal notranslate"><span class="pre">3.2f</span></code>) or unsigned int (e.g. <code class="docutils literal notranslate"><span class="pre">21u</span></code>).</p></li>
+<li><p><strong>group</strong> - A <code class="docutils literal notranslate"><span class="pre">pw::metric::Group</span></code> instance. If provided, the metric is
+added to the given group.</p></li>
+</ul>
+<p>The macro declares a variable or member named “name” with type
+<code class="docutils literal notranslate"><span class="pre">pw::metric::Metric</span></code>, and works in three contexts: global, local, and
+member.</p>
+<p>If the <cite>_STATIC</cite> variant is used, the macro declares a variable with static
+storage. These can be used in function scopes, but not in classes.</p>
+<ol class="arabic simple">
+<li><p>At global scope:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">15.5f</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">MyFunc</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">foo</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>At local function or member function scope:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">MyFunc</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">15.5f</span><span class="p">);</span>
+  <span class="n">foo</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+  <span class="c1">// foo goes out of scope here; be careful!</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>At member level inside a class or struct:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">MyStructy</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">somethings</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="c1">// Every instance of MyStructy will have a separate somethings counter.</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">somethings</span><span class="p">,</span> <span class="s">&quot;somethings&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can also put a metric into a group with the macro. Metrics can belong to
+strictly one group, otherwise a assertion will fail. Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s">&quot;my_group&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14f</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you want a globally registered metric, see <code class="docutils literal notranslate"><span class="pre">pw_metric/global.h</span></code>; in
+that contexts, metrics are globally registered without the need to
+centrally register in a single place.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv415PW_METRIC_GROUP10identifier4name">
+<span id="_CPPv315PW_METRIC_GROUP10identifier4name"></span><span id="_CPPv215PW_METRIC_GROUP10identifier4name"></span><span id="PW_METRIC_GROUP__identifier.name"></span><code class="sig-name descname">PW_METRIC_GROUP</code><span class="sig-paren">(</span>identifier, name<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415PW_METRIC_GROUP10identifier4name" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv415PW_METRIC_GROUP12parent_group10identifier4name">
+<span id="_CPPv315PW_METRIC_GROUP12parent_group10identifier4name"></span><span id="_CPPv215PW_METRIC_GROUP12parent_group10identifier4name"></span><span id="PW_METRIC_GROUP__parent_group.identifier.name"></span><code class="sig-name descname">PW_METRIC_GROUP</code><span class="sig-paren">(</span>parent_group, identifier, name<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415PW_METRIC_GROUP12parent_group10identifier4name" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv422PW_METRIC_GROUP_STATIC10identifier4name">
+<span id="_CPPv322PW_METRIC_GROUP_STATIC10identifier4name"></span><span id="_CPPv222PW_METRIC_GROUP_STATIC10identifier4name"></span><span id="PW_METRIC_GROUP_STATIC__identifier.name"></span><code class="sig-name descname">PW_METRIC_GROUP_STATIC</code><span class="sig-paren">(</span>identifier, name<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv422PW_METRIC_GROUP_STATIC10identifier4name" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv422PW_METRIC_GROUP_STATIC12parent_group10identifier4name">
+<span id="_CPPv322PW_METRIC_GROUP_STATIC12parent_group10identifier4name"></span><span id="_CPPv222PW_METRIC_GROUP_STATIC12parent_group10identifier4name"></span><span id="PW_METRIC_GROUP_STATIC__parent_group.identifier.name"></span><code class="sig-name descname">PW_METRIC_GROUP_STATIC</code><span class="sig-paren">(</span>parent_group, identifier, name<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv422PW_METRIC_GROUP_STATIC12parent_group10identifier4name" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Declares a <code class="docutils literal notranslate"><span class="pre">pw::metric::Group</span></code> with name name; the name is tokenized.
+Works similar to <code class="docutils literal notranslate"><span class="pre">PW_METRIC</span></code> and can be used in the same contexts (global,
+local, and member). Optionally, the group can be added to a parent group.</p>
+<p>If the <cite>_STATIC</cite> variant is used, the macro declares a variable with static
+storage. These can be used in function scopes, but not in classes.</p>
+<p>Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s">&quot;my_group&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14f</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_METRIC_GLOBAL10identifier4name5value">
+<span id="_CPPv316PW_METRIC_GLOBAL10identifier4name5value"></span><span id="_CPPv216PW_METRIC_GLOBAL10identifier4name5value"></span><span id="PW_METRIC_GLOBAL__identifier.name.value"></span><code class="sig-name descname">PW_METRIC_GLOBAL</code><span class="sig-paren">(</span>identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_METRIC_GLOBAL10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Declare a <code class="docutils literal notranslate"><span class="pre">pw::metric::Metric</span></code> with name name, and register it in the
+global metrics list <code class="docutils literal notranslate"><span class="pre">pw::metric::global_metrics</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// No need to coordinate collection of foo and bar; they&#39;re autoregistered.</span>
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that metrics defined with <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> should never be added to
+groups defined with <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GROUP_GLOBAL</span></code>. Each metric can only belong
+to one group, and metrics defined with <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> are
+pre-registered with the global metrics list.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Do not create <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> instances anywhere other than global
+scope. Putting these on an instance (member context) would lead to dangling
+pointers and misery. Metrics are never deleted or unregistered!</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv422PW_METRIC_GROUP_GLOBAL10identifier4name5value">
+<span id="_CPPv322PW_METRIC_GROUP_GLOBAL10identifier4name5value"></span><span id="_CPPv222PW_METRIC_GROUP_GLOBAL10identifier4name5value"></span><span id="PW_METRIC_GROUP_GLOBAL__identifier.name.value"></span><code class="sig-name descname">PW_METRIC_GROUP_GLOBAL</code><span class="sig-paren">(</span>identifier, name, value<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv422PW_METRIC_GROUP_GLOBAL10identifier4name5value" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Declare a <code class="docutils literal notranslate"><span class="pre">pw::metric::Group</span></code> with name name, and register it in the
+global metric groups list <code class="docutils literal notranslate"><span class="pre">pw::metric::global_groups</span></code>.</p>
+<p>Note that metrics created with <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> should never be added to
+groups! Instead, just create a freestanding metric and register it into the
+global group (like in the example below).</p>
+<p>Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// No need to coordinate collection of this group; it&#39;s globally registered.</span>
+<span class="n">PW_METRIC_GROUP_GLOBAL</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="s">&quot;legacy_system&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="mf">0.2f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="mi">44000u</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Do not create <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GROUP_GLOBAL</span></code> instances anywhere other than
+global scope. Putting these on an instance (member context) would lead to
+dangling pointers and misery. Metrics are never deleted or unregistered!</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="usage-best-practices">
+<h2>Usage &amp; Best Practices<a class="headerlink" href="#usage-best-practices" title="Permalink to this headline">¶</a></h2>
+<p>This library makes several tradeoffs to enable low memory use per-metric, and
+one of those tradeoffs results in requiring care in constructing the metric
+trees.</p>
+<div class="section" id="use-the-init-pattern-for-static-objects-with-metrics">
+<h3>Use the Init() pattern for static objects with metrics<a class="headerlink" href="#use-the-init-pattern-for-static-objects-with-metrics" title="Permalink to this headline">¶</a></h3>
+<p>A common pattern in embedded systems is to allocate many objects globally, and
+reduce reliance on dynamic allocation (or eschew malloc entirely). This leads
+to a pattern where rich/large objects are statically constructed at global
+scope, then interacted with via tasks or threads. For example, consider a
+hypothetical global <code class="docutils literal notranslate"><span class="pre">Uart</span></code> object:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span> <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span> <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="c1">// Send/receive here...</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
+<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span> <span class="n">uart_tx_buffer</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Through the course of building a product, the team may want to add metrics to
+the UART to for example gain insight into which operations are triggering lots
+of data transfer. When adding metrics to the above imaginary UART object, one
+might consider the following approach:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span>
+       <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">,</span>
+       <span class="n">Group</span><span class="o">&amp;</span> <span class="n">parent_metrics</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span>
+      <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// PROBLEM! parent_metrics may not be constructed if it&#39;s a reference</span>
+      <span class="c1">// to a static global.</span>
+      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">);</span>
+      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">);</span>
+   <span class="p">}</span>
+
+  <span class="c1">// Send/receive here which increment tx/rx_bytes.</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">,</span> <span class="s">&quot;tx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">,</span> <span class="s">&quot;rx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">global_metrics</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">global_metrics</span><span class="p">,</span> <span class="n">uart1_metrics</span><span class="p">,</span> <span class="s">&quot;uart1&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
+<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span>
+           <span class="n">uart_tx_buffer</span><span class="p">,</span>
+           <span class="n">uart1_metrics</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>However, this <strong>is incorrect</strong>, since the <code class="docutils literal notranslate"><span class="pre">parent_metrics</span></code> (pointing to
+<code class="docutils literal notranslate"><span class="pre">uart1_metrics</span></code> in this case) may not be constructed at the point of
+<code class="docutils literal notranslate"><span class="pre">uart1</span></code> getting constructed. Thankfully in the case of <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> this
+will result in an assertion failure (or it will work correctly if the
+constructors are called in a favorable order), so the problem will not go
+unnoticed.  Instead, consider using the <code class="docutils literal notranslate"><span class="pre">Init()</span></code> pattern for static objects,
+where references to dependencies may only be stored during construction, but no
+methods on the dependencies are called.</p>
+<p>Instead, the <code class="docutils literal notranslate"><span class="pre">Init()</span></code> approach separates global object construction into two
+phases: The constructor where references are stored, and a <code class="docutils literal notranslate"><span class="pre">Init()</span></code> function
+which is called after all static constructors have run. This approach works
+correctly, even when the objects are allocated globally:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="c1">// Note that metrics is not passed in here at all.</span>
+  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span>
+       <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span>
+      <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{}</span>
+
+   <span class="c1">// Precondition: parent_metrics is already constructed.</span>
+   <span class="kt">void</span> <span class="n">Init</span><span class="p">(</span><span class="n">Group</span><span class="o">&amp;</span> <span class="n">parent_metrics</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">);</span>
+      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">);</span>
+   <span class="p">}</span>
+
+  <span class="c1">// Send/receive here which increment tx/rx_bytes.</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">,</span> <span class="s">&quot;tx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">,</span> <span class="s">&quot;rx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="n">uart1_metrics</span><span class="p">,</span> <span class="s">&quot;uart1&quot;</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
+<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span>
+           <span class="n">uart_tx_buffer</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// uart1_metrics is guaranteed to be initialized by this point, so it is</span>
+  <span class="n">safe</span> <span class="n">to</span> <span class="n">pass</span> <span class="n">it</span> <span class="n">to</span> <span class="n">Init</span><span class="p">().</span>
+  <span class="n">uart1</span><span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="n">uart1_metrics</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Be extra careful about <strong>static global metric registration</strong>. Consider using
+the <code class="docutils literal notranslate"><span class="pre">Init()</span></code> pattern.</p>
+</div>
+</div>
+<div class="section" id="metric-member-order-matters-in-objects">
+<h3>Metric member order matters in objects<a class="headerlink" href="#metric-member-order-matters-in-objects" title="Permalink to this headline">¶</a></h3>
+<p>The order of declaring in-class groups and metrics matters if the metrics are
+within a group declared inside the class. For example, the following class will
+work fine:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">PowerSubsystem</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+   <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+   <span class="k">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;power&quot;</span><span class="p">);</span>  <span class="c1">// Note metrics_ declared first.</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>but the following one will not since the group is constructed after the metrics
+(and will result in a compile error):</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">PowerSubsystem</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+   <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+   <span class="k">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">private</span><span class="o">:</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;power&quot;</span><span class="p">);</span>  <span class="c1">// Error: metrics_ must be first.</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Put <strong>groups before metrics</strong> when declaring metrics members inside classes.</p>
+</div>
+</div>
+<div class="section" id="thread-safety">
+<h3>Thread safety<a class="headerlink" href="#thread-safety" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> has <strong>no built-in synchronization for manipulating the tree</strong>
+structure. Users are expected to either rely on shared global mutex when
+constructing the metric tree, or do the metric construction in a single thread
+(e.g. a boot/init thread). The same applies for destruction, though we do not
+advise destructing metrics or groups.</p>
+<p>Individual metrics have atomic <code class="docutils literal notranslate"><span class="pre">Increment()</span></code>, <code class="docutils literal notranslate"><span class="pre">Set()</span></code>, and the value
+accessors <code class="docutils literal notranslate"><span class="pre">as_float()</span></code> and <code class="docutils literal notranslate"><span class="pre">as_int()</span></code> which don’t require separate
+synchronization, and can be used from ISRs.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><strong>You must synchronize access to metrics</strong>. <code class="docutils literal notranslate"><span class="pre">pw_metrics</span></code> does not
+internally synchronize access during construction. Metric Set/Increment are
+safe.</p>
+</div>
+</div>
+<div class="section" id="lifecycle">
+<h3>Lifecycle<a class="headerlink" href="#lifecycle" title="Permalink to this headline">¶</a></h3>
+<p>Metric objects are not designed to be destructed, and are expected to live for
+the lifetime of the program or application. If you need dynamic
+creation/destruction of metrics, <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> does not attempt to cover that
+use case. Instead, <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> covers the case of products with two execution
+phases:</p>
+<ol class="arabic simple">
+<li><p>A boot phase where the metric tree is created.</p></li>
+<li><p>A run phase where metrics are collected. The tree structure is fixed.</p></li>
+</ol>
+<p>Technically, it is possible to destruct metrics provided care is taken to
+remove the given metric (or group) from the list it’s contained in. However,
+there are no helper functions for this, so be careful.</p>
+<p>Below is an example that <strong>is incorrect</strong>. Don’t do what follows!</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
+  <span class="p">{</span>
+    <span class="c1">// BAD! The metrics have a different lifetime than the group.</span>
+    <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="s">&quot;temperature_f&quot;</span><span class="p">,</span> <span class="mf">72.3f</span><span class="p">);</span>
+    <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="s">&quot;humidity_relative_percent&quot;</span><span class="p">,</span> <span class="mf">33.2f</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// OOPS! root now has a linked list that points to the destructed</span>
+  <span class="c1">// &quot;humidity&quot; object.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><strong>Don’t destruct metrics</strong>. Metrics are designed to be registered /
+structured upfront, then manipulated during a device’s active phase. They do
+not support destruction.</p>
+</div>
+</div>
+</div>
+<div class="section" id="exporting-metrics">
+<h2>Exporting metrics<a class="headerlink" href="#exporting-metrics" title="Permalink to this headline">¶</a></h2>
+<p>Collecting metrics on a device is not useful without a mechanism to export
+those metrics for analysis and debugging. <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> offers an optional RPC
+service library (<code class="docutils literal notranslate"><span class="pre">:metric_service_nanopb</span></code>) that enables exporting a
+user-supplied set of on-device metrics via RPC. This facility is intended to
+function from the early stages of device bringup through production in the
+field.</p>
+<p>The metrics are fetched by calling the <code class="docutils literal notranslate"><span class="pre">MetricService.Get</span></code> RPC method, which
+streams all registered metrics to the caller in batches (server streaming RPC).
+Batching the returned metrics avoids requiring a large buffer or large RPC MTU.</p>
+<p>The returned metric objects have flattened paths to the root. For example, the
+returned metrics (post detokenization and jsonified) might look something like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;/i2c1/failed_txns&quot;: 17,
+  &quot;/i2c1/total_txns&quot;: 2013,
+  &quot;/i2c1/gyro/resets&quot;: 24,
+  &quot;/i2c1/gyro/hangs&quot;: 1,
+  &quot;/spi1/thermocouple/reads&quot;: 242,
+  &quot;/spi1/thermocouple/temp_celcius&quot;: 34.52,
+}
+</pre></div>
+</div>
+<p>Note that there is no nesting of the groups; the nesting is implied from the
+path.</p>
+<div class="section" id="rpc-service-setup">
+<h3>RPC service setup<a class="headerlink" href="#rpc-service-setup" title="Permalink to this headline">¶</a></h3>
+<p>To expose a <code class="docutils literal notranslate"><span class="pre">MetricService</span></code> in your application, do the following:</p>
+<ol class="arabic simple">
+<li><p>Define metrics around the system, and put them in a group or list of
+metrics. Easy choices include for example the <code class="docutils literal notranslate"><span class="pre">global_groups</span></code> and
+<code class="docutils literal notranslate"><span class="pre">global_metrics</span></code> variables; or creat your own.</p></li>
+<li><p>Create an instance of <code class="docutils literal notranslate"><span class="pre">pw::metric::MetricService</span></code>.</p></li>
+<li><p>Register the service with your RPC server.</p></li>
+</ol>
+<p>For example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_rpc/server.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric_service_nanopb.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// Note: You must customize the RPC server setup; see pw_rpc.</span>
+<span class="n">Channel</span> <span class="n">channels</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="n">Channel</span><span class="o">::</span><span class="n">Create</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uart_output</span><span class="p">),</span>
+<span class="p">};</span>
+<span class="n">Server</span> <span class="nf">server</span><span class="p">(</span><span class="n">channels</span><span class="p">);</span>
+
+<span class="c1">// Metric service instance, pointing to the global metric objects.</span>
+<span class="c1">// This could also point to custom per-product or application objects.</span>
+<span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">MetricService</span> <span class="n">metric_service</span><span class="p">(</span>
+    <span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">global_metrics</span><span class="p">,</span>
+    <span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">global_groups</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">RegisterServices</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">server</span><span class="p">.</span><span class="n">RegisterService</span><span class="p">(</span><span class="n">metric_service</span><span class="p">);</span>
+  <span class="c1">// Register other services here.</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// ... system initialization ...</span>
+
+  <span class="n">RegisterServices</span><span class="p">();</span>
+
+  <span class="c1">// ... start your applcation ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Take care when exporting metrics. Ensure <strong>appropriate access control</strong> is in
+place. In some cases it may make sense to entirely disable metrics export for
+production builds. Although reading metrics via RPC won’t influence the
+device, in some cases the metrics could expose sensitive information if
+product owners are not careful.</p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><strong>MetricService::Get is a synchronous RPC method</strong></p>
+<p>Calls to is <code class="docutils literal notranslate"><span class="pre">MetricService::Get</span></code> are blocking and will send all metrics
+immediately, even though it is a server-streaming RPC. This will work fine if
+the device doesn’t have too many metics, or doesn’t have concurrent RPCs like
+logging, but could be a problem in some cases.</p>
+<p>We plan to offer an async version where the application is responsible for
+pumping the metrics into the streaming response. This gives flow control to
+the application.</p>
+</div>
+</div>
+</div>
+<div class="section" id="size-report">
+<h2>Size report<a class="headerlink" href="#size-report" title="Permalink to this headline">¶</a></h2>
+<p>The below size report shows the cost in code and memory for a few examples of
+metrics. This does not include the RPC service.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 51%" />
+<col style="width: 11%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Label</p></th>
+<th class="head"><p>Segment</p></th>
+<th class="head"><p>Before</p></th>
+<th class="head"><p>Delta</p></th>
+<th class="head"><p>After</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1 metric and 1 group no dump or export</p></td>
+<td><div class="line-block">
+<div class="line">FLASH</div>
+<div class="line">RAM</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">20,440</div>
+<div class="line">672</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">+676</div>
+<div class="line">+40</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">21,116</div>
+<div class="line">712</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>(+) dump group and metrics to log</p></td>
+<td><div class="line-block">
+<div class="line">FLASH</div>
+<div class="line">RAM</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">20,440</div>
+<div class="line">672</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">+1,420</div>
+<div class="line">+40</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">21,860</div>
+<div class="line">712</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>(+) 1 group (+) 4 metrics</p></td>
+<td><div class="line-block">
+<div class="line">FLASH</div>
+<div class="line">RAM</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">21,860</div>
+<div class="line">712</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">+264</div>
+<div class="line">+64</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">22,124</div>
+<div class="line">776</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>At time of writing, <strong>the above sizes show an unexpectedly large flash
+impact</strong>. We are investigating why GCC is inserting large global static
+constructors per group, when all the logic should be reused across objects.</p>
+</div>
+</div>
+<div class="section" id="design-tradeoffs">
+<h2>Design tradeoffs<a class="headerlink" href="#design-tradeoffs" title="Permalink to this headline">¶</a></h2>
+<p>There are many possible approaches to metrics collection and aggregation. We’ve
+chosen some points on the tradeoff curve:</p>
+<ul>
+<li><p><strong>Atomic-sized metrics</strong> - Using simple metric objects with just uint32/float
+enables atomic operations. While it might be nice to support larger types, it
+is more useful to have safe metrics increment from interrupt subroutines.</p></li>
+<li><p><strong>No aggregate metrics (yet)</strong> - Aggregate metrics (e.g. average, max, min,
+histograms) are not supported, and must be built on top of the simple base
+metrics. By taking this route, we can considerably simplify the core metrics
+system and have aggregation logic in separate modules. Those modules can then
+feed into the metrics system - for example by creating multiple metrics for a
+single underlying metric. For example: “foo”, “foo_max”, “foo_min” and so on.</p>
+<p>The other problem with automatic aggregation is that what period the
+aggregation happens over is often important, and it can be hard to design
+this cleanly into the API. Instead, this responsibility is pushed to the user
+who must take more care.</p>
+<p>Note that we will add helpers for aggregated metrics.</p>
+</li>
+<li><p><strong>No virtual metrics</strong> - An alternate approach to the concrete Metric class
+in the current module is to have a virtual interface for metrics, and then
+allow those metrics to have their own storage. This is attractive but can
+lead to many vtables and excess memory use in simple one-metric use cases.</p></li>
+<li><p><strong>Linked list registration</strong> - Using linked lists for registration is a
+tradeoff, accepting some memory overhead in exchange for flexibility. Other
+alternatives include a global table of metrics, which has the disadvantage of
+requiring centralizing the metrics – an impossibility for middleware like
+Pigweed.</p></li>
+<li><p><strong>Synchronization</strong> - The only synchronization guarantee provided by
+pw_metric is that increment and set are atomic. Other than that, users are on
+their own to synchonize metric collection and updating.</p></li>
+<li><p><strong>No fast metric lookup</strong> - The current design does not make it fast to
+lookup a metric at runtime; instead, one must run a linear search of the tree
+to find the matching metric. In most non-dynamic use cases, this is fine in
+practice, and saves having a more involved hash table. Metric updates will be
+through direct member or variable accesses.</p></li>
+<li><p><strong>Relying on C++ static initialization</strong> - In short, the convenience
+outweighs the cost and risk. Without static initializers, it would be
+impossible to automatically collect the metrics without post-processing the
+C++ code to find the metrics; a huge and debatably worthwhile approach. We
+have carefully analyzed the static initializer behaviour of Pigweed’s
+IntrusiveList and are confident it is correct.</p></li>
+<li><p><strong>Both local &amp; global support</strong> - Potentially just one approach (the local or
+global one) could be offered, making the module less complex. However, we
+feel the additional complexity is worthwhile since there are legimitate use
+cases for both e.g. <code class="docutils literal notranslate"><span class="pre">PW_METRIC</span></code> and <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code>. We’d prefer to
+have a well-tested upstream solution for these use cases rather than have
+customers re-implement one of these.</p></li>
+</ul>
+</div>
+<div class="section" id="roadmap-status">
+<h2>Roadmap &amp; Status<a class="headerlink" href="#roadmap-status" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>String metric names</strong> - <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> stores metric names as tokens. On one
+hand, this is great for production where having a compact binary is often a
+requirement to fit the application in the given part. However, in early
+development before flash is a constraint, string names are more convenient to
+work with since there is no need for host-side detokenization. We plan to add
+optional support for using supporting strings.</p></li>
+<li><p><strong>Aggregate metrics</strong> - We plan to add support for aggregate metrics on top
+of the simple metric mechanism, either as another module or as additional
+functionality inside this one. Likely examples include min/max,</p></li>
+<li><p><strong>Selectively enable or disable metrics</strong> - Currently the metrics are always
+enabled once included. In practice this is not ideal since many times only a
+few metrics are wanted in production, but having to strip all the metrics
+code is error prone. Instead, we will add support for controlling what
+metrics are enabled or disabled at compile time. This may rely on of C++20’s
+support for zero-sized members to fully remove the cost.</p></li>
+<li><p><strong>Async RCPC</strong> - The current RPC service exports the metrics by streaming
+them to the client in batches. However, the current solution streams all the
+metrics to completion; this may block the RPC thread. In the future we will
+have an async solution where the user is in control of flow priority.</p></li>
+<li><p><strong>Timer integration</strong> - We would like to add a stopwatch type mechanism to
+time multiple in-flight events.</p></li>
+<li><p><strong>C support</strong> - In practice it’s often useful or necessary to instrument
+C-only code. While it will be impossible to support the global registration
+system that the C++ version supports, we will figure out a solution to make
+instrumenting C code relatively smooth.</p></li>
+<li><p><strong>Global counter</strong> - We may add a global metric counter to help detect cases
+where post-initialization metrics manipulations are done.</p></li>
+<li><p><strong>Proto structure</strong> - It may be possible to directly map metrics to a custom
+proto structure, where instead of a name or token field, a tag field is
+provided. This could result in elegant export to an easily machine parsable
+and compact representation on the host. We may investigate this in the
+future.</p></li>
+<li><p><strong>Safer data structures</strong> - At a cost of 4B per metric and 4B per group, it
+may be possible to make metric structure instantiation safe even in static
+constructors, and also make it safe to remove metrics dynamically. We will
+consider whether this tradeoff is the right one, since a 4B cost per metric
+is substantial on projects with many metrics.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_minimal_cpp_stdlib/docs.html" class="btn btn-neutral float-right" title="pw_minimal_cpp_stdlib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_log_tokenized/docs.html" class="btn btn-neutral float-left" title="pw_log_tokenized" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Embedded C++ Guide &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Style Guide and Conventions" href="style_guide.html" />
+    <link rel="prev" title="Code of Conduct" href="../CODE_OF_CONDUCT.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Embedded C++ Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#constexpr-functions">Constexpr functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constexpr-variables">Constexpr variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-templates">Function templates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#virtual-functions">Virtual functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Embedded C++ Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="embedded-c-guide">
+<h1>Embedded C++ Guide<a class="headerlink" href="#embedded-c-guide" title="Permalink to this headline">¶</a></h1>
+<p>This page contains recommendations for using C++ for embedded software. For
+Pigweed code, these should be considered as requirements. For external
+projects, these recommendations can serve as a resource for efficiently using
+C++ in embedded projects.</p>
+<p>These recommendations are subject to change as the C++ standard and compilers
+evolve, and as the authors continue to gain more knowledge and experience in
+this area. If you disagree with recommendations, please discuss them with the
+Pigweed team, as we’re always looking to improve the guide or correct any
+inaccuracies.</p>
+<div class="section" id="constexpr-functions">
+<h2>Constexpr functions<a class="headerlink" href="#constexpr-functions" title="Permalink to this headline">¶</a></h2>
+<p>Constexpr functions are functions that may be called from a constant
+expression, such as a template parameter, constexpr variable initialization, or
+<code class="docutils literal notranslate"><span class="pre">static_assert</span></code> statement. Labeling a function <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> does not
+guarantee that it is executed at compile time; if called from regular code, it
+will be compiled as a regular function and executed at run time.</p>
+<p>Constexpr functions are implicitly inline, which means they are suitable to be
+defined in header files. Like any function in a header, the compiler is more
+likely to inline it than other functions. Marking non-trivial functions as
+<code class="docutils literal notranslate"><span class="pre">constexpr</span></code> could increase code size, so check the compilation results if this
+is a concern.</p>
+<p>Simple constructors should be marked <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> whenever possible. GCC
+produces smaller code in some situations when the <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> specifier is
+present. Do not avoid important initialization in order to make the class
+constexpr-constructible unless it actually needs to be used in a constant
+expression.</p>
+</div>
+<div class="section" id="constexpr-variables">
+<h2>Constexpr variables<a class="headerlink" href="#constexpr-variables" title="Permalink to this headline">¶</a></h2>
+<p>Constants should be marked <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> whenever possible. Constexpr variables
+can be used in any constant expression, such as a non-type template argument,
+<code class="docutils literal notranslate"><span class="pre">static_assert</span></code> statement, or another constexpr variable initialization.
+Constexpr variables can be initialized at compile time with values calculated by
+constexpr functions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">constexpr</span></code> implies <code class="docutils literal notranslate"><span class="pre">const</span></code> for variables, so there is no need to include
+the <code class="docutils literal notranslate"><span class="pre">const</span></code> qualifier when declaring a constexpr variable.</p>
+<p>Unlike constexpr functions, constexpr variables are <strong>not</strong> implicitly inline.
+Constexpr variables in headers must be declared with the <code class="docutils literal notranslate"><span class="pre">inline</span></code> specifier.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">pw</span> <span class="p">{</span>
+
+<span class="kr">inline</span> <span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">kStringConstant</span> <span class="o">=</span> <span class="s">&quot;O_o&quot;</span><span class="p">;</span>
+
+<span class="kr">inline</span> <span class="k">constexpr</span> <span class="kt">float</span> <span class="n">kFloatConstant1</span> <span class="o">=</span> <span class="n">CalculateFloatConstant</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="kr">inline</span> <span class="k">constexpr</span> <span class="kt">float</span> <span class="n">kFloatConstant2</span> <span class="o">=</span> <span class="n">CalculateFloatConstant</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="p">}</span>  <span class="c1">// namespace pw</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="function-templates">
+<h2>Function templates<a class="headerlink" href="#function-templates" title="Permalink to this headline">¶</a></h2>
+<p>Function templates facilitate writing code that works with different types. For
+example, the following clamps a value within a minimum and maximum:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">Clamp</span><span class="p">(</span><span class="n">T</span> <span class="n">min</span><span class="p">,</span> <span class="n">T</span> <span class="n">max</span><span class="p">,</span> <span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">min</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">min</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">min</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">value</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The above code works seamlessly with values of any type – float, int, or even a
+custom type that supports the &lt; and &gt; operators.</p>
+<p>The compiler implements templates by generating a separate version of the
+function for each set of types it is instantiated with. This can increase code
+size significantly.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Be careful when instantiating non-trivial template functions with multiple
+types.</p>
+</div>
+</div>
+<div class="section" id="virtual-functions">
+<h2>Virtual functions<a class="headerlink" href="#virtual-functions" title="Permalink to this headline">¶</a></h2>
+<p>Virtual functions provide for runtime polymorphism. Unless runtime polymorphism
+is required, virtual functions should be avoided. Virtual functions require a
+virtual table, which increases RAM usage and requires extra instructions at each
+call site. Virtual functions can also inhibit compiler optimizations, since the
+compiler may not be able to tell which functions will actually be invoked. This
+can prevent linker garbage collection, resulting in unused functions being
+linked into a binary.</p>
+<p>When runtime polymorphism is required, virtual functions should be considered.
+C alternatives, such as a struct of function pointers, could be used instead,
+but these approaches may offer no performance advantage while sacrificing
+flexibility and ease of use.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Only use virtual functions when runtime polymorphism is needed.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="style_guide.html" class="btn btn-neutral float-right" title="Style Guide and Conventions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../CODE_OF_CONDUCT.html" class="btn btn-neutral float-left" title="Code of Conduct" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

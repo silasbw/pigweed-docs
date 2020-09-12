@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_trace_tokenized &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_unit_test" href="../pw_unit_test/docs.html" />
+    <link rel="prev" title="pw_trace" href="../pw_trace/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_trace_tokenized</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#status">Status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#macro-api">Macro API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#event-callbacks-data-sinks">Event Callbacks &amp; Data Sinks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trace-reference">Trace Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#time-source">Time source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#buffer">Buffer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#added-dependencies">Added dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic">Basic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trigger">Trigger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filter">Filter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_trace_tokenized</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-trace-tokenized">
+<h1>pw_trace_tokenized<a class="headerlink" href="#pw-trace-tokenized" title="Permalink to this headline">¶</a></h1>
+<p>Pigweed’s tracing module provides facilities for applications to trace
+information about the execution of their application. The module is split into
+two components:</p>
+<ol class="arabic simple">
+<li><p>The facade, provided elsewhere, which is only a macro interface layer</p></li>
+<li><p>The backend (this module), is one implemention of the low level tracing.</p></li>
+</ol>
+<div class="section" id="status">
+<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>This module is currently in development, and is therefore still undergoing
+significant changes.</p>
+<p>Future work will add:</p>
+<ol class="arabic simple">
+<li><p>Add a more complete API for how to retrieve data from ring_buffer.</p></li>
+<li><p>Add a Python library to decode the trace data.</p></li>
+<li><p>Add examples with sample output (especially for filtering and triggering).</p></li>
+<li><p>Add tools to retrieve trace data.</p></li>
+<li><p>Add more sinks, such as RTT.</p></li>
+<li><p>Add support to more platforms.</p></li>
+<li><p>Improve the locking behaviour and provide default trace locking
+implementions.</p></li>
+</ol>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The tokenized trace backend aims to be a reasonable tradeoff of trace features
+and event size for most applications. It works by encoding all compile time data
+for a trace event into a tokenized number. This provides a good amount of
+compression, while maintaining the full trace feature set.</p>
+<p>In addition the tokenized trace backend adds flexibility through callbacks,
+which allows the application to do things such as filtering trace_events and
+triggering tracing to turn on and off. This flexibility can help maximize the
+effectiveness of a limited trace buffer as well as be a valuable tool while
+debugging.</p>
+<div class="section" id="compatibility">
+<h3>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h3>
+<p>Most of this module is compatible with C and C++, the only exception to this is
+the <code class="docutils literal notranslate"><span class="pre">RegisterCallbackWhenCreated</span></code> helper class.</p>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_assert</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_log</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_preprocessor</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_status</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_tokenizer</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_trace:facade</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_varint</span></code></p>
+</div>
+</div>
+<div class="section" id="macro-api">
+<h2>Macro API<a class="headerlink" href="#macro-api" title="Permalink to this headline">¶</a></h2>
+<p>All code should use the trace API facade directly, this backend fully
+implements all features of the tracing facade.</p>
+<div class="section" id="event-callbacks-data-sinks">
+<h3>Event Callbacks &amp; Data Sinks<a class="headerlink" href="#event-callbacks-data-sinks" title="Permalink to this headline">¶</a></h3>
+<p>The tokenized trace module adds both event callbacks and data sinks which
+provide hooks into tracing.</p>
+<p>The <em>event callbacks</em> are called when trace events occur, with the trace event
+data. Using the return flags, these callbacks can be used to adjust the trace
+behaviour at runtime in response to specific events. If requested (using
+<code class="docutils literal notranslate"><span class="pre">called_on_every_event</span></code>) the callback will be called on every trace event
+regardless if tracing is currently enabled or not. Using this, the application
+can trigger tracing on or off when specific traces or patterns of traces are
+observed, or can selectively filter traces to preserve the trace buffer.</p>
+<p>The event callback is a single function which is provided the details of the
+trace as arguments, and returns <code class="docutils literal notranslate"><span class="pre">pw_trace_TraceEventReturnFlags</span></code>, which can be
+used to change how the trace is handled.</p>
+<dl class="function">
+<dt id="_CPPv422pw_trace_EventCallbackPv8uint32_t18pw_trace_EventTypePKc8uint32_t7uint8_t">
+<span id="_CPPv322pw_trace_EventCallbackPv8uint32_t18pw_trace_EventTypePKc8uint32_t7uint8_t"></span><span id="_CPPv222pw_trace_EventCallbackPv8uint32_t18pw_trace_EventTypePKc8uint32_t7uint8_t"></span><span id="pw_trace_EventCallback__voidP.uint32_t.pw_trace_EventType.cCP.uint32_t.uint8_t"></span>pw_trace_TraceEventReturnFlags <code class="sig-name descname">pw_trace_EventCallback</code><span class="sig-paren">(</span>void *<em>user_data</em>, uint32_t <em>trace_ref</em>, pw_trace_EventType <em>event_type</em>, <em class="property">const</em> char *<em>module</em>, uint32_t <em>trace_id</em>, uint8_t <em>flags</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv422pw_trace_EventCallbackPv8uint32_t18pw_trace_EventTypePKc8uint32_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv430pw_trace_RegisterEventCallback22pw_trace_EventCallbackbPvP28pw_trace_EventCallbackHandle">
+<span id="_CPPv330pw_trace_RegisterEventCallback22pw_trace_EventCallbackbPvP28pw_trace_EventCallbackHandle"></span><span id="_CPPv230pw_trace_RegisterEventCallback22pw_trace_EventCallbackbPvP28pw_trace_EventCallbackHandle"></span><span id="pw_trace_RegisterEventCallback__pw_trace_EventCallback.b.voidP.pw_trace_EventCallbackHandleP"></span>pw_Status <code class="sig-name descname">pw_trace_RegisterEventCallback</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv422pw_trace_EventCallbackPv8uint32_t18pw_trace_EventTypePKc8uint32_t7uint8_t" title="pw_trace_EventCallback">pw_trace_EventCallback</a> <em>callback</em>, bool <em>called_on_every_event</em>, void *<em>user_data</em>, pw_trace_EventCallbackHandle *<em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv430pw_trace_RegisterEventCallback22pw_trace_EventCallbackbPvP28pw_trace_EventCallbackHandle" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv432pw_trace_UnregisterEventCallback28pw_trace_EventCallbackHandle">
+<span id="_CPPv332pw_trace_UnregisterEventCallback28pw_trace_EventCallbackHandle"></span><span id="_CPPv232pw_trace_UnregisterEventCallback28pw_trace_EventCallbackHandle"></span><span id="pw_trace_UnregisterEventCallback__pw_trace_EventCallbackHandle"></span>pw_Status <code class="sig-name descname">pw_trace_UnregisterEventCallback</code><span class="sig-paren">(</span>pw_trace_EventCallbackHandle <em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv432pw_trace_UnregisterEventCallback28pw_trace_EventCallbackHandle" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>The <em>data sinks</em> are called only for trace events which get processed (tracing
+is enabled, and the sample not skipped). The sink callback is called with the
+encoded bytes of the trace event, which can be used by the application to
+connect different data sinks. The callback is broken into three callbacks
+<code class="docutils literal notranslate"><span class="pre">pw_trace_SinkStartBlock</span></code>, <code class="docutils literal notranslate"><span class="pre">pw_trace_SinkAddBytes</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">pw_trace_SinkEndBlock</span></code>. <code class="docutils literal notranslate"><span class="pre">Start</span></code> is called with the size of the block,
+before any bytes are emitted and can be used if needed to allocate space.
+<code class="docutils literal notranslate"><span class="pre">AddBytes</span></code> is then called multiple times with chunks of bytes. Finally <code class="docutils literal notranslate"><span class="pre">End</span></code>
+is called to allow any cleanup to be done by the sink if neccessary. Not all
+callbacks are required, it is acceptible to provide nullptr for any callbacks
+which you don’t require.</p>
+<dl class="function">
+<dt id="_CPPv423pw_trace_SinkStartBlockPv6size_t">
+<span id="_CPPv323pw_trace_SinkStartBlockPv6size_t"></span><span id="_CPPv223pw_trace_SinkStartBlockPv6size_t"></span><span id="pw_trace_SinkStartBlock__voidP.s"></span>void <code class="sig-name descname">pw_trace_SinkStartBlock</code><span class="sig-paren">(</span>void *<em>user_data</em>, size_t <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv423pw_trace_SinkStartBlockPv6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421pw_trace_SinkAddBytesPvPKv6size_t">
+<span id="_CPPv321pw_trace_SinkAddBytesPvPKv6size_t"></span><span id="_CPPv221pw_trace_SinkAddBytesPvPKv6size_t"></span><span id="pw_trace_SinkAddBytes__voidP.voidCP.s"></span>void <code class="sig-name descname">pw_trace_SinkAddBytes</code><span class="sig-paren">(</span>void *<em>user_data</em>, <em class="property">const</em> void *<em>bytes</em>, size_t <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421pw_trace_SinkAddBytesPvPKv6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421pw_trace_SinkEndBlockPv">
+<span id="_CPPv321pw_trace_SinkEndBlockPv"></span><span id="_CPPv221pw_trace_SinkEndBlockPv"></span><span id="pw_trace_SinkEndBlock__voidP"></span>void <code class="sig-name descname">pw_trace_SinkEndBlock</code><span class="sig-paren">(</span>void *<em>user_data</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421pw_trace_SinkEndBlockPv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421pw_trace_RegisterSink23pw_trace_SinkStartBlock21pw_trace_SinkAddBytes21pw_trace_SinkEndBlockPvP19pw_trace_SinkHandle">
+<span id="_CPPv321pw_trace_RegisterSink23pw_trace_SinkStartBlock21pw_trace_SinkAddBytes21pw_trace_SinkEndBlockPvP19pw_trace_SinkHandle"></span><span id="_CPPv221pw_trace_RegisterSink23pw_trace_SinkStartBlock21pw_trace_SinkAddBytes21pw_trace_SinkEndBlockPvP19pw_trace_SinkHandle"></span><span id="pw_trace_RegisterSink__pw_trace_SinkStartBlock.pw_trace_SinkAddBytes.pw_trace_SinkEndBlock.voidP.pw_trace_SinkHandleP"></span>pw_Status <code class="sig-name descname">pw_trace_RegisterSink</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv423pw_trace_SinkStartBlockPv6size_t" title="pw_trace_SinkStartBlock">pw_trace_SinkStartBlock</a> <em>start</em>, <a class="reference internal" href="#_CPPv421pw_trace_SinkAddBytesPvPKv6size_t" title="pw_trace_SinkAddBytes">pw_trace_SinkAddBytes</a> <em>add_bytes</em>, <a class="reference internal" href="#_CPPv421pw_trace_SinkEndBlockPv" title="pw_trace_SinkEndBlock">pw_trace_SinkEndBlock</a> <em>end_block</em>, void *<em>user_data</em>, pw_trace_SinkHandle *<em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421pw_trace_RegisterSink23pw_trace_SinkStartBlock21pw_trace_SinkAddBytes21pw_trace_SinkEndBlockPvP19pw_trace_SinkHandle" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv423pw_trace_UnregisterSink19pw_trace_SinkHandle">
+<span id="_CPPv323pw_trace_UnregisterSink19pw_trace_SinkHandle"></span><span id="_CPPv223pw_trace_UnregisterSink19pw_trace_SinkHandle"></span><span id="pw_trace_UnregisterSink__pw_trace_SinkHandle"></span>pw_Status <code class="sig-name descname">pw_trace_UnregisterSink</code><span class="sig-paren">(</span>pw_trace_SinkHandle <em>handle</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv423pw_trace_UnregisterSink19pw_trace_SinkHandle" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="trace-reference">
+<h3>Trace Reference<a class="headerlink" href="#trace-reference" title="Permalink to this headline">¶</a></h3>
+<p>Some use-cases might involve referencing a specific trace event, for example
+to use it as a trigger or filtering. Since the trace events are tokenized, a
+macro is provided to generate the token to use as a reference. All the fields
+must match exactly to generate the correct trace reference. If the trace does
+not have a group, use <code class="docutils literal notranslate"><span class="pre">PW_TRACE_GROUP_LABEL_DEFAULT</span></code>.</p>
+<dl class="function">
+<dt id="_CPPv412PW_TRACE_REF10event_type6module5label5flags5group">
+<span id="_CPPv312PW_TRACE_REF10event_type6module5label5flags5group"></span><span id="_CPPv212PW_TRACE_REF10event_type6module5label5flags5group"></span><span id="PW_TRACE_REF__event_type.module.label.flags.group"></span><code class="sig-name descname">PW_TRACE_REF</code><span class="sig-paren">(</span>event_type, module, label, flags, group<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_TRACE_REF10event_type6module5label5flags5group" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_REF_DATA10event_type6module5label5flags5group4type">
+<span id="_CPPv317PW_TRACE_REF_DATA10event_type6module5label5flags5group4type"></span><span id="_CPPv217PW_TRACE_REF_DATA10event_type6module5label5flags5group4type"></span><span id="PW_TRACE_REF_DATA__event_type.module.label.flags.group.type"></span><code class="sig-name descname">PW_TRACE_REF_DATA</code><span class="sig-paren">(</span>event_type, module, label, flags, group, type<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_REF_DATA10event_type6module5label5flags5group4type" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="time-source">
+<h2>Time source<a class="headerlink" href="#time-source" title="Permalink to this headline">¶</a></h2>
+<p>Tracing rquires the platform to provide the time source for tracing, this can
+be done in one of a few ways.</p>
+<ol class="arabic simple">
+<li><p>Create a file with the default time functions, and provide as build variable
+<code class="docutils literal notranslate"><span class="pre">pw_trace_tokenized_time</span></code>, which will get pulled in as a dependency.</p></li>
+<li><p>Provide time functions elsewhere in project, and ensure they are included.</p></li>
+<li><p>Redefine the trace time macros to something else, other then the default
+trace time functions.</p></li>
+</ol>
+<dl class="function">
+<dt id="_CPPv421pw_trace_GetTraceTimev">
+<span id="_CPPv321pw_trace_GetTraceTimev"></span><span id="_CPPv221pw_trace_GetTraceTimev"></span><span id="pw_trace_GetTraceTime"></span>PW_TRACE_TIME_TYPE <code class="sig-name descname">pw_trace_GetTraceTime</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421pw_trace_GetTraceTimev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_GET_TIMEv">
+<span id="_CPPv317PW_TRACE_GET_TIMEv"></span><span id="_CPPv217PW_TRACE_GET_TIMEv"></span><span id="PW_TRACE_GET_TIME"></span><code class="sig-name descname">PW_TRACE_GET_TIME</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_GET_TIMEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv435pw_trace_GetTraceTimeTicksPerSecondv">
+<span id="_CPPv335pw_trace_GetTraceTimeTicksPerSecondv"></span><span id="_CPPv235pw_trace_GetTraceTimeTicksPerSecondv"></span><span id="pw_trace_GetTraceTimeTicksPerSecond"></span>size_t <code class="sig-name descname">pw_trace_GetTraceTimeTicksPerSecond</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv435pw_trace_GetTraceTimeTicksPerSecondv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv434PW_TRACE_GET_TIME_TICKS_PER_SECONDv">
+<span id="_CPPv334PW_TRACE_GET_TIME_TICKS_PER_SECONDv"></span><span id="_CPPv234PW_TRACE_GET_TIME_TICKS_PER_SECONDv"></span><span id="PW_TRACE_GET_TIME_TICKS_PER_SECOND"></span><code class="sig-name descname">PW_TRACE_GET_TIME_TICKS_PER_SECOND</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv434PW_TRACE_GET_TIME_TICKS_PER_SECONDv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="buffer">
+<h2>Buffer<a class="headerlink" href="#buffer" title="Permalink to this headline">¶</a></h2>
+<p>The optional trace buffer adds a ring buffer which contains the encoded trace
+data. This is still a work in progress, in particular better methods for
+retireving the data still needs to be added. Currently there is an accessor for
+the underlying ring buffer object, but this is a short term solution.</p>
+<dl class="function">
+<dt id="_CPPv411ClearBufferv">
+<span id="_CPPv311ClearBufferv"></span><span id="_CPPv211ClearBufferv"></span><span id="ClearBuffer"></span>void <code class="sig-name descname">ClearBuffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411ClearBufferv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv49GetBufferv">
+<span id="_CPPv39GetBufferv"></span><span id="_CPPv29GetBufferv"></span><span id="GetBuffer"></span>pw::ring_buffer::PrefixedEntryRingBuffer *<code class="sig-name descname">GetBuffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49GetBufferv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>The buffer has two configurable options:</p>
+<ol class="arabic simple">
+<li><p>PW_TRACE_BUFFER_SIZE_BYTES: The total size of the ring buffer in bytes.</p></li>
+<li><p>PW_TRACE_BUFFER_MAX_BLOCK_SIZE_BYTES: The maximum single trace object size.
+Including the token, time, and any attached data. Any trace object larger
+then this will be dropped.</p></li>
+</ol>
+<div class="section" id="added-dependencies">
+<h3>Added dependencies<a class="headerlink" href="#added-dependencies" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_ring_buffer</span></code>
+<code class="docutils literal notranslate"><span class="pre">pw_varint</span></code></p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>The examples all use <cite>pw_trace</cite> sample app to provide the trace data. Details
+for how to build, run, and decode the traces are included at the top of each
+example. This is early work, and is provided as an example of how different
+tracing concepts can look.</p>
+<div class="section" id="basic">
+<h3>Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h3>
+<p>The basic example turns on tracing and dumps all trace output to a file provided
+on the command line.</p>
+</div>
+<div class="section" id="trigger">
+<h3>Trigger<a class="headerlink" href="#trigger" title="Permalink to this headline">¶</a></h3>
+<p>The trigger example demonstrates how a trace event can be used as a trigger to
+start and stop capturing a trace. The examples makes use of <cite>PW_TRACE_REF</cite> and
+<cite>PW_TRACE_REF_DATA</cite> to specify a start and stop event for the capture. This can
+be useful if the trace buffer is small and you wish to capture a specific
+series of events.</p>
+</div>
+<div class="section" id="filter">
+<h3>Filter<a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h3>
+<p>The filter example demonstrates how a callback can be used to filter which trace
+events get processed and saved. In this example all events from the processing
+task which don’t have traceId equal to 3 are removed. Both the other task traces
+are not removed. This can be a useful feature while debugging as it limits the
+amount of events which get stored to the buffer, and only saves the events of
+interest.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_unit_test/docs.html" class="btn btn-neutral float-right" title="pw_unit_test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_trace/docs.html" class="btn btn-neutral float-left" title="pw_trace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

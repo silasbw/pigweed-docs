@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing" href="../CONTRIBUTING.html" />
+    <link rel="prev" title="Pigweed" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#express-setup">Express setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bootstrap">Bootstrap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pigweed-environment">Pigweed Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-pigweed-for-host">Build Pigweed for Host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-unit-tests">Running Unit Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-for-a-device">Building for a Device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-tests-on-a-device">Running Tests on a Device</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connect-device-s">1. Connect Device(s)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launch-test-server">2. Launch Test Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-gn">3. Configure GN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#done">Done!</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-documentation">Building the Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>This guide will walk you through setup and general use of Pigweed.
+We hope to make the setup process as smooth as possible. If any of this doesn’t
+work, please <a class="reference external" href="mailto:pigweed&#37;&#52;&#48;googlegroups&#46;com">let us know</a>.</p>
+<div class="section" id="express-setup">
+<h2>Express setup<a class="headerlink" href="#express-setup" title="Permalink to this headline">¶</a></h2>
+<p>If you’d like to skip the detailed explanations, below is the shorter version of
+getting setup for Pigweed. If you run into trouble, look at the more in-depth
+guide below, starting at <a class="reference internal" href="#"><span class="doc">Prerequisites</span></a>. The
+express setup configures Pigweed’s watcher for three targets to give a taste of
+Pigweed:</p>
+<ol class="arabic simple">
+<li><p><strong>Host</strong> - Mac, Linux, or Windows. Builds and runs tests</p></li>
+<li><p><strong>Device/STM32F429</strong> - Build only; Optionally, the STM32F429I-DISC1 kit to
+follow along later in the guide to run tests directly on said device(s)</p></li>
+<li><p><strong>Docs</strong> - Builds the Pigweed docs</p></li>
+</ol>
+<p>To get setup:</p>
+<ol class="arabic simple">
+<li><p>Make sure you have Git and Python installed and on your path.</p></li>
+<li><p>Clone Pigweed and bootstrap the environment (compiler setup &amp; more). <strong>Be
+patient, this step downloads ~1GB of LLVM, GCC, and other tooling</strong>.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~
+$ git clone https://pigweed.googlesource.com/pigweed/pigweed
+...
+$ <span class="nb">cd</span> pigweed
+$ <span class="nb">source</span> ./bootstrap.sh
+...
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Configure the GN build.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gn gen out
+Done. Made <span class="m">1047</span> targets from <span class="m">91</span> files in 114ms
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Start the watcher. The watcher will invoke Ninja to build all the targets</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out default stm32f429i
+
+ ▒█████▄   █▓  ▄███▒  ▒█    ▒█ ░▓████▒ ░▓████▒ ▒▓████▄
+  ▒█░  █░ ░█▒ ██▒ ▀█▒ ▒█░ █ ▒█  ▒█   ▀  ▒█   ▀  ▒█  ▀█▌
+  ▒█▄▄▄█░ ░█▒ █▓░ ▄▄░ ▒█░ █ ▒█  ▒███    ▒███    ░█   █▌
+  ▒█▀     ░█░ ▓█   █▓ ░█░ █ ▒█  ▒█   ▄  ▒█   ▄  ░█  ▄█▌
+  ▒█      ░█░ ░▓███▀   ▒█▓▀▓█░ ░▓████▒ ░▓████▒ ▒▓████▀
+
+<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Starting Pigweed build watcher
+<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Will build <span class="o">[</span><span class="m">1</span>/1<span class="o">]</span>: out default stm32f429i
+<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Attaching filesystem watcher to <span class="nv">$HOME</span>/wrk/pigweed/...
+<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Triggering initial build...
+...
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p><strong>Congratulations, you’re ready to go!</strong> Now take Pigweed for a spin with
+the below steps.</p></li>
+<li><p>With the watcher running in a separate window, edit
+<code class="docutils literal notranslate"><span class="pre">pw_status/status_test.cc</span></code> to make an expectation fail; for example, add
+<code class="docutils literal notranslate"><span class="pre">EXPECT_EQ(0,</span> <span class="pre">1);</span></code> in a test.</p></li>
+<li><p>Save the file. Observe the watcher rebuild &amp; retest, and fail. Restore the
+test if you feel like it.</p></li>
+<li><p>Open the generated docs in <code class="docutils literal notranslate"><span class="pre">out/docs/gen/docs/html/index.html</span></code> in your
+browser.</p></li>
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">docs/getting_started.md</span></code> (this file!) and make any change. Save. See
+the watcher rebuild the docs. Reload your browser, and see the changes.</p></li>
+</ol>
+<p>See below for equivalent Windows commands, and for more details on what each
+part does.</p>
+<p><strong>Note:</strong> After running bootstrap once, use <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">./activate.sh</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">activate.bat</span></code> on Windows) to re-activate the environment without
+re-bootstrapping.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p><strong>Linux</strong><span class="raw-html-m2r"><br/></span>
+Most Linux installations should work out of box, and not require any manual
+installation of prerequisites beyond basics like <code class="docutils literal notranslate"><span class="pre">git</span></code> and <code class="docutils literal notranslate"><span class="pre">build-essential</span></code>.
+Make sure gcc is set to gcc-8.</p>
+<p><strong>macOS</strong><span class="raw-html-m2r"><br/></span>
+On macOS you may get SSL certificate errors with the system Python
+installation. Run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">certifi</span></code> to fix this. If you get SSL
+errors with the Python from <a class="reference external" href="https://brew.sh">Homebrew</a> try running the
+following commands to ensure Python knows how to use OpenSSL.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install openssl
+brew uninstall python
+brew install python
+</pre></div>
+</div>
+<p>To flash firmware to a STM32 Discovery development board (and run <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">test</span></code>)
+from macOS, you will need to install OpenOCD. Install
+<a class="reference external" href="https://brew.sh">Homebrew</a>, then install OpenOCD with <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">openocd</span></code>.</p>
+<p><strong>Windows</strong><span class="raw-html-m2r"><br/></span>
+To start using Pigweed on Windows, you’ll need to install
+<a class="reference external" href="https://git-scm.com/download/win">Git</a> and
+<a class="reference external" href="https://www.python.org/downloads/windows/">Python</a> (2.7 or above). We recommend
+you install Git to run from the command line and third party software.</p>
+<p>If you plan to flash devices with firmware, you’ll need to install OpenOCD and
+ensure it’s on your system path.</p>
+</div>
+<div class="section" id="bootstrap">
+<h2>Bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h2>
+<p>Once you satisfied the prerequisites, you will be able to clone Pigweed and
+run the bootstrap that initializes the Pigweed virtual environment. The
+bootstrap may take several minutes to complete, so please be patient.</p>
+<p><strong>Linux/macOS</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://pigweed.googlesource.com/pigweed/pigweed ~/pigweed
+$ <span class="nb">cd</span> ~/pigweed
+$ <span class="nb">source</span> ./bootstrap.sh
+</pre></div>
+</div>
+<p><strong>Windows</strong></p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="c1">: Run git commands from the shell you set up to use with Git during install.</span>
+<span class="p">&gt;</span> git clone https://pigweed.googlesource.com/pigweed/pigweed <span class="nv">%HOMEPATH%</span>\pigweed
+<span class="p">&gt;</span> cd <span class="nv">%HOMEPATH%</span>\pigweed
+<span class="p">&gt;</span> bootstrap.bat
+</pre></div>
+</div>
+<p>Below is a real-time demo with roughly what you should expect to see as output:</p>
+<a class="reference external image-reference" href="images/pw_env_setup_demo.gif"><img alt="build example using pw watch" src="../_images/pw_env_setup_demo.gif" /></a>
+<p>Congratulations, you are now set up to start using Pigweed!</p>
+</div>
+<div class="section" id="pigweed-environment">
+<h2>Pigweed Environment<a class="headerlink" href="#pigweed-environment" title="Permalink to this headline">¶</a></h2>
+<p>After going through the initial setup process, your current terminal will be in
+the Pigweed development environment that provides all the tools you should need
+to develop on Pigweed. If you leave that session, you can activate the
+environment in a new session with the following command:</p>
+<p><strong>Linux/macOS</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> ./activate.sh
+</pre></div>
+</div>
+<p><strong>Windows</strong></p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> activate.bat
+</pre></div>
+</div>
+<p>Some major changes may require triggering the bootstrap again, so if you run
+into host tooling changes after a pull it may be worth re-running bootstrap.</p>
+</div>
+<div class="section" id="build-pigweed-for-host">
+<h2>Build Pigweed for Host<a class="headerlink" href="#build-pigweed-for-host" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed’s primary build system is GN/Ninja based. There are CMake and Bazel
+builds in-development, but they are incomplete and don’t have feature parity
+with the GN build. We strongly recommend you stick to the GN build system.</p>
+<p>GN (Generate Ninja) just does what it says on the tin; GN generates
+<a class="reference external" href="https://ninja-build.org/">Ninja</a> build files.</p>
+<p>The default GN configuration generates build files that allow you to build host
+binaries, device binaries, and upstream documentation all in one Ninja
+invocation.</p>
+<p>Run GN as seen below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ gn gen out
+</pre></div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">out</span></code> is simply the directory the build files are saved to. Unless
+this directory is deleted or you desire to do a clean build, there’s no need to
+run GN again; just rebuild using Ninja directly.</p>
+<p>Now that we have build files, it’s time to build Pigweed!</p>
+<p>Now you <em>could</em> manually invoke the host build using <code class="docutils literal notranslate"><span class="pre">ninja</span> <span class="pre">-C</span> <span class="pre">out</span></code> every
+time you make a change, but that’s tedious. Instead, let’s use <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code>.</p>
+<p>Go ahead and start <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> starts up, it will automatically build the directory we
+generated in <code class="docutils literal notranslate"><span class="pre">out</span></code>. Additionally, <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> watches source code files for
+changes, and triggers a Ninja build whenever it notices a file has been saved.
+You might be surprised how much time it can save you!</p>
+<p>With <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">watch</span></code> running, try modifying <code class="docutils literal notranslate"><span class="pre">pw_status/public/pw_status/status.h</span></code> and
+watch the build re-trigger when you save the file.</p>
+<p>See below for a demo of this in action:</p>
+<a class="reference external image-reference" href="images/pw_watch_build_demo.gif"><img alt="build example using pw watch" src="../_images/pw_watch_build_demo.gif" /></a>
+</div>
+<div class="section" id="running-unit-tests">
+<h2>Running Unit Tests<a class="headerlink" href="#running-unit-tests" title="Permalink to this headline">¶</a></h2>
+<p>Fun fact, you’ve been running the unit tests already! Ninja builds targeting the
+host automatically build and run the unit tests. Unit tests err on the side of
+being quiet in the success case, and only output test results when there’s a
+failure.</p>
+<p>To see the a test failure, you can modify <code class="docutils literal notranslate"><span class="pre">pw_status/status_test.cc</span></code> to fail
+by changing one of the strings in the “KnownString” test.</p>
+<a class="reference external image-reference" href="images/pw_watch_test_demo.gif"><img alt="example test failure using pw watch" src="../_images/pw_watch_test_demo.gif" /></a>
+<p>Running tests as part of the build isn’t particularly expensive because GN
+caches passing tests. Each time you build, only the tests that are affected
+(whether directly or transitively) by the code changes since the last build will
+be re-built and re-run.</p>
+<p>Try running the <code class="docutils literal notranslate"><span class="pre">pw_status</span></code> test manually:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./out/host_<span class="o">{</span>clang,gcc<span class="o">}</span>_debug/obj/pw_status/test/status_test
+</pre></div>
+</div>
+<p>Depending on your host OS, the compiler will default to either <code class="docutils literal notranslate"><span class="pre">clang</span></code> or <code class="docutils literal notranslate"><span class="pre">gcc</span></code>.</p>
+</div>
+<div class="section" id="building-for-a-device">
+<h2>Building for a Device<a class="headerlink" href="#building-for-a-device" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned previously, Pigweed builds for host by default. In the context of
+Pigweed, a Pigweed “target” is a build configuration that includes a toolchain,
+default library configurations, and more to result in binaries that run
+natively on the target.</p>
+<p>Switch to the window running <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code>, and quit using <code class="docutils literal notranslate"><span class="pre">ctrl+c</span></code>. To get
+<code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> to build the new STM32F429I-DISC1 target, re-launch by specifying
+which Ninja targets to build:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out default stm32f429i
+</pre></div>
+</div>
+<p>This is equivalent to the following Ninja invocation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ninja -C out default stm32f429i
+</pre></div>
+</div>
+<p>Or since the “default” target builds host and docs,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ninja -C out host docs stm32f429i
+</pre></div>
+</div>
+<p>Now <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> is building for host and a device!</p>
+</div>
+<div class="section" id="running-tests-on-a-device">
+<h2>Running Tests on a Device<a class="headerlink" href="#running-tests-on-a-device" title="Permalink to this headline">¶</a></h2>
+<p>While tests run automatically on the host, it takes a few more steps to get
+tests to run automatically on a device, too. Even though we’ve verified tests
+pass on the host, it’s crucial to verify the same with on-device testing. We’ve
+encountered some unexpected bugs that can only be found by running the unit
+tests directly on the device.</p>
+<div class="section" id="connect-device-s">
+<h3>1. Connect Device(s)<a class="headerlink" href="#connect-device-s" title="Permalink to this headline">¶</a></h3>
+<p>Connect any number of STM32F429I-DISC1 boards to your computer using the mini
+USB port on the board (<strong>not</strong> the micro USB). Pigweed will automatically detect
+the boards and distribute the tests across the devices. More boards = faster
+tests! Keep in mind that you may have to make some environment specific updates
+to ensure you have permissions to use the USB device. For example, on Linux you
+may need to update your udev rules and ensure you’re in the plugdev and dialout
+groups.</p>
+<a class="reference external image-reference" href="images/stm32f429i-disc1_connected.jpg"><img alt="development boards connected via USB" src="../_images/stm32f429i-disc1_connected.jpg" /></a>
+</div>
+<div class="section" id="launch-test-server">
+<h3>2. Launch Test Server<a class="headerlink" href="#launch-test-server" title="Permalink to this headline">¶</a></h3>
+<p>To allow Ninja to run tests on an arbitrary number of devices, Ninja will send
+test requests to a server running in the background. Launch the server in
+another window using the command below (remember, you’ll need to activate the
+Pigweed environment first).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ stm32f429i_disc1_test_server
+</pre></div>
+</div>
+<p><strong>Note:</strong> If you attach or detach any more boards to your workstation you’ll
+need to relaunch this server.</p>
+</div>
+<div class="section" id="configure-gn">
+<h3>3. Configure GN<a class="headerlink" href="#configure-gn" title="Permalink to this headline">¶</a></h3>
+<p>We can tell GN to use the testing server by enabling a build arg specific to
+the stm32f429i-disc1 target.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ gn args out
+<span class="c1"># Append this line to the file that opens in your editor to tell GN to run</span>
+<span class="c1"># on-device unit tests.</span>
+<span class="nv">pw_use_test_server</span> <span class="o">=</span> <span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="done">
+<h3>Done!<a class="headerlink" href="#done" title="Permalink to this headline">¶</a></h3>
+<p>Whenever you make code changes and trigger a build, all the affected unit tests
+will be run across the attached boards!</p>
+<p>See the demo below for an example of what this all looks like put together:</p>
+<a class="reference external image-reference" href="images/pw_watch_on_device_demo.gif"><img alt="pw watch running on-device tests" src="../_images/pw_watch_on_device_demo.gif" /></a>
+</div>
+</div>
+<div class="section" id="building-the-documentation">
+<h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the markdown documentation, Pigweed has a collection of
+information-rich RST files that are built by the default invocation of GN. You
+will find the documents at <code class="docutils literal notranslate"><span class="pre">out/docs/gen/docs/html</span></code>.</p>
+<p>You can build the documentation manually by with the command below.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ninja -C out docs
+</pre></div>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>This concludes the introduction to developing with Pigweed. If you’d like to see
+more of what Pigweed has to offer, feel free to dive into the per-module
+documentation. If you run into snags along the way, please <a class="reference external" href="mailto:pigweed&#37;&#52;&#48;googlegroups&#46;com">let us
+know</a>!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../CONTRIBUTING.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Pigweed" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

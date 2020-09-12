@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Frequently Asked Questions &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module Structure" href="module_structure.html" />
+    <link rel="prev" title="Build system" href="../build_system.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#is-pigweed-a-framework">Is Pigweed a framework?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#isn-t-c-bloated-and-slow">Isn’t C++ bloated and slow?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-do-i-setup-pigweed-for-my-project">How do I setup Pigweed for my project?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a-la-carte-individual-modules-only">A la carte: Individual modules only</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monolith-using-the-integrated-system">Monolith: Using the integrated system</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-development-hosts-are-supported">What development hosts are supported?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#partially-supported-host-platform-chrome-os">Partially supported host platform: Chrome OS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#what-about-other-host-platforms">What about other host platforms?</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#host-platforms-that-we-are-likely-to-support-in-the-future">Host platforms that we are likely to support in the future</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#platforms-that-we-are-unlikely-to-support">Platforms that we are unlikely to support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#why-name-the-project-pigweed">Why name the project Pigweed?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Frequently Asked Questions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="frequently-asked-questions">
+<span id="chapter-faq"></span><h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="is-pigweed-a-framework">
+<h2>Is Pigweed a framework?<a class="headerlink" href="#is-pigweed-a-framework" title="Permalink to this headline">¶</a></h2>
+<p>There are three core components of Pigweed’s offering:</p>
+<ol class="arabic simple">
+<li><p>The environment setup system (bootstrap and activate)</p></li>
+<li><p>The GN-based build and test system</p></li>
+<li><p>The individual modules (mostly C++ code)</p></li>
+</ol>
+<p>We consider #1 and #2 combined as the “Pigweed Monolith” - since it has an
+integrated environment setup and build system. However, this part of the system
+is entirely optional; it is not only possible, but encouraged to take
+individual modules (like for example <code class="docutils literal notranslate"><span class="pre">pw_tokenizer</span></code> or <code class="docutils literal notranslate"><span class="pre">pw_ring_buffer</span></code>)
+and integrate them into your existing environment setup approach and build
+system.</p>
+<p>So, to answer the question:</p>
+<ol class="arabic simple">
+<li><p><strong>Is Pigweed’s environment setup system a framework?</strong> No. This component
+solves (a) downloading compilers and (b) setting up a Python virtual
+environment; what you do with the environment is up to you.</p></li>
+<li><p><strong>Is Pigweed’s GN-based build &amp; test setup system a framework?</strong> In short,
+yes. This is the most framework-like part of Pigweed, since you build your
+code using Pigweed’s GN-based primitives. However, it is optional.</p></li>
+<li><p><strong>Are Pigweed’s C++ modules a framework?</strong> No. They are libraries you can
+independently take into your project and use like any other C++ library.</p></li>
+</ol>
+</div>
+<div class="section" id="isn-t-c-bloated-and-slow">
+<h2>Isn’t C++ bloated and slow?<a class="headerlink" href="#isn-t-c-bloated-and-slow" title="Permalink to this headline">¶</a></h2>
+<p>In general, no, but it is important to follow some guidelines as discussed in
+the <a class="reference internal" href="embedded_cpp_guide.html#chapter-embedded-cpp"><span class="std std-ref">Embedded C++ Guide</span></a>.</p>
+<p>At Google, we have made some quantitative analysis of various common embedded
+patterns in C++ to evaluate the cost of various constructs. We will open source
+this work at some point.</p>
+</div>
+<div class="section" id="how-do-i-setup-pigweed-for-my-project">
+<h2>How do I setup Pigweed for my project?<a class="headerlink" href="#how-do-i-setup-pigweed-for-my-project" title="Permalink to this headline">¶</a></h2>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This FAQ entry should be an entire article, but isn’t one yet; sorry!</p>
+</div>
+<p>To use Pigweed, you must decide the answer to one question: Do you wish to use
+the Pigweed integrated environment and build, or just use individual modules?</p>
+<div class="section" id="a-la-carte-individual-modules-only">
+<h3>A la carte: Individual modules only<a class="headerlink" href="#a-la-carte-individual-modules-only" title="Permalink to this headline">¶</a></h3>
+<p>This is best option if you have an existing project, with pre-existing build in
+place.</p>
+<p>To use the libraries, submodule or copy the relevant Pigweed modules into your
+project, and use them like any other C++ library. You can reference the
+existing GN files or CMake files when doing this. In the case of CMake, you can
+directly import Pigweed’s build from your project with CMake’s external project
+system, or just use a CMake include statement.</p>
+</div>
+<div class="section" id="monolith-using-the-integrated-system">
+<h3>Monolith: Using the integrated system<a class="headerlink" href="#monolith-using-the-integrated-system" title="Permalink to this headline">¶</a></h3>
+<p>This may be a good option if you are starting a new project. However,
+there is a gap in our documentation and examples at the moment; sorry about
+that! You may need to ask us for help; try the mailing list or chat room.</p>
+<p>Note: Pigweed isn’t quite ready for masses of projects to use the whole system
+just yet. We will be offering examples and material for this eventually.</p>
+<p>The summary is:</p>
+<ul class="simple">
+<li><p>Create a new repository</p></li>
+<li><p>Add Pigweed as a submodule; we suggest under <code class="docutils literal notranslate"><span class="pre">third_party/pigweed</span></code> or
+<code class="docutils literal notranslate"><span class="pre">vendor/pigweed</span></code>. It is also possible to use Android’s repo tool, but we
+suggest submodules.</p></li>
+<li><p>Create your own <code class="docutils literal notranslate"><span class="pre">BUILD.gn</span></code> and <code class="docutils literal notranslate"><span class="pre">BUILDCONFIG.gn</span></code>; we suggest starting by
+copying the ones from Pigweed. You’ll need to create your own toplevel
+targets like those in Pigweed’s root <code class="docutils literal notranslate"><span class="pre">BUILD.gn</span></code>.</p></li>
+<li><p>Create a bootstrap script in your project root that optionally does some
+project specific setup, then invokes the Pigweed upstream bootstrap (or in
+the other order).</p></li>
+<li><p>If you have custom hardware, you will want to create a <em>target</em>. See the
+<cite>targets/</cite> directory for examples like the STM32F429i-Discovery.</p></li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This section is incomplete; if you need help please reach out in chat or on
+the mailing list. We know this part of Pigweed is incomplete and will help
+those who are interested in giving Pigweed a try.</p>
+</div>
+</div>
+</div>
+<div class="section" id="what-development-hosts-are-supported">
+<h2>What development hosts are supported?<a class="headerlink" href="#what-development-hosts-are-supported" title="Permalink to this headline">¶</a></h2>
+<p>We support the following platforms:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Development host</strong></p></td>
+<td><p><strong>Comments</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Linux on x86-64</p></td>
+<td><p>Most recent Linux distributions
+will work.</p></td>
+</tr>
+<tr class="row-odd"><td><p>macOS on x86-64</p></td>
+<td><p>Mojave or newer should work.</p></td>
+</tr>
+<tr class="row-even"><td><p>Windows 10 on x86-64</p></td>
+<td><p>Native Windows only; WSL1 or 2 not
+supported.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Docker on x86-64</p></td>
+<td><p>Containers based on Ubuntu 18.04
+and newer.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>In all of the above supported platforms, the support is contingent on using
+Pigweed’s bootstrap (env setup) system. While it is possible to use Pigweed
+without bootstrap, it is unsupported and undocumented at this time.</p>
+</div>
+<div class="section" id="partially-supported-host-platform-chrome-os">
+<h3>Partially supported host platform: Chrome OS<a class="headerlink" href="#partially-supported-host-platform-chrome-os" title="Permalink to this headline">¶</a></h3>
+<p>Chromebooks are able to run some of the Pigweed components; notably all the
+“host” target builds and runs. However, due to USB access issues, it is not
+possible to flash and run on real hardware (like for example the STM32F429i
+Discovery).</p>
+<p>To run on ChromeOS:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://support.google.com/chromebook/answer/9145439">Enable the Linux shell</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-install</span> <span class="pre">build-essential</span></code></p></li>
+<li><p>Go through Pigweed setup.</p></li>
+</ol>
+</div>
+<div class="section" id="what-about-other-host-platforms">
+<h3>What about other host platforms?<a class="headerlink" href="#what-about-other-host-platforms" title="Permalink to this headline">¶</a></h3>
+<p>There are two key issues that make running the host tooling on other platforms
+challenging:</p>
+<ol class="arabic simple">
+<li><p>Availability of up-to-date compilers</p></li>
+<li><p>Availability of up-to-date Python</p></li>
+</ol>
+<p>For both of these, Pigweed relies on Google-maintained binaries packaged in
+CIPD, which includes daily builds of LLVM, and recent versions of the ARM GCC
+toolchains. Platforms other than Mac/Windows/Linux running on x86-64 will need
+to provide equivalent binaries, which is some effort.</p>
+<div class="section" id="host-platforms-that-we-are-likely-to-support-in-the-future">
+<h4>Host platforms that we are likely to support in the future<a class="headerlink" href="#host-platforms-that-we-are-likely-to-support-in-the-future" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Linux on ARM</strong> - At time of writing (mid 2020), we do not support ARM-based
+host platforms.  However, we would like to support this eventually.</p></li>
+<li><p><strong>Windows on WSL2 x86-64</strong> - There are some minor issues preventing WSL2 on
+Windows from being a smooth experience, but we are working on them.</p></li>
+</ul>
+</div>
+<div class="section" id="platforms-that-we-are-unlikely-to-support">
+<h4>Platforms that we are unlikely to support<a class="headerlink" href="#platforms-that-we-are-unlikely-to-support" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Anything on x86-32</strong> - While it’s possible 32-bit x86 could be made to
+work, we don’t have enough users to make this worthwhile. If this is
+something you are interested in and would be willing to support, let us know.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="why-name-the-project-pigweed">
+<h2>Why name the project Pigweed?<a class="headerlink" href="#why-name-the-project-pigweed" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed, also known as amaranth, is a nutritious grain and leafy salad green
+that is also a rapidly growing weed. When developing the project that
+eventually became Pigweed, we wanted to find a name that was fun, playful, and
+reflective of how we saw Pigweed growing. Teams would start out using one
+module that catches their eye, and after that goes well, they’d quickly start
+using more.</p>
+<p>So far, so good 😁</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="module_structure.html" class="btn btn-neutral float-right" title="Module Structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../build_system.html" class="btn btn-neutral float-left" title="Build system" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

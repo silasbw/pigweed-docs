@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_unit_test &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_varint" href="../pw_varint/docs.html" />
+    <link rel="prev" title="pw_trace_tokenized" href="../pw_trace_tokenized/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_unit_test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#writing-unit-tests">Writing unit tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-test-framework">Using the test framework</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#the-eventhandler-interface">The EventHandler interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-tests">Running tests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-system-integration">Build system integration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_unit_test</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-unit-test">
+<span id="chapter-pw-unit-test"></span><h1>pw_unit_test<a class="headerlink" href="#pw-unit-test" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> unit testing library with a <a class="reference external" href="https://github.com/google/googletest/blob/master/googletest/docs/primer.md">Google Test</a>-compatible API,
+built on top of embedded-friendly primitives.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> is a portable library which can run on almost any system from
+from bare metal to a full-fledged desktop OS. It does this by offloading the
+responsibility of test reporting and output to the underlying system,
+communicating its results through a common interface. Unit tests can be written
+once and run under many different environments, empowering developers to write
+robust, high quality code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> is still under development and lacks many features expected in
+a complete testing framework; nevertheless, it is already used heavily within
+Pigweed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This documentation is currently incomplete.</p>
+</div>
+<div class="section" id="writing-unit-tests">
+<h2>Writing unit tests<a class="headerlink" href="#writing-unit-tests" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code>’s interface is largely compatible with <a class="reference external" href="https://github.com/google/googletest/blob/master/googletest/docs/primer.md">Google Test</a>. Refer to
+the Google Test documentation for examples of to define unit test cases.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A lot of Google Test’s more advanced features are not yet implemented. To
+request a feature addition, please
+<a class="reference external" href="mailto:pigweed&#37;&#52;&#48;googlegroups&#46;com">let us know</a>.</p>
+</div>
+</div>
+<div class="section" id="using-the-test-framework">
+<h2>Using the test framework<a class="headerlink" href="#using-the-test-framework" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="the-eventhandler-interface">
+<h3>The EventHandler interface<a class="headerlink" href="#the-eventhandler-interface" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">EventHandler</span></code> class in <code class="docutils literal notranslate"><span class="pre">public/pw_unit_test/event_handler.h</span></code> defines
+the interface through which <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> communicates the results of its
+test runs. A platform using <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> must register an event handler with
+the unit testing framework to receive test output.</p>
+<p>As the framework runs tests, it calls the event handler’s callback functions to
+notify the system of various test events. The system can then choose to perform
+any necessary handling or aggregation of these events, and report them back to
+the developer.</p>
+<div class="section" id="predefined-event-handlers">
+<h4>Predefined event handlers<a class="headerlink" href="#predefined-event-handlers" title="Permalink to this headline">¶</a></h4>
+<p>Pigweed provides some standard event handlers upstream to simplify the process
+of getting started using <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SimplePrintingEventHandler</span></code>: An event handler that writes Google Test-style
+output to a specified sink.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[==========]</span> Running all tests.
+<span class="o">[</span> RUN      <span class="o">]</span> Status.Default
+<span class="o">[</span>       OK <span class="o">]</span> Status.Default
+<span class="o">[</span> RUN      <span class="o">]</span> Status.ConstructWithStatusCode
+<span class="o">[</span>       OK <span class="o">]</span> Status.ConstructWithStatusCode
+<span class="o">[</span> RUN      <span class="o">]</span> Status.AssignFromStatusCode
+<span class="o">[</span>       OK <span class="o">]</span> Status.AssignFromStatusCode
+<span class="o">[</span> RUN      <span class="o">]</span> Status.CompareToStatusCode
+<span class="o">[</span>       OK <span class="o">]</span> Status.CompareToStatusCode
+<span class="o">[</span> RUN      <span class="o">]</span> Status.Ok_OkIsTrue
+<span class="o">[</span>       OK <span class="o">]</span> Status.Ok_OkIsTrue
+<span class="o">[</span> RUN      <span class="o">]</span> Status.NotOk_OkIsFalse
+<span class="o">[</span>       OK <span class="o">]</span> Status.NotOk_OkIsFalse
+<span class="o">[</span> RUN      <span class="o">]</span> Status.KnownString
+<span class="o">[</span>       OK <span class="o">]</span> Status.KnownString
+<span class="o">[</span> RUN      <span class="o">]</span> Status.UnknownString
+<span class="o">[</span>       OK <span class="o">]</span> Status.UnknownString
+<span class="o">[==========]</span> Done running all tests.
+<span class="o">[</span>  PASSED  <span class="o">]</span> <span class="m">8</span> test<span class="o">(</span>s<span class="o">)</span>.
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LoggingEventHandler</span></code>: An event handler which uses the <code class="docutils literal notranslate"><span class="pre">pw_log</span></code> module to
+output test results, to integrate with the system’s existing logging setup.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="running-tests">
+<span id="id1"></span><h3>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<p>To run unit tests, link the tests into a single binary with the unit testing
+framework, register an event handler, and call the <code class="docutils literal notranslate"><span class="pre">RUN_ALL_TESTS</span></code> macro.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_unit_test/framework.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_unit_test/simple_printing_event_handler.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">WriteString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="o">&amp;</span> <span class="n">string</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">newline</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">newline</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pw</span><span class="o">::</span><span class="n">unit_test</span><span class="o">::</span><span class="n">SimplePrintingEventHandler</span> <span class="n">handler</span><span class="p">(</span><span class="n">WriteString</span><span class="p">);</span>
+  <span class="n">pw</span><span class="o">::</span><span class="n">unit_test</span><span class="o">::</span><span class="n">RegisterEventHandler</span><span class="p">(</span><span class="o">&amp;</span><span class="n">handler</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">RUN_ALL_TESTS</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-system-integration">
+<h3>Build system integration<a class="headerlink" href="#build-system-integration" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> integrates directly into Pigweed’s GN build system. To define
+simple unit tests, set the <code class="docutils literal notranslate"><span class="pre">pw_unit_test_MAIN</span></code> build variable to a target
+which configures the test framework as described in the <a class="reference internal" href="#running-tests"><span class="std std-ref">Running tests</span></a>
+section, and use the <code class="docutils literal notranslate"><span class="pre">pw_test</span></code> template to register your test code.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+
+pw_test<span class="o">(</span><span class="s2">&quot;foo_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nv">sources</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;foo_test.cc&quot;</span> <span class="o">]</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> module provides a few optional libraries to simplify setup:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">simple_printing_event_handler`</span></code>: When running tests, output test results
+as plain text over <code class="docutils literal notranslate"><span class="pre">pw_sys_io</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simple_printing_main</span></code>: Implements a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function that simply runs
+tests using the <code class="docutils literal notranslate"><span class="pre">simple_printing_event_handler</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logging_event_handler</span></code>: When running tests, log test results as
+plain text using pw_log (ensure your target has set a <code class="docutils literal notranslate"><span class="pre">pw_log</span></code> backend).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logging_main</span></code>: Implements a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function that simply runs tests
+using the <code class="docutils literal notranslate"><span class="pre">logging_event_handler</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="pw-test-template">
+<h4>pw_test template<a class="headerlink" href="#pw-test-template" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">pw_test</span></code> defines a single test binary. It wraps <code class="docutils literal notranslate"><span class="pre">pw_executable</span></code> and pulls
+in the test framework as well as the test entry point defined by the
+<code class="docutils literal notranslate"><span class="pre">pw_unit_test_main</span></code> build variable.</p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><p>All GN executable arguments are accepted and forwarded to the underlying
+<code class="docutils literal notranslate"><span class="pre">pw_executable</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable_if</span></code>: Boolean indicating whether the test should be built. If false,
+replaces the test with an empty target. Default true.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_main</span></code>: Target label to add to the tests’s dependencies to provide the
+<code class="docutils literal notranslate"><span class="pre">main()</span></code> function. Defaults to <code class="docutils literal notranslate"><span class="pre">pw_unit_test_MAIN</span></code>. Set to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> if
+<code class="docutils literal notranslate"><span class="pre">main()</span></code> is implemented in the test’s <code class="docutils literal notranslate"><span class="pre">sources</span></code>.</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+
+pw_test<span class="o">(</span><span class="s2">&quot;large_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nv">sources</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;large_test.cc&quot;</span> <span class="o">]</span>
+  <span class="nv">enable_if</span> <span class="o">=</span> device_has_1m_flash
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pw-test-group-template">
+<h4>pw_test_group template<a class="headerlink" href="#pw-test-group-template" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">pw_test_group</span></code> defines a collection of tests or other test groups. Each
+module should expose a <code class="docutils literal notranslate"><span class="pre">pw_test_group</span></code> called <code class="docutils literal notranslate"><span class="pre">tests</span></code> with the module’s test
+binaries.</p>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code>: List of the <code class="docutils literal notranslate"><span class="pre">pw_test</span></code> targets in the group.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_deps</span></code>: List of other <code class="docutils literal notranslate"><span class="pre">pw_test_group</span></code> targets on which this one
+depends.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enable_if</span></code>: Boolean indicating whether the group target should be created.
+If false, an empty GN group is created instead. Default true.</p></li>
+</ul>
+<p><strong>Example</strong></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+
+pw_test_group<span class="o">(</span><span class="s2">&quot;tests&quot;</span><span class="o">)</span> <span class="o">{</span>
+  <span class="nv">tests</span> <span class="o">=</span> <span class="o">[</span>
+    <span class="s2">&quot;:bar_test&quot;</span>,
+    <span class="s2">&quot;:foo_test&quot;</span>,
+  <span class="o">]</span>
+<span class="o">}</span>
+
+pw_test<span class="o">(</span><span class="s2">&quot;foo_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+  <span class="c1"># ...</span>
+<span class="o">}</span>
+
+pw_test<span class="o">(</span><span class="s2">&quot;bar_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+  <span class="c1"># ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_varint/docs.html" class="btn btn-neutral float-right" title="pw_varint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_trace_tokenized/docs.html" class="btn btn-neutral float-left" title="pw_trace_tokenized" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Style Guide and Conventions &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Targets" href="../targets.html" />
+    <link rel="prev" title="Embedded C++ Guide" href="embedded_cpp_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code Style</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#c-style">C++ style</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-formatting">Automatic formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-standard-library">C Standard Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">C++ Standard Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#combining-c-and-c">Combining C and C++</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-statements">Control statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#include-guards">Include guards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memory-allocation">Memory allocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#naming">Naming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#namespace-scope-formatting">Namespace scope formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pointers-and-references">Pointers and references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocessor-macros">Preprocessor macros</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stand-alone-statement-macros">Stand-alone statement macros</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#private-macros-in-public-headers">Private macros in public headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macros-in-private-implementation-files-cc">Macros in private implementation files (.cc)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#preprocessor-conditional-statements">Preprocessor conditional statements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unsigned-integers">Unsigned integers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-style">Python style</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-3">Python 3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#build-files-gn">Build files: GN</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Style Guide and Conventions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="style-guide-and-conventions">
+<h1>Style Guide and Conventions<a class="headerlink" href="#style-guide-and-conventions" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pigweed runs <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">format</span></code> as part of <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span></code> to perform some code
+formatting checks. To speed up the review process, consider adding <code class="docutils literal notranslate"><span class="pre">pw</span>
+<span class="pre">presubmit</span></code> as a git push hook using the following command:
+<code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span> <span class="pre">--install</span></code></p>
+</div>
+<div class="section" id="c-style">
+<h2>C++ style<a class="headerlink" href="#c-style" title="Permalink to this headline">¶</a></h2>
+<p>The Pigweed C++ style guide is closely based on Google’s external C++ Style
+Guide, which is found on the web at
+<a class="reference external" href="https://google.github.io/styleguide/cppguide.html">https://google.github.io/styleguide/cppguide.html</a>. The Google C++ Style Guide
+applies to Pigweed except as described in this document.</p>
+<p>The Pigweed style guide only applies to Pigweed itself. It does not apply to
+projects that use Pigweed or to the third-party code included with Pigweed.
+Non-Pigweed code is free to use features restricted by Pigweed, such as dynamic
+memory allocation and the entirety of the C++ Standard Library.</p>
+<p>Recommendations in the <a class="reference internal" href="embedded_cpp_guide.html"><span class="doc">Embedded C++ Guide</span></a> are considered part of the
+Pigweed style guide, but are separated out since it covers more general
+embedded development beyond just C++ style.</p>
+<div class="section" id="automatic-formatting">
+<h3>Automatic formatting<a class="headerlink" href="#automatic-formatting" title="Permalink to this headline">¶</a></h3>
+<p>Pigweed uses <a class="reference external" href="https://clang.llvm.org/docs/ClangFormat.html">clang-format</a> to
+automatically format Pigweed source code. A <code class="docutils literal notranslate"><span class="pre">.clang-format</span></code> configuration is
+provided with the Pigweed repository.</p>
+<p>Automatic formatting is essential to facilitate large-scale, automated changes
+in Pigweed. Therefore, all code in Pigweed is expected to be formatted with
+<code class="docutils literal notranslate"><span class="pre">clang-format</span></code> prior to submission. Existing code may be reformatted at any
+time.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> formats code in an undesirable or incorrect way, it can be
+disabled for the affected lines by adding <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">clang-format</span> <span class="pre">off</span></code>.
+<code class="docutils literal notranslate"><span class="pre">clang-format</span></code> must then be re-enabled with a <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">clang-format</span> <span class="pre">on</span></code> comment.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// clang-format off</span>
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">kMyMatrix</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">100</span><span class="p">,</span>  <span class="mi">23</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>
+      <span class="mi">0</span><span class="p">,</span> <span class="mi">542</span><span class="p">,</span>  <span class="mi">38</span><span class="p">,</span>
+      <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="c1">// clang-format on</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="c-standard-library">
+<h3>C Standard Library<a class="headerlink" href="#c-standard-library" title="Permalink to this headline">¶</a></h3>
+<p>In C++ headers, always use the C++ versions of C Standard Library headers (e.g.
+<code class="docutils literal notranslate"><span class="pre">&lt;cstdlib&gt;</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&lt;stdlib.h&gt;</span></code>). If the header is used by both C and
+C++ code, only the C header should be used.</p>
+<p>In C++ code, it is preferred to use C functions from the <code class="docutils literal notranslate"><span class="pre">std</span></code> namespace. For
+example, use <code class="docutils literal notranslate"><span class="pre">std::memcpy</span></code> instead of <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>. The C++ standard does not
+require the global namespace versions of the functions to be provided. Using
+<code class="docutils literal notranslate"><span class="pre">std::</span></code> is more consistent with the C++ Standard Library and makes it easier
+to distinguish Pigweed functions from library functions.</p>
+<p>Within core Pigweed, do not use C standard library functions that allocate
+memory, such as <code class="docutils literal notranslate"><span class="pre">std::malloc</span></code>. There are exceptions to this for when dynamic
+allocation is enabled for a system; Pigweed modules are allowed to add extra
+functionality when a heap is present; but this must be optional.</p>
+</div>
+<div class="section" id="id1">
+<h3>C++ Standard Library<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Much of the C++ Standard Library is not a good fit for embedded software. Many
+of the classes and functions were not designed with the RAM, flash, and
+performance constraints of a microcontroller in mind. For example, simply
+adding the line <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;iostream&gt;</span></code> can increase the binary size by 150 KB!
+This is larger than many microcontrollers’ entire internal storage.</p>
+<p>However, with appropriate caution, a limited set of standard C++ libraries can
+be used to great effect. Developers can leverage familiar, well-tested
+abstractions instead of writing their own. C++ library algorithms and classes
+can give equivalent or better performance than hand-written C code.</p>
+<p>A limited subset of the C++ Standard Library is permitted in Pigweed. To keep
+Pigweed small, flexible, and portable, functions that allocate dynamic memory
+must be avoided. Care must be exercised when using multiple instantiations of a
+template function, which can lead to code bloat.</p>
+<p>The following C++ Standard Library headers are always permitted:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;array&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;complex&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;initializer_list&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;iterator&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;limits&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;optional&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;random&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;ratio&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;string_view&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;tuple&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;type_traits&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;utility&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;variant&gt;</span></code></p></li>
+<li><p>C Standard Library headers (<code class="docutils literal notranslate"><span class="pre">&lt;c*&gt;</span></code>)</p></li>
+</ul>
+</div></blockquote>
+<p>With caution, parts of the following headers can be used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;algorithm&gt;</span></code> – be wary of potential memory allocation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;atomic&gt;</span></code> – not all MCUs natively support atomic operations</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;bitset&gt;</span></code> – conversions to or from strings are disallowed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;functional&gt;</span></code> – do <strong>not</strong> use <code class="docutils literal notranslate"><span class="pre">std::function</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;new&gt;</span></code> – for placement new</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;numeric&gt;</span></code> – be wary of code size with multiple template instantiations</p></li>
+</ul>
+</div></blockquote>
+<p>Never use any of these headers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Dynamic containers (<code class="docutils literal notranslate"><span class="pre">&lt;list&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;map&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;set&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;vector&gt;</span></code>, etc.)</p></li>
+<li><p>Streams (<code class="docutils literal notranslate"><span class="pre">&lt;iostream&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;ostream&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;fstream&gt;</span></code>, etc.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;exception&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;future&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;mutex&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;thread&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;memory&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;regex&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;scoped_allocator&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;sstream&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;stdexcept&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;valarray&gt;</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>Headers not listed here should be carefully evaluated before they are used.</p>
+<p>These restrictions do not apply to third party code or to projects that use
+Pigweed.</p>
+</div>
+<div class="section" id="combining-c-and-c">
+<h3>Combining C and C++<a class="headerlink" href="#combining-c-and-c" title="Permalink to this headline">¶</a></h3>
+<p>Prefer to write C++ code over C code, using <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> for symbols that must
+have C linkage. <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> functions should be defined within C++
+namespaces to simplify referring to other code.</p>
+<p>C++ functions with no parameters do not include <code class="docutils literal notranslate"><span class="pre">void</span></code> in the parameter list.
+C functions with no parameters must include <code class="docutils literal notranslate"><span class="pre">void</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">pw</span> <span class="p">{</span>
+
+<span class="kt">bool</span> <span class="n">ThisIsACppFunction</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="kt">int</span> <span class="n">pw_ThisIsACFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+
+<span class="kt">int</span> <span class="n">pw_ThisIsAlsoACFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">ThisIsACppFunction</span><span class="p">()</span> <span class="o">?</span> <span class="mi">100</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// extern &quot;C&quot;</span>
+
+<span class="p">}</span>  <span class="c1">// namespace pw</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comments">
+<h3>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h3>
+<p>Prefer C++-style (<code class="docutils literal notranslate"><span class="pre">//</span></code>) comments over C-style commments (<code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">*/</span></code>). C-style
+comments should only be used for inline comments.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Use C++-style comments, except where C-style comments are necessary.</span>
+<span class="c1">// This returns a random number using an algorithm I found on the internet.</span>
+<span class="cp">#define RANDOM_NUMBER() [] {                \</span>
+<span class="cp">  return 4;  </span><span class="cm">/* chosen by fair dice roll */</span><span class="cp"> \</span>
+<span class="cp">}()</span>
+</pre></div>
+</div>
+<p>Indent code in comments with two additional spaces, making a total of three
+spaces after the <code class="docutils literal notranslate"><span class="pre">//</span></code>. All code blocks must begin and end with an empty
+comment line, even if the blank comment line is the last line in the block.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Here is an example of code in comments.</span>
+<span class="c1">//</span>
+<span class="c1">//   int indentation_spaces = 2;</span>
+<span class="c1">//   int total_spaces = 3;</span>
+<span class="c1">//</span>
+<span class="c1">//   engine_1.thrust = RANDOM_NUMBER() * indentation_spaces + total_spaces;</span>
+<span class="c1">//</span>
+<span class="kt">bool</span> <span class="nf">SomeFunction</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="control-statements">
+<h3>Control statements<a class="headerlink" href="#control-statements" title="Permalink to this headline">¶</a></h3>
+<p>All loops and conditional statements must use braces.</p>
+<p>The syntax <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">(true)</span></code> is preferred over <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(;;)</span></code> for infinite loops.</p>
+</div>
+<div class="section" id="include-guards">
+<h3>Include guards<a class="headerlink" href="#include-guards" title="Permalink to this headline">¶</a></h3>
+<p>The first non-comment line of every header file must be <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">once</span></code>. Do
+not use traditional macro include guards. The <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">once</span></code> should come
+directly after the Pigweed copyright block, with no blank line, followed by a
+blank, like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright 2020 The Pigweed Authors</span>
+<span class="c1">//</span>
+<span class="c1">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not</span>
+<span class="c1">// use this file except in compliance with the License. You may obtain a copy of</span>
+<span class="c1">// the License at</span>
+<span class="c1">//</span>
+<span class="c1">//     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">//</span>
+<span class="c1">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">// License for the specific language governing permissions and limitations under</span>
+<span class="c1">// the License.</span>
+<span class="cp">#pragma once</span>
+
+<span class="c1">// Header file-level comment goes here...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="memory-allocation">
+<h3>Memory allocation<a class="headerlink" href="#memory-allocation" title="Permalink to this headline">¶</a></h3>
+<p>Dynamic memory allocation can be problematic. Heap allocations and deallocations
+occupy valuable CPU cycles. Memory usage becomes nondeterministic, which can
+result in a system crashing without a clear culprit.</p>
+<p>To keep Pigweed portable, core Pigweed code is not permitted to dynamically
+(heap) allocate memory, such as with <code class="docutils literal notranslate"><span class="pre">malloc</span></code> or <code class="docutils literal notranslate"><span class="pre">new</span></code>. All memory should be
+allocated with automatic (stack) or static (global) storage duration. Pigweed
+must not use C++ libraries that use dynamic allocation.</p>
+<p>Projects that use Pigweed are free to use dynamic allocation, provided they
+have selected a target that enables the heap.</p>
+</div>
+<div class="section" id="naming">
+<h3>Naming<a class="headerlink" href="#naming" title="Permalink to this headline">¶</a></h3>
+<p>Entities shall be named according to the <a class="reference external" href="https://google.github.io/styleguide/cppguide.html">Google style guide</a>, with the following
+additional requirements.</p>
+<dl>
+<dt><strong>C++ code</strong></dt><dd><ul>
+<li><p>All Pigweed C++ code must be in the <code class="docutils literal notranslate"><span class="pre">pw</span></code> namespace. Namespaces for
+modules should be nested under <code class="docutils literal notranslate"><span class="pre">pw</span></code>. For example,
+<code class="docutils literal notranslate"><span class="pre">pw::string::Format()</span></code>.</p></li>
+<li><p>Whenever possible, private code should be in a source (.cc) file and placed
+in anonymous namespace nested under <code class="docutils literal notranslate"><span class="pre">pw</span></code>.</p></li>
+<li><p>If private code must be exposed in a header file, it must be in a namespace
+nested under <code class="docutils literal notranslate"><span class="pre">pw</span></code>. The namespace may be named for its subsystem or use a
+name that designates it as private, such as <code class="docutils literal notranslate"><span class="pre">internal</span></code>.</p></li>
+<li><p>Template arguments for non-type names (e.g. <code class="docutils literal notranslate"><span class="pre">template</span> <span class="pre">&lt;int</span> <span class="pre">foo_bar&gt;</span></code>)
+should follow the variable naming convention, which means snake case (e.g.
+<code class="docutils literal notranslate"><span class="pre">foo_bar</span></code>). This matches the Google C++ style, however the wording in the
+official style guide isn’t explicit and could be interpreted to use
+<code class="docutils literal notranslate"><span class="pre">kFooBar</span></code> style naming. Wide practice establishes that the naming
+convention is <code class="docutils literal notranslate"><span class="pre">snake_case</span></code>, and so that is the style we use in Pigweed.</p>
+<p><strong>Note:</strong> At time of writing much of Pigweed incorrectly follows the
+<code class="docutils literal notranslate"><span class="pre">kCamelCase</span></code> naming for non-type template arguments. This is a bug that
+will be fixed eventually.</p>
+</li>
+</ul>
+</dd>
+<dt><strong>C code</strong></dt><dd><ul>
+<li><p>Public names used by C code must be prefixed with <code class="docutils literal notranslate"><span class="pre">pw_</span></code>.</p></li>
+<li><p>If private code must be exposed in a header, private names used by C code
+must be prefixed with <code class="docutils literal notranslate"><span class="pre">_pw_</span></code>.</p></li>
+<li><p>Avoid writing C source (.c) files in Pigweed. Prefer to write C++ code with
+C linkage using <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code>. Within C source, private C functions and
+variables must be named with the <code class="docutils literal notranslate"><span class="pre">_pw_</span></code> prefix and should be declared
+<code class="docutils literal notranslate"><span class="pre">static</span></code> whenever possible; for example, <code class="docutils literal notranslate"><span class="pre">_pw__MyPrivateFunction</span></code>.</p></li>
+<li><p>The C prefix rules apply to</p>
+<ul class="simple">
+<li><p>C functions (<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">pw_FunctionName(void);</span></code>),</p></li>
+<li><p>variables used by C code (<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">pw_variable_name;</span></code>),</p></li>
+<li><p>constant variables used by C code (<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">pw_kConstantName;</span></code>), and</p></li>
+<li><p>structs used by C code (<code class="docutils literal notranslate"><span class="pre">typedef</span> <span class="pre">struct</span> <span class="pre">{}</span> <span class="pre">pw_StructName;</span></code>).</p></li>
+</ul>
+<p>The prefix does not apply to struct members, which use normal Google style.</p>
+</li>
+</ul>
+</dd>
+<dt><strong>Preprocessor macros</strong></dt><dd><ul class="simple">
+<li><p>Public Pigweed macros must be prefixed with <code class="docutils literal notranslate"><span class="pre">PW_</span></code>.</p></li>
+<li><p>Private Pigweed macros must be prefixed with <code class="docutils literal notranslate"><span class="pre">_PW_</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Example</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">pw</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="n">nested_namespace</span> <span class="p">{</span>
+
+<span class="c1">// C++ names (types, variables, functions) must be in the pw namespace.</span>
+<span class="c1">// They are named according to the Google style guide.</span>
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">kGlobalConstant</span> <span class="o">=</span> <span class="mi">123</span><span class="p">;</span>
+
+<span class="c1">// Prefer using functions over extern global variables.</span>
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">global_variable</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Class</span> <span class="p">{};</span>
+
+<span class="kt">void</span> <span class="nf">Function</span><span class="p">();</span>
+
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+
+<span class="c1">// Public Pigweed code used from C must be prefixed with pw_.</span>
+<span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">pw_kGlobalConstant</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">pw_global_variable</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">pw_Function</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">member_variable</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">pw_Struct</span><span class="p">;</span>
+
+<span class="c1">// Private Pigweed code used from C must be prefixed with _pw_.</span>
+<span class="k">extern</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">_pw_kPrivateGlobalConstant</span><span class="p">;</span>
+
+<span class="k">extern</span> <span class="kt">int</span> <span class="n">_pw_private_global_variable</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">_pw_PrivateFunction</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">member_variable</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">_pw_PrivateStruct</span><span class="p">;</span>
+
+<span class="p">}</span>  <span class="c1">// extern &quot;C&quot;</span>
+
+<span class="c1">// Public macros must be prefixed with PW_.</span>
+<span class="cp">#define PW_PUBLIC_MACRO(arg) arg</span>
+
+<span class="c1">// Private macros must be prefixed with _PW_.</span>
+<span class="cp">#define _PW_PRIVATE_MACRO(arg) arg</span>
+
+<span class="p">}</span>  <span class="c1">// namespace nested_namespace</span>
+<span class="p">}</span>  <span class="c1">// namespace pw</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="namespace-scope-formatting">
+<h3>Namespace scope formatting<a class="headerlink" href="#namespace-scope-formatting" title="Permalink to this headline">¶</a></h3>
+<p>All non-indented blocks (namespaces, <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> blocks, and preprocessor
+conditionals) must have a comment on their closing line with the
+contents of the starting line.</p>
+<p>All nested namespaces should be declared together with no blank lines between
+them.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;some/header.h&quot;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">pw</span><span class="o">::</span><span class="n">nested</span> <span class="p">{</span>
+<span class="k">namespace</span> <span class="p">{</span>
+
+<span class="k">constexpr</span> <span class="kt">int</span> <span class="n">kAnonConstantGoesHere</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>  <span class="c1">// namespace</span>
+
+<span class="k">namespace</span> <span class="n">other</span> <span class="p">{</span>
+
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">SomeClass</span><span class="o">::</span><span class="n">yes</span> <span class="o">=</span> <span class="s">&quot;no&quot;</span><span class="p">;</span>
+
+<span class="kt">bool</span> <span class="nf">ThisIsAFunction</span><span class="p">()</span> <span class="p">{</span>
+<span class="cp">#if PW_CONFIG_IS_SET</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="cp">#else</span>
+  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="cp">#endif  </span><span class="c1">// PW_CONFIG_IS_SET</span>
+<span class="p">}</span>
+
+<span class="k">extern</span> <span class="s">&quot;C&quot;</span> <span class="p">{</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">pw_kSomeConstant</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">pw_some_global_variable</span> <span class="o">=</span> <span class="mi">600</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">pw_CFunction</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+
+<span class="p">}</span>  <span class="c1">// extern &quot;C&quot;</span>
+
+<span class="p">}</span>  <span class="c1">// namespace</span>
+<span class="p">}</span>  <span class="c1">// namespace pw::nested</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pointers-and-references">
+<h3>Pointers and references<a class="headerlink" href="#pointers-and-references" title="Permalink to this headline">¶</a></h3>
+<p>For pointer and reference types, place the asterisk or ampersand next to the
+type.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">*</span> <span class="k">const</span> <span class="n">number</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">that_thing</span><span class="p">;</span>
+<span class="k">constexpr</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">kString</span> <span class="o">=</span> <span class="s">&quot;theory!&quot;</span>
+
+<span class="kt">bool</span> <span class="n">FindTheOneRing</span><span class="p">(</span><span class="k">const</span> <span class="n">Region</span><span class="o">&amp;</span> <span class="n">where_to_look</span><span class="p">)</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Prefer storing references over storing pointers. Pointers are required when the
+pointer can change its target or may be <code class="docutils literal notranslate"><span class="pre">nullptr</span></code>. Otherwise, a reference or
+const reference should be used. In accordance with the Google C++ style guide,
+only const references are permitted as function arguments; pointers must be used
+in place of mutable references when passed as function arguments.</p>
+</div>
+<div class="section" id="preprocessor-macros">
+<h3>Preprocessor macros<a class="headerlink" href="#preprocessor-macros" title="Permalink to this headline">¶</a></h3>
+<p>Macros should only be used when they significantly improve upon the C++ code
+they replace. Macros should make code more readable, robust, and safe, or
+provide features not possible with standard C++, such as stringification, line
+number capturing, or conditional compilation. When possible, use C++ constructs
+like constexpr variables in place of macros. Never use macros as constants,
+except when a string literal is needed or the value must be used by C code.</p>
+<p>When macros are needed, the macros should be accompanied with extensive tests
+to ensure the macros are hard to use wrong.</p>
+<div class="section" id="stand-alone-statement-macros">
+<h4>Stand-alone statement macros<a class="headerlink" href="#stand-alone-statement-macros" title="Permalink to this headline">¶</a></h4>
+<p>Macros that are standalone statements must require the caller to terminate the
+macro invocation with a semicolon. For example, the following does <em>not</em> conform
+to Pigweed’s macro style:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// BAD! Definition has built-in semicolon.</span>
+<span class="cp">#define PW_LOG_IF_BAD(mj) \</span>
+<span class="cp">  CallSomeFunction(mj);</span>
+
+<span class="c1">// BAD! Compiles without error; semicolon is missing.</span>
+<span class="n">PW_LOG_IF_BAD</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here’s how to do this instead:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// GOOD; requires semicolon to compile.</span>
+<span class="cp">#define PW_LOG_IF_BAD(mj) \</span>
+<span class="cp">  CallSomeFunction(mj)</span>
+
+<span class="c1">// GOOD; fails to compile due to lacking semicolon.</span>
+<span class="n">PW_LOG_IF_BAD</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For macros in function scope that do not already require a semicolon, the
+contents can be placed in a <code class="docutils literal notranslate"><span class="pre">do</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span> <span class="pre">while</span> <span class="pre">(0)</span></code> loop.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PW_LOG_IF_BAD(mj)  \</span>
+<span class="cp">  do {                     \</span>
+<span class="cp">    if (mj.Bad()) {        \</span>
+<span class="cp">      Log(#mj &quot; is bad&quot;)   \</span>
+<span class="cp">    }                      \</span>
+<span class="cp">  } while (0)</span>
+</pre></div>
+</div>
+<p>Standalone macros at global scope that do not already require a semicolon can
+add a <code class="docutils literal notranslate"><span class="pre">static_assert</span></code> or throwaway struct declaration statement as their
+last line.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PW_NEAT_THING(thing)             \</span>
+<span class="cp">  bool IsNeat_##thing() { return true; } \</span>
+<span class="cp">  static_assert(true, &quot;Macros must be terminated with a semicolon&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="private-macros-in-public-headers">
+<h4>Private macros in public headers<a class="headerlink" href="#private-macros-in-public-headers" title="Permalink to this headline">¶</a></h4>
+<p>Private macros in public headers must be prefixed with <code class="docutils literal notranslate"><span class="pre">_PW_</span></code>, even if they
+are undefined after use; this prevents collisions with downstream users. For
+example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define _PW_MY_SPECIAL_MACRO(op) ...</span>
+<span class="p">...</span>
+<span class="c1">// Code that uses _PW_MY_SPECIAL_MACRO()</span>
+<span class="p">...</span>
+<span class="cp">#undef _PW_MY_SPECIAL_MACRO</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="macros-in-private-implementation-files-cc">
+<h4>Macros in private implementation files (.cc)<a class="headerlink" href="#macros-in-private-implementation-files-cc" title="Permalink to this headline">¶</a></h4>
+<p>Macros within .cc files that should only used within one file should be
+undefined after their last use; for example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define DEFINE_OPERATOR(op) \</span>
+<span class="cp">  T operator ## op(T x, T y) { return x op y; } \</span>
+<span class="cp">  static_assert(true, &quot;Macros must be terminated with a semicolon&quot;) \</span>
+
+<span class="n">DEFINE_OPERATOR</span><span class="p">(</span><span class="o">+</span><span class="p">);</span>
+<span class="n">DEFINE_OPERATOR</span><span class="p">(</span><span class="o">-</span><span class="p">);</span>
+<span class="n">DEFINE_OPERATOR</span><span class="p">(</span><span class="o">/</span><span class="p">);</span>
+<span class="n">DEFINE_OPERATOR</span><span class="p">(</span><span class="o">*</span><span class="p">);</span>
+
+<span class="cp">#undef DEFINE_OPERATOR</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preprocessor-conditional-statements">
+<h3>Preprocessor conditional statements<a class="headerlink" href="#preprocessor-conditional-statements" title="Permalink to this headline">¶</a></h3>
+<p>When using macros for conditional compilation, prefer to use <code class="docutils literal notranslate"><span class="pre">#if</span></code> over
+<code class="docutils literal notranslate"><span class="pre">#ifdef</span></code>. This checks the value of the macro rather than whether it exists.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">#if</span></code> handles undefined macros equivalently to <code class="docutils literal notranslate"><span class="pre">#ifdef</span></code>. Undefined
+macros expand to 0 in preprocessor conditional statements.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">#if</span></code> evaluates false for macros defined as 0, while <code class="docutils literal notranslate"><span class="pre">#ifdef</span></code> evaluates
+true.</p></li>
+<li><p>Macros defined using compiler flags have a default value of 1 in GCC and
+Clang, so they work equivalently for <code class="docutils literal notranslate"><span class="pre">#if</span></code> and <code class="docutils literal notranslate"><span class="pre">#ifdef</span></code>.</p></li>
+<li><p>Macros defined to an empty statement cause compile-time errors in <code class="docutils literal notranslate"><span class="pre">#if</span></code>
+statements, which avoids ambiguity about how the macro should be used.</p></li>
+</ul>
+</div></blockquote>
+<p>All <code class="docutils literal notranslate"><span class="pre">#endif</span></code> statements should be commented with the expression from their
+corresponding <code class="docutils literal notranslate"><span class="pre">#if</span></code>. Do not indent within preprocessor conditional statements.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#if USE_64_BIT_WORD</span>
+<span class="k">using</span> <span class="n">Word</span> <span class="o">=</span> <span class="kt">uint64_t</span><span class="p">;</span>
+<span class="cp">#else</span>
+<span class="k">using</span> <span class="n">Word</span> <span class="o">=</span> <span class="kt">uint32_t</span><span class="p">;</span>
+<span class="cp">#endif  </span><span class="c1">// USE_64_BIT_WORD</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unsigned-integers">
+<h3>Unsigned integers<a class="headerlink" href="#unsigned-integers" title="Permalink to this headline">¶</a></h3>
+<p>Unsigned integers are permitted in Pigweed. Aim for consistency with existing
+code and the C++ Standard Library. Be very careful mixing signed and unsigned
+integers.</p>
+</div>
+</div>
+<div class="section" id="python-style">
+<h2>Python style<a class="headerlink" href="#python-style" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed uses the standard Python style: PEP8, which is available on the web at
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a>. All Pigweed Python code should pass
+<code class="docutils literal notranslate"><span class="pre">yapf</span></code> when configured for PEP8 style.</p>
+<div class="section" id="python-3">
+<h3>Python 3<a class="headerlink" href="#python-3" title="Permalink to this headline">¶</a></h3>
+<p>Pigweed uses Python 3. Some modules may offer limited support for Python 2, but
+Python 3.6 or newer is required for most Pigweed code.</p>
+</div>
+</div>
+<div class="section" id="build-files-gn">
+<h2>Build files: GN<a class="headerlink" href="#build-files-gn" title="Permalink to this headline">¶</a></h2>
+<p>Each Pigweed source module will require a build file named BUILD.gn which
+encapsulates the build targets and specifies their sources and dependencies.
+The format of this file is simlar in structure to the
+<a class="reference external" href="https://docs.bazel.build/versions/3.2.0/build-ref.html">Bazel/Blaze format</a>
+(Googlers may also review <a class="reference external" href="go/build-style">go/build-style</a>), but with
+nomenclature specific to Pigweed. For each target specified within the build
+file there are a list of depdency fields. Those fields, in their expected
+order, are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;public_config&gt;</span></code> – external build configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;public_deps&gt;</span></code> – necessary public dependencies (ie: Pigweed headers)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;public&gt;</span></code> – exposed package public interface header files</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;config&gt;</span></code> – package build configuration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;sources&gt;</span></code> – package source code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;deps&gt;</span></code> – package necessary local dependencies</p></li>
+</ul>
+</div></blockquote>
+<p>Assets within each field must be listed in alphabetical order</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp"># Here is a brief example of a GN build file.</span>
+
+<span class="n">import</span><span class="p">(</span><span class="s">&quot;$dir_pw_unit_test/test.gni&quot;</span><span class="p">)</span>
+
+<span class="n">config</span><span class="p">(</span><span class="s">&quot;default_config&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">include_dirs</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;public&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">source_set</span><span class="p">(</span><span class="s">&quot;pw_sample_module&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">public_configs</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;:default_config&quot;</span> <span class="p">]</span>
+  <span class="n">public_deps</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">dir_pw_span</span><span class="p">,</span>
+    <span class="n">dir_pw_status</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="k">public</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;public/pw_sample_module/sample_module.h&quot;</span> <span class="p">]</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;public/pw_sample_module/internal/sample_module.h&quot;</span><span class="p">,</span>
+    <span class="s">&quot;sample_module.cc&quot;</span><span class="p">,</span>
+    <span class="s">&quot;used_by_sample_module.cc&quot;</span><span class="p">,</span>
+  <span class="p">]</span>
+  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="n">dir_pw_varint</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">pw_test_group</span><span class="p">(</span><span class="s">&quot;tests&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;:sample_module_test&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">pw_test</span><span class="p">(</span><span class="s">&quot;sample_module_test&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;sample_module_test.cc&quot;</span> <span class="p">]</span>
+  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;:sample_module&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">pw_doc_group</span><span class="p">(</span><span class="s">&quot;docs&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span> <span class="s">&quot;docs.rst&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../targets.html" class="btn btn-neutral float-right" title="Targets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="embedded_cpp_guide.html" class="btn btn-neutral float-left" title="Embedded C++ Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

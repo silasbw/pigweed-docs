@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contributing &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Code of Conduct" href="CODE_OF_CONDUCT.html" />
+    <link rel="prev" title="Getting Started" href="docs/getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Contributor License Agreement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gerrit-commit-hook">Gerrit Commit Hook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-reviews">Code Reviews</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#community-guidelines">Community Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code-headers">Source Code Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contributing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>We’d love to accept your patches and contributions to Pigweed. There are just a
+few small guidelines you need to follow. Before making or sending major changes,
+please reach out on the <a class="reference external" href="mailto:pigweed&#37;&#52;&#48;googlegroups&#46;com">mailing list</a> first to
+ensure the changes make sense for upstream. We generally go through a design
+phase before making large changes.</p>
+<p>Before participating in our community, please take a moment to review our <a class="reference internal" href="CODE_OF_CONDUCT.html"><span class="doc">code
+of conduct</span></a>. We expect everyone who interacts with the
+project to respect these guidelines.</p>
+<p>Pigweed contribution overview:</p>
+<ol class="arabic simple">
+<li><p>One-time contributor setup:</p>
+<ul class="simple">
+<li><p>Sign the <a class="reference external" href="https://cla.developers.google.com/">Contributor License Agreement</a>.</p></li>
+<li><p>Verify that Git user email (git config user.email) is either Google Account
+email or an Alternate email for the Google account used to sign the CLA (Manage
+Google account-&gt;Personal Info-&gt;email).</p></li>
+<li><p>Install the <a class="reference internal" href="#"><span class="doc">Gerrit commit hook</span></a> to
+automatically add a <code class="docutils literal notranslate"><span class="pre">Change-Id:</span> <span class="pre">...</span></code> line to your commit.</p></li>
+<li><p>Install the Pigweed presubmit check hook (<code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span> <span class="pre">--install</span></code>).
+(recommended).</p></li>
+</ul>
+</li>
+<li><p>Ensure all files include a correct <a class="reference internal" href="#"><span class="doc">copyright and license header</span></a>.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span></code> (see below) to detect style or compilation issues before
+uploading.</p></li>
+<li><p>Upload the change with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">HEAD:refs/for/master</span></code>.</p></li>
+<li><p>Address any reviewer feedback by amending the commit (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">--amend</span></code>).</p></li>
+<li><p>Submit change to CI builders to merge. If you are not part of Pigweed’s
+core team, you can ask the reviewer to add the <code class="docutils literal notranslate"><span class="pre">+2</span> <span class="pre">CQ</span></code> vote, which will
+trigger a rebase asd submit once the builders pass.</p></li>
+</ol>
+<div class="section" id="id1">
+<h2>Contributor License Agreement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Contributions to this project must be accompanied by a Contributor License
+Agreement. You (or your employer) retain the copyright to your contribution;
+this simply gives us permission to use and redistribute your contributions as
+part of the project. Head over to <a class="reference external" href="https://cla.developers.google.com/">https://cla.developers.google.com/</a> to see
+your current agreements on file or to sign a new one.</p>
+<p>You generally only need to submit a CLA once, so if you’ve already submitted one
+(even if it was for a different project), you probably don’t need to do it
+again.</p>
+</div>
+<div class="section" id="gerrit-commit-hook">
+<h2>Gerrit Commit Hook<a class="headerlink" href="#gerrit-commit-hook" title="Permalink to this headline">¶</a></h2>
+<p>Gerrit requires all changes to have a <code class="docutils literal notranslate"><span class="pre">Change-Id</span></code> tag at the bottom of each CL.
+You should set this up to be done automatically using the instructions below.</p>
+<p><strong>Linux/macOS</strong><span class="raw-html-m2r"><br/></span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">f</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir<span class="sb">`</span>/hooks/commit-msg <span class="p">;</span> mkdir -p <span class="k">$(</span>dirname <span class="nv">$f</span><span class="k">)</span> <span class="p">;</span> curl -Lo <span class="nv">$f</span> https://gerrit-review.googlesource.com/tools/hooks/commit-msg <span class="p">;</span> chmod +x <span class="nv">$f</span>
+</pre></div>
+</div>
+<p><strong>Windows</strong><span class="raw-html-m2r"><br/></span>
+Download <a class="reference external" href="https://gerrit-review.googlesource.com/tools/hooks/commit-msg">the Gerrit commit hook</a>
+and then copy it to the <code class="docutils literal notranslate"><span class="pre">.git\hooks</span></code> directory in the Pigweed repository.</p>
+<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="k">copy</span> <span class="nv">%HOMEPATH%</span>\Downloads\commit-msg <span class="nv">%HOMEPATH%</span>\pigweed\.git\hooks\commit-msg
+</pre></div>
+</div>
+</div>
+<div class="section" id="code-reviews">
+<h2>Code Reviews<a class="headerlink" href="#code-reviews" title="Permalink to this headline">¶</a></h2>
+<p>All Pigweed development happens on Gerrit, following the <a class="reference external" href="http://ceres-solver.org/contributing.html">typical Gerrit
+development workflow</a>. Consult
+<a class="reference external" href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.12.3/intro-user.html">Gerrit User Guide</a>
+for more information on using Gerrit.</p>
+<p>In the future we may support GitHub pull requests, but until that time we will
+close GitHub pull requests and ask that the changes be uploaded to Gerrit
+instead.</p>
+</div>
+<div class="section" id="community-guidelines">
+<h2>Community Guidelines<a class="headerlink" href="#community-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>This project follows <a class="reference external" href="https://opensource.google/conduct/">Google’s Open Source Community
+Guidelines</a> and the <a class="reference internal" href="CODE_OF_CONDUCT.html"><span class="doc">Pigweed Code of
+Conduct</span></a>.</p>
+</div>
+<div class="section" id="source-code-headers">
+<h2>Source Code Headers<a class="headerlink" href="#source-code-headers" title="Permalink to this headline">¶</a></h2>
+<p>Every Pigweed file containing source code must include copyright and license
+information. This includes any JS/CSS files that you might be serving out to
+browsers.</p>
+<p>Apache header for C and C++ files:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Copyright 2020 The Pigweed Authors</span>
+<span class="c1">//</span>
+<span class="c1">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not</span>
+<span class="c1">// use this file except in compliance with the License. You may obtain a copy of</span>
+<span class="c1">// the License at</span>
+<span class="c1">//</span>
+<span class="c1">//     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">//</span>
+<span class="c1">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1">// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1">// License for the specific language governing permissions and limitations under</span>
+<span class="c1">// the License.</span>
+</pre></div>
+</div>
+<p>Apache header for Python and GN files:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copyright 2020 The Pigweed Authors</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not</span>
+<span class="c1"># use this file except in compliance with the License. You may obtain a copy of</span>
+<span class="c1"># the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT</span>
+<span class="c1"># WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the</span>
+<span class="c1"># License for the specific language governing permissions and limitations under</span>
+<span class="c1"># the License.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="continuous-integration">
+<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h2>
+<p>All Pigweed CLs must adhere to Pigweed’s style guide and pass a suite of
+automated builds, tests, and style checks to be merged upstream. Much of this
+checking is done using Pigweed’s pw_presubmit module by automated builders. To
+speed up the review process, consider adding <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span></code> as a git push hook
+using the following command:</p>
+<p><strong>Linux/macOS</strong><span class="raw-html-m2r"><br/></span></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw presubmit --install
+</pre></div>
+</div>
+<p>This will be effectively the same as running the following command before every
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw presubmit --program quick
+</pre></div>
+</div>
+<a class="reference external image-reference" href="pw_presubmit/docs/pw_presubmit_demo.gif"><img alt="pigweed presubmit demonstration" src="_images/pw_presubmit_demo.gif" /></a>
+<p>Running <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">presubmit</span></code> manually will default to running the <code class="docutils literal notranslate"><span class="pre">full</span></code> presubmit
+program.</p>
+<p>If you ever need to bypass the presubmit hook (due to it being broken, for example) you
+may push using this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git push origin HEAD:refs/for/master --no-verify
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="CODE_OF_CONDUCT.html" class="btn btn-neutral float-right" title="Code of Conduct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="docs/getting_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1203 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_rpc &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nanopb" href="nanopb/docs.html" />
+    <link rel="prev" title="pw_ring_buffer" href="../pw_ring_buffer/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_rpc</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#services">Services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nanopb/docs.html">nanopb</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-a-pw-rpc-integration">Testing a pw_rpc integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#protocol-description">Protocol description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#packet-format">Packet format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inovking-a-service-method">Inovking a service method</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rpc-server">RPC server</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rpc-server-implementation">RPC server implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_rpc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-rpc">
+<span id="chapter-pw-rpc"></span><h1>pw_rpc<a class="headerlink" href="#pw-rpc" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> module provides a system for defining and invoking remote
+procedure calls (RPCs) on a device.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Under construction.</p>
+</div>
+<div class="section" id="services">
+<h2>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h2>
+<p>A service is a logical grouping of RPCs defined within a .proto file. <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code>
+uses these .proto definitions to generate code for a base service, from which
+user-defined RPCs are implemented.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> supports multiple protobuf libraries, and the generated code API
+depends on which is used.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="nanopb/docs.html">nanopb</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="testing-a-pw-rpc-integration">
+<h2>Testing a pw_rpc integration<a class="headerlink" href="#testing-a-pw-rpc-integration" title="Permalink to this headline">¶</a></h2>
+<p>After setting up a <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> server in your project, you can test that it is
+working as intended by registering the provided <code class="docutils literal notranslate"><span class="pre">EchoService</span></code>, defined in
+<code class="docutils literal notranslate"><span class="pre">pw_rpc_protos/echo.proto</span></code>, which echoes back a message that it receives.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="na">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+
+<span class="kn">package</span> <span class="nn">pw</span><span class="o">.</span><span class="k">rpc</span><span class="p">;</span>
+
+<span class="kd">service</span> <span class="n">EchoService</span> <span class="p">{</span>
+  <span class="k">rpc</span> <span class="n">Echo</span><span class="p">(</span><span class="n">EchoMessage</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">EchoMessage</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">EchoMessage</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">msg</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For example, in C++ with nanopb:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_rpc/server.h&quot;</span><span class="cp"></span>
+
+<span class="c1">// Include the apporpriate header for your protobuf library.</span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_rpc/echo_service_nanopb.h&quot;</span><span class="cp"></span>
+
+<span class="k">constexpr</span> <span class="n">pw</span><span class="o">::</span><span class="n">rpc</span><span class="o">::</span><span class="n">Channel</span> <span class="n">kChannels</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">};</span>
+<span class="k">static</span> <span class="n">pw</span><span class="o">::</span><span class="n">rpc</span><span class="o">::</span><span class="n">Server</span> <span class="n">server</span><span class="p">(</span><span class="n">kChannels</span><span class="p">);</span>
+
+<span class="k">static</span> <span class="n">pw</span><span class="o">::</span><span class="n">rpc</span><span class="o">::</span><span class="n">EchoService</span> <span class="n">echo_service</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">Init</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">server</span><span class="p">.</span><span class="n">RegisterService</span><span class="p">(</span><span class="o">&amp;</span><span class="n">echo_service</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="protocol-description">
+<h2>Protocol description<a class="headerlink" href="#protocol-description" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed RPC servers and clients communicate using <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> packets. These
+packets are used to send requests and responses, control streams, cancel ongoing
+RPCs, and report errors.</p>
+<div class="section" id="packet-format">
+<h3>Packet format<a class="headerlink" href="#packet-format" title="Permalink to this headline">¶</a></h3>
+<p>Pigweed RPC packets consist of a type and a set of fields. The packets are
+encoded as protocol buffers. The full packet format is described in
+<code class="docutils literal notranslate"><span class="pre">pw_rpc/pw_rpc_protos/packet.proto</span></code>.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="na">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+
+<span class="kn">package</span> <span class="nn">pw</span><span class="o">.</span><span class="k">rpc</span><span class="o">.</span><span class="n">internal</span><span class="p">;</span>
+
+<span class="k">option</span> <span class="na">java_package</span> <span class="o">=</span> <span class="s">&quot;dev.pigweed.pw.rpc.internal&quot;</span><span class="p">;</span>
+
+<span class="kd">enum</span> <span class="n">PacketType</span> <span class="p">{</span>
+  <span class="c1">// To simplify identifying the origin of a packet, client-to-server packets</span>
+  <span class="c1">// use even numbers and server-to-client packets use odd numbers.</span>
+
+  <span class="c1">// Client-to-server packets</span>
+
+  <span class="c1">// A request from a client for a service method.</span>
+  <span class="na">REQUEST</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// A client stream has completed.</span>
+  <span class="na">CLIENT_STREAM_END</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// The client received a packet for an RPC it did not request.</span>
+  <span class="na">CLIENT_ERROR</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="c1">// The client requests cancellation of an ongoing server stream.</span>
+  <span class="na">CANCEL_SERVER_STREAM</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+  <span class="c1">// Server-to-client packets</span>
+
+  <span class="c1">// A response from a server for a service method.</span>
+  <span class="na">RESPONSE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// A server streaming or bidirectional RPC has completed.</span>
+  <span class="na">SERVER_STREAM_END</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="c1">// The server was unable to process a request.</span>
+  <span class="na">SERVER_ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">RpcPacket</span> <span class="p">{</span>
+  <span class="c1">// The type of packet. Determines which other fields are used.</span>
+  <span class="n">PacketType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Channel through which the packet is sent.</span>
+  <span class="kt">uint32</span> <span class="na">channel_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// Hash of the fully-qualified name of the service with which this packet is</span>
+  <span class="c1">// associated. For RPC packets, this is the service that processes the packet.</span>
+  <span class="kt">fixed32</span> <span class="na">service_id</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="c1">// Hash of the name of the method which should process this packet.</span>
+  <span class="kt">fixed32</span> <span class="na">method_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="c1">// The packet&#39;s payload, which is an encoded protobuf.</span>
+  <span class="kt">bytes</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+  <span class="c1">// Status code for the RPC response or error.</span>
+  <span class="kt">uint32</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The packet type and RPC type determine which fields are present in a Pigweed RPC
+packet. Each packet type is only sent by either the client or the server.
+These tables describe the meaning of and fields included with each packet type.</p>
+<div class="section" id="client-to-server-packets">
+<h4>Client-to-server packets<a class="headerlink" href="#client-to-server-packets" title="Permalink to this headline">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>packet type</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>REQUEST</p></td>
+<td><p>RPC request</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+- payload
+  (unless first client stream)
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>CLIENT_STREAM_END</p></td>
+<td><p>Client stream finished</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>CLIENT_ERROR</p></td>
+<td><p>Received unexpected packet</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+- status
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>CANCEL_SERVER_STREAM</p></td>
+<td><p>Cancel a server stream</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Errors</strong></p>
+<p>The client sends <code class="docutils literal notranslate"><span class="pre">CLIENT_ERROR</span></code> packets to a server when it receives a packet
+it did not request. If the RPC is a streaming RPC, the server should abort it.</p>
+<p>The status code indicates the type of error. If the client does not distinguish
+between the error types, it can send whichever status is most relevant. The
+status code is logged, but all status codes result in the same action by the
+server: aborting the RPC.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NOT_FOUND</span></code> – Received a packet for a service method the client does not
+recognize.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FAILED_PRECONDITION</span></code> – Received a packet for a service method that the
+client did not invoke.</p></li>
+</ul>
+</div>
+<div class="section" id="server-to-client-packets">
+<h4>Server-to-client packets<a class="headerlink" href="#server-to-client-packets" title="Permalink to this headline">¶</a></h4>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>packet type</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>RESPONSE</p></td>
+<td><p>RPC response</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+- payload
+- status
+  (unless in server stream)
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>SERVER_STREAM_END</p></td>
+<td><p>Server stream and RPC finished</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id
+- method_id
+- status
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>SERVER_ERROR</p></td>
+<td><p>Received unexpected packet</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- channel_id
+- service_id (if relevant)
+- method_id (if relevant)
+- status
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Errors</strong></p>
+<p>The server sends <code class="docutils literal notranslate"><span class="pre">SERVER_ERROR</span></code> packets when it receives a packet it cannot
+process. The client should abort any RPC for which it receives an error. The
+status field indicates the type of error.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NOT_FOUND</span></code> – The requested service or method does not exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FAILED_PRECONDITION</span></code> – Attempted to cancel an RPC that is not pending.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RESOURCE_EXHAUSTED</span></code> – The request came on a new channel, but a channel
+could not be allocated for it.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">INTERNAL</span></code> – The server was unable to respond to an RPC due to an
+unrecoverable internal error.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="inovking-a-service-method">
+<h3>Inovking a service method<a class="headerlink" href="#inovking-a-service-method" title="Permalink to this headline">¶</a></h3>
+<p>Calling an RPC requires a specific sequence of packets. This section describes
+the protocol for calling service methods of each type: unary, server streaming,
+client streaming, and bidirectional streaming.</p>
+<div class="section" id="unary-rpc">
+<h4>Unary RPC<a class="headerlink" href="#unary-rpc" title="Permalink to this headline">¶</a></h4>
+<p>In a unary RPC, the client sends a single request and the server sends a single
+response.</p>
+<div><svg height="408.1" viewBox="0 0 534 371" width="587.4000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="190" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="171" y="159" />
+  <rect fill="rgb(0,0,0)" height="114" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="363" y="159" />
+  <polygon fill="rgb(0,0,0)" points="27,126 151,126 159,134 159,193 27,193 27,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="383,233 513,233 521,241 521,313 383,313 383,233" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="111" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="303" y="46" />
+  <path d="M 172 80 L 172 359" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="190" stroke="rgb(0,0,0)" width="8" x="168" y="153" />
+  <path d="M 364 80 L 364 359" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="114" stroke="rgb(0,0,0)" width="8" x="360" y="153" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="108" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="172.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="300" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="364.0" y="66">server</text>
+  <path d="M 180 153 L 356 153" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="348,149 356,153 348,157" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,120 148,120 156,128 156,187 24,187 24,120" stroke="rgb(0,0,0)" />
+  <path d="M 148 120 L 148 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 148 128 L 156 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="86.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="172">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="53.0" y="185">payload</text>
+  <path d="M 180 267 L 356 267" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="188,263 180,267 188,271" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="380,227 510,227 518,235 518,307 380,307 380,227" stroke="rgb(0,0,0)" />
+  <path d="M 510 227 L 510 235" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 510 235 L 518 235" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="445.0" y="240">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="253">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="266">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="415.0" y="279">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="409.0" y="292">payload</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="406.0" y="305">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="205.0" y="151">request</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="332.0" y="265">response</text>
+</svg>
+</div>
+</div>
+<div class="section" id="server-streaming-rpc">
+<h4>Server streaming RPC<a class="headerlink" href="#server-streaming-rpc" title="Permalink to this headline">¶</a></h4>
+<p>In a server streaming RPC, the client sends a single request and the server
+sends any number of responses followed by a <code class="docutils literal notranslate"><span class="pre">SERVER_STREAM_END</span></code> packet.</p>
+<div><svg height="511.50000000000006" viewBox="0 0 588 465" width="646.8000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="284" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="171" y="159" />
+  <rect fill="rgb(0,0,0)" height="214" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="363" y="159" />
+  <polygon fill="rgb(0,0,0)" points="27,126 151,126 159,134 159,193 27,193 27,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="383,233 513,233 521,241 521,300 383,300 383,233" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="383,340 567,340 575,348 575,407 383,407 383,340" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="111" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="303" y="46" />
+  <path d="M 172 80 L 172 453" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="284" stroke="rgb(0,0,0)" width="8" x="168" y="153" />
+  <path d="M 364 80 L 364 453" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="214" stroke="rgb(0,0,0)" width="8" x="360" y="153" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="108" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="172.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="300" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="364.0" y="66">server</text>
+  <path d="M 180 153 L 356 153" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="348,149 356,153 348,157" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,120 148,120 156,128 156,187 24,187 24,120" stroke="rgb(0,0,0)" />
+  <path d="M 148 120 L 148 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 148 128 L 156 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="86.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="172">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="53.0" y="185">payload</text>
+  <path d="M 180 260 L 356 260" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="188,256 180,260 188,264" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="380,227 510,227 518,235 518,294 380,294 380,227" stroke="rgb(0,0,0)" />
+  <path d="M 510 227 L 510 235" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 510 235 L 518 235" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="445.0" y="240">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="253">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="266">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="415.0" y="279">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="409.0" y="292">payload</text>
+  <path d="M 180 367 L 356 367" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="188,363 180,367 188,371" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="380,334 564,334 572,342 572,401 380,401 380,334" stroke="rgb(0,0,0)" />
+  <path d="M 564 334 L 564 342" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 564 342 L 572 342" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="168" x="472.0" y="347">PacketType.SERVER_STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="360">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="373">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="415.0" y="386">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="406.0" y="399">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="205.0" y="151">request</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="144" x="284.0" y="258">responses (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="344.0" y="365">done</text>
+</svg>
+</div>
+<p>Server streaming RPCs may be cancelled by the client. The client sends a
+<code class="docutils literal notranslate"><span class="pre">CANCEL_SERVER_STREAM</span></code> packet to terminate the RPC.</p>
+<div><svg height="614.9000000000001" viewBox="0 0 666 559" width="732.6" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="378" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="249" y="159" />
+  <rect fill="rgb(0,0,0)" height="308" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="441" y="159" />
+  <polygon fill="rgb(0,0,0)" points="105,126 229,126 237,134 237,193 105,193 105,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="461,233 591,233 599,241 599,300 461,300 461,233" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="27,340 229,340 237,348 237,394 27,394 27,340" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="461,434 645,434 653,442 653,501 461,501 461,434" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="189" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="381" y="46" />
+  <path d="M 250 80 L 250 547" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="378" stroke="rgb(0,0,0)" width="8" x="246" y="153" />
+  <path d="M 442 80 L 442 547" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="308" stroke="rgb(0,0,0)" width="8" x="438" y="153" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="186" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="250.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="378" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="442.0" y="66">server</text>
+  <path d="M 258 153 L 434 153" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="426,149 434,153 426,157" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="102,120 226,120 234,128 234,187 102,187 102,120" stroke="rgb(0,0,0)" />
+  <path d="M 226 120 L 226 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 226 128 L 234 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="164.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="140.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="140.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="137.0" y="172">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="131.0" y="185">payload</text>
+  <path d="M 258 260 L 434 260" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="266,256 258,260 266,264" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="458,227 588,227 596,235 596,294 458,294 458,227" stroke="rgb(0,0,0)" />
+  <path d="M 588 227 L 588 235" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 588 235 L 596 235" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="523.0" y="240">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="253">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="266">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="493.0" y="279">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="487.0" y="292">payload</text>
+  <path d="M 258 361 L 434 361" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="426,357 434,361 426,365" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,334 226,334 234,342 234,388 24,388 24,334" stroke="rgb(0,0,0)" />
+  <path d="M 226 334 L 226 342" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 226 342 L 234 342" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="186" x="125.0" y="347">PacketType.CANCEL_SERVER_STREAM</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="360">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="373">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="386">method ID</text>
+  <path d="M 258 461 L 434 461" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="266,457 258,461 266,465" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="458,428 642,428 650,436 650,495 458,495 458,428" stroke="rgb(0,0,0)" />
+  <path d="M 642 428 L 642 436" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 642 436 L 650 436" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="168" x="550.0" y="441">PacketType.SERVER_STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="454">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="467">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="493.0" y="480">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="484.0" y="493">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="283.0" y="151">request</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="144" x="362.0" y="258">responses (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="280.0" y="359">cancel</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="422.0" y="459">done</text>
+</svg>
+</div>
+</div>
+<div class="section" id="client-streaming-rpc">
+<h4>Client streaming RPC<a class="headerlink" href="#client-streaming-rpc" title="Permalink to this headline">¶</a></h4>
+<p>In a client streaming RPC, the client sends any number of RPC requests followed
+by a <code class="docutils literal notranslate"><span class="pre">CLIENT_STREAM_END</span></code> packet. The server then sends a single response.</p>
+<p>The first client-to-server RPC packet does not include a payload.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> does not yet support client streaming RPCs.</p>
+</div>
+<div><svg height="614.9000000000001" viewBox="0 0 594 559" width="653.4000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="384" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="231" y="153" />
+  <rect fill="rgb(0,0,0)" height="308" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="423" y="153" />
+  <polygon fill="rgb(0,0,0)" points="87,126 211,126 219,134 219,180 87,180 87,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="87,220 211,220 219,228 219,287 87,287 87,220" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="27,327 211,327 219,335 219,381 27,381 27,327" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="443,421 573,421 581,429 581,501 443,501 443,421" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="171" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="363" y="46" />
+  <path d="M 232 80 L 232 547" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="384" stroke="rgb(0,0,0)" width="8" x="228" y="147" />
+  <path d="M 424 80 L 424 547" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="308" stroke="rgb(0,0,0)" width="8" x="420" y="147" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="168" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="232.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="360" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="424.0" y="66">server</text>
+  <path d="M 240 147 L 416 147" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="408,143 416,147 408,151" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="84,120 208,120 216,128 216,174 84,174 84,120" stroke="rgb(0,0,0)" />
+  <path d="M 208 120 L 208 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 128 L 216 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="146.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="119.0" y="172">method ID</text>
+  <path d="M 240 247 L 416 247" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="408,243 416,247 408,251" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="84,214 208,214 216,222 216,281 84,281 84,214" stroke="rgb(0,0,0)" />
+  <path d="M 208 214 L 208 222" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 222 L 216 222" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="146.0" y="227">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="240">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="253">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="119.0" y="266">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="113.0" y="279">payload</text>
+  <path d="M 240 348 L 416 348" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="408,344 416,348 408,352" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,321 208,321 216,329 216,375 24,375 24,321" stroke="rgb(0,0,0)" />
+  <path d="M 208 321 L 208 329" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 329 L 216 329" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="168" x="116.0" y="334">PacketType.CLIENT_STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="347">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="360">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="373">method ID</text>
+  <path d="M 240 455 L 416 455" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="248,451 240,455 248,459" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="440,415 570,415 578,423 578,495 440,495 440,415" stroke="rgb(0,0,0)" />
+  <path d="M 570 415 L 570 423" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 570 423 L 578 423" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="505.0" y="428">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="441">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="454">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="475.0" y="467">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="469.0" y="480">payload</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="466.0" y="493">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="259.0" y="145">start</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="138" x="313.0" y="245">requests (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="256.0" y="346">done</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="392.0" y="453">response</text>
+</svg>
+</div>
+<p>The server may terminate a client streaming RPC at any time by sending its
+response packet.</p>
+<div><svg height="511.50000000000006" viewBox="0 0 534 465" width="587.4000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="290" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="171" y="153" />
+  <rect fill="rgb(0,0,0)" height="214" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="363" y="153" />
+  <polygon fill="rgb(0,0,0)" points="27,126 151,126 159,134 159,180 27,180 27,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="27,220 151,220 159,228 159,287 27,287 27,220" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="383,327 513,327 521,335 521,407 383,407 383,327" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="111" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="303" y="46" />
+  <path d="M 172 80 L 172 453" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="290" stroke="rgb(0,0,0)" width="8" x="168" y="147" />
+  <path d="M 364 80 L 364 453" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="214" stroke="rgb(0,0,0)" width="8" x="360" y="147" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="108" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="172.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="300" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="364.0" y="66">server</text>
+  <path d="M 180 147 L 356 147" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="348,143 356,147 348,151" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,120 148,120 156,128 156,174 24,174 24,120" stroke="rgb(0,0,0)" />
+  <path d="M 148 120 L 148 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 148 128 L 156 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="86.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="172">method ID</text>
+  <path d="M 180 247 L 356 247" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="348,243 356,247 348,251" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,214 148,214 156,222 156,281 24,281 24,214" stroke="rgb(0,0,0)" />
+  <path d="M 148 214 L 148 222" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 148 222 L 156 222" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="86.0" y="227">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="240">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="253">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="266">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="53.0" y="279">payload</text>
+  <path d="M 180 361 L 356 361" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="188,357 180,361 188,365" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="380,321 510,321 518,329 518,401 380,401 380,321" stroke="rgb(0,0,0)" />
+  <path d="M 510 321 L 510 329" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 510 329 L 518 329" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="445.0" y="334">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="347">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="418.0" y="360">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="415.0" y="373">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="409.0" y="386">payload</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="406.0" y="399">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="199.0" y="145">start</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="138" x="253.0" y="245">requests (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="48" x="332.0" y="359">response</text>
+</svg>
+</div>
+</div>
+<div class="section" id="bidirectional-streaming-rpc">
+<h4>Bidirectional streaming RPC<a class="headerlink" href="#bidirectional-streaming-rpc" title="Permalink to this headline">¶</a></h4>
+<p>In a bidirectional streaming RPC, the client sends any number of requests and
+the server sends any number of responses. The client sends a
+<code class="docutils literal notranslate"><span class="pre">CLIENT_STREAM_END</span></code> packet when it has finished sending requests. The server
+sends a <code class="docutils literal notranslate"><span class="pre">SERVER_STREAM_END</span></code> packet after it receives the client’s
+<code class="docutils literal notranslate"><span class="pre">CLIENT_STREAM_END</span></code> and finished sending its responses.</p>
+<p>The first client-to-server RPC packet does not include a payload.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> does not yet support bidirectional streaming RPCs.</p>
+</div>
+<div><svg height="924.0000000000001" viewBox="0 0 648 840" width="712.8000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="665" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="231" y="153" />
+  <rect fill="rgb(0,0,0)" height="595" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="423" y="153" />
+  <polygon fill="rgb(0,0,0)" points="87,126 211,126 219,134 219,180 87,180 87,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="87,220 211,220 219,228 219,287 87,287 87,220" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="443,407 573,407 581,415 581,474 443,474 443,407" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="27,514 211,514 219,522 219,568 27,568 27,514" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="443,608 543,608 551,616 551,675 443,675 443,608" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="443,715 627,715 635,723 635,782 443,782 443,715" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="171" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="363" y="46" />
+  <path d="M 232 80 L 232 321" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 232 329 L 232 353" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="2 8" />
+  <path d="M 232 361 L 232 828" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="665" stroke="rgb(0,0,0)" width="8" x="228" y="147" />
+  <path d="M 424 80 L 424 321" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <path d="M 424 329 L 424 353" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="2 8" />
+  <path d="M 424 361 L 424 828" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="595" stroke="rgb(0,0,0)" width="8" x="420" y="147" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="168" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="232.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="360" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="424.0" y="66">server</text>
+  <path d="M 240 147 L 416 147" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="408,143 416,147 408,151" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="84,120 208,120 216,128 216,174 84,174 84,120" stroke="rgb(0,0,0)" />
+  <path d="M 208 120 L 208 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 128 L 216 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="146.0" y="133">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="119.0" y="172">method ID</text>
+  <path d="M 240 247 L 416 247" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="408,243 416,247 408,251" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="84,214 208,214 216,222 216,281 84,281 84,214" stroke="rgb(0,0,0)" />
+  <path d="M 208 214 L 208 222" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 222 L 216 222" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="146.0" y="227">PacketType.REQUEST</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="240">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="122.0" y="253">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="119.0" y="266">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="113.0" y="279">payload</text>
+  <path d="M 240 434 L 416 434" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="248,430 240,434 248,438" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="440,401 570,401 578,409 578,468 440,468 440,401" stroke="rgb(0,0,0)" />
+  <path d="M 570 401 L 570 409" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 570 409 L 578 409" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="505.0" y="414">PacketType.RESPONSE</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="427">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="440">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="475.0" y="453">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="469.0" y="466">payload</text>
+  <path d="M 240 535 L 416 535" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="408,531 416,535 408,539" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,508 208,508 216,516 216,562 24,562 24,508" stroke="rgb(0,0,0)" />
+  <path d="M 208 508 L 208 516" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 208 516 L 216 516" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="168" x="116.0" y="521">PacketType.CLIENT_STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="534">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="547">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="560">method ID</text>
+  <path d="M 240 635 L 416 635" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="248,631 240,635 248,639" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="440,602 540,602 548,610 548,669 440,669 440,602" stroke="rgb(0,0,0)" />
+  <path d="M 540 602 L 540 610" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 540 610 L 548 610" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="490.0" y="615">PacketType.RPC</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="628">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="641">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="475.0" y="654">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="469.0" y="667">payload</text>
+  <path d="M 240 742 L 416 742" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="248,738 240,742 248,746" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="440,709 624,709 632,717 632,776 440,776 440,709" stroke="rgb(0,0,0)" />
+  <path d="M 624 709 L 624 717" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 624 717 L 632 717" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="168" x="532.0" y="722">PacketType.SERVER_STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="735">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="478.0" y="748">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="475.0" y="761">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="466.0" y="774">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="259.0" y="145">start</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="138" x="313.0" y="245">requests (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="144" x="344.0" y="432">responses (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="256.0" y="533">done</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="144" x="344.0" y="633">responses (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="404.0" y="740">done</text>
+  <rect fill="white" height="19" stroke="white" width="158" x="249" y="331" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="138" x="328.0" y="346">(messages in any order)</text>
+</svg>
+</div>
+<p>The server may terminate the RPC at any time by sending a <code class="docutils literal notranslate"><span class="pre">SERVER_STREAM_END</span></code>
+packet with the status, even if the client has not sent its <code class="docutils literal notranslate"><span class="pre">STREAM_END</span></code>. The
+client may cancel the RPC at any time by sending a <code class="docutils literal notranslate"><span class="pre">CANCEL_SERVER_STREAM</span></code>
+packet.</p>
+<div><svg height="718.3000000000001" viewBox="0 0 624 653" width="686.4000000000001" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="478" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="249" y="153" />
+  <rect fill="rgb(0,0,0)" height="408" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="8" x="441" y="153" />
+  <polygon fill="rgb(0,0,0)" points="129,126 229,126 237,134 237,180 129,180 129,126" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="129,220 229,220 237,228 237,287 129,287 129,220" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="461,327 561,327 569,335 569,394 461,394 461,327" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="27,434 229,434 237,442 237,488 27,488 27,434" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <polygon fill="rgb(0,0,0)" points="461,528 603,528 611,536 611,595 461,595 461,528" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="189" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="381" y="46" />
+  <path d="M 250 80 L 250 641" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="478" stroke="rgb(0,0,0)" width="8" x="246" y="147" />
+  <path d="M 442 80 L 442 641" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="8 4" />
+  <rect fill="moccasin" height="408" stroke="rgb(0,0,0)" width="8" x="438" y="147" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="186" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="250.0" y="66">client</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="378" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="442.0" y="66">server</text>
+  <path d="M 258 147 L 434 147" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="426,143 434,147 426,151" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="126,120 226,120 234,128 234,174 126,174 126,120" stroke="rgb(0,0,0)" />
+  <path d="M 226 120 L 226 128" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 226 128 L 234 128" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="176.0" y="133">PacketType.RPC</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="164.0" y="146">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="164.0" y="159">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="161.0" y="172">method ID</text>
+  <path d="M 258 247 L 434 247" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="426,243 434,247 426,251" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="126,214 226,214 234,222 234,281 126,281 126,214" stroke="rgb(0,0,0)" />
+  <path d="M 226 214 L 226 222" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 226 222 L 234 222" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="176.0" y="227">PacketType.RPC</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="164.0" y="240">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="164.0" y="253">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="161.0" y="266">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="155.0" y="279">payload</text>
+  <path d="M 258 354 L 434 354" fill="none" stroke="rgb(0,0,0)" stroke-dasharray="4" />
+  <polygon fill="rgb(0,0,0)" points="266,350 258,354 266,358" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="458,321 558,321 566,329 566,388 458,388 458,321" stroke="rgb(0,0,0)" />
+  <path d="M 558 321 L 558 329" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 558 329 L 566 329" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="508.0" y="334">PacketType.RPC</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="347">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="360">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="493.0" y="373">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="487.0" y="386">payload</text>
+  <path d="M 258 455 L 434 455" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="426,451 434,455 426,459" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="24,428 226,428 234,436 234,482 24,482 24,428" stroke="rgb(0,0,0)" />
+  <path d="M 226 428 L 226 436" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 226 436 L 234 436" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="186" x="125.0" y="441">PacketType.CANCEL_SERVER_STREAM</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="454">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="62.0" y="467">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="59.0" y="480">method ID</text>
+  <path d="M 258 555 L 434 555" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="266,551 258,555 266,559" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(240,248,255)" points="458,522 600,522 608,530 608,589 458,589 458,522" stroke="rgb(0,0,0)" />
+  <path d="M 600 522 L 600 530" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 600 530 L 608 530" fill="none" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="126" x="529.0" y="535">PacketType.STREAM_END</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="548">channel ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="496.0" y="561">service ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="54" x="493.0" y="574">method ID</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="484.0" y="587">status</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="277.0" y="145">start</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="138" x="331.0" y="245">requests (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="144" x="362.0" y="352">responses (zero or more)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="280.0" y="453">cancel</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="24" x="422.0" y="553">done</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="rpc-server">
+<h2>RPC server<a class="headerlink" href="#rpc-server" title="Permalink to this headline">¶</a></h2>
+<p>Declare an instance of <code class="docutils literal notranslate"><span class="pre">rpc::Server</span></code> and register services with it.</p>
+<div class="admonition-todo admonition">
+<p class="admonition-title">TODO</p>
+<p>Document the public interface</p>
+</div>
+<div class="section" id="rpc-server-implementation">
+<h3>RPC server implementation<a class="headerlink" href="#rpc-server-implementation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-method-class">
+<h4>The Method class<a class="headerlink" href="#the-method-class" title="Permalink to this headline">¶</a></h4>
+<p>The RPC Server depends on the <code class="docutils literal notranslate"><span class="pre">pw::rpc::internal::Method</span></code> class. <code class="docutils literal notranslate"><span class="pre">Method</span></code>
+serves as the bridge between the <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> server library and the user-defined
+RPC functions. <code class="docutils literal notranslate"><span class="pre">Method</span></code> takes an RPC packet, decodes it using a protobuf
+library (if applicable), and calls the RPC function. Since <code class="docutils literal notranslate"><span class="pre">Method</span></code> interacts
+directly with the protobuf library, it must be implemented separately for each
+protobuf library.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw::rpc::internal::Method</span></code> is not implemented as a facade with different
+backends. Instead, there is a separate instance of the <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> server library
+for each <code class="docutils literal notranslate"><span class="pre">Method</span></code> implementation. There are a few reasons for this.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Method</span></code> is entirely internal to <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code>. Users will never implement a
+custom backend. Exposing a facade would unnecessarily expose implementation
+details and make <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> more difficult to use.</p></li>
+<li><p>There is no common interface between <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> / <code class="docutils literal notranslate"><span class="pre">Method</span></code> implementations.
+It’s not possible to swap between e.g. a Nanopb and a <code class="docutils literal notranslate"><span class="pre">pw_protobuf</span></code> RPC
+server because the interface for the user-implemented RPCs changes completely.
+This nullifies the primary benefit of facades.</p></li>
+<li><p>The different <code class="docutils literal notranslate"><span class="pre">Method</span></code> implementations can be built easily alongside one
+another in a cross-platform way. This makes testing simpler, since the tests
+build with any backend configuration. Users can select which <code class="docutils literal notranslate"><span class="pre">Method</span></code>
+implementation to use simply by depending on the corresponding server library.</p></li>
+</ul>
+</div>
+<div class="section" id="packet-flow">
+<h4>Packet flow<a class="headerlink" href="#packet-flow" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="requests">
+<h5>Requests<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h5>
+<div><svg height="280" viewBox="0 0 640 280" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(243,152,0)" height="60" style="filter:url(#filter_blur)" width="528" x="56" y="110" />
+  <ellipse cx="131" cy="66" fill="rgb(0,0,0)" rx="8.0" ry="8.0" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="126" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="126" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="126" />
+  <ellipse cx="131" cy="226" fill="rgb(0,0,0)" rx="64.0" ry="20.0" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 267 206 L 379 206 A8,8 0 0 1 387 214 L 387 238 A8,8 0 0 1 379 246 L 267 246 A8,8 0 0 1 259 238 L 259 214 A8,8 0 0 1 267 206" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="128" cy="60" fill="rgb(0,0,0)" rx="8.0" ry="8.0" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="157.0" y="56">packets</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="120" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="128.0" y="146">Server</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="120" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="320.0" y="146">Service</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="120" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="96" x="512.0" y="146">internal::Method</text>
+  <ellipse cx="128" cy="220" fill="rgb(255,255,255)" rx="64.0" ry="20.0" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="128.0" y="226">generated services</text>
+  <path d="M 264 200 L 376 200 A8,8 0 0 1 384 208 L 384 232 A8,8 0 0 1 376 240 L 264 240 A8,8 0 0 1 256 232 L 256 208 A8,8 0 0 1 264 200" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="102" x="320.0" y="226">user-defined RPCs</text>
+  <path d="M 128 68 L 128 112" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,119 124,112 132,112 128,119" stroke="rgb(0,0,0)" />
+  <path d="M 192 220 L 248 220" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="255,220 248,216 248,224 255,220" stroke="rgb(0,0,0)" />
+  <path d="M 192 140 L 248 140" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="255,140 248,136 248,144 255,140" stroke="rgb(0,0,0)" />
+  <path d="M 384 140 L 440 140" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="447,140 440,136 440,144 447,140" stroke="rgb(0,0,0)" />
+  <path d="M 512 160 L 512 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 512 180" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 180 L 128 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,199 124,192 132,192 128,199" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="320.0" y="116">pw_rpc library</text>
+</svg>
+</div>
+</div>
+<div class="section" id="responses">
+<h5>Responses<a class="headerlink" href="#responses" title="Permalink to this headline">¶</a></h5>
+<div><svg height="360" viewBox="0 0 640 360" width="640" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(243,152,0)" height="60" style="filter:url(#filter_blur)" width="528" x="56" y="190" />
+  <path d="M 75 46 L 187 46 A8,8 0 0 1 195 54 L 195 78 A8,8 0 0 1 187 86 L 75 86 A8,8 0 0 1 67 78 L 67 54 A8,8 0 0 1 75 46" fill="rgb(0,0,0)" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <ellipse cx="131" cy="146" fill="rgb(0,0,0)" rx="64.0" ry="20.0" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="206" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="206" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="206" />
+  <ellipse cx="131" cy="306" fill="rgb(0,0,0)" rx="8.0" ry="8.0" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" />
+  <path d="M 72 40 L 184 40 A8,8 0 0 1 192 48 L 192 72 A8,8 0 0 1 184 80 L 72 80 A8,8 0 0 1 64 72 L 64 48 A8,8 0 0 1 72 40" fill="rgb(255,255,255)" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="102" x="128.0" y="66">user-defined RPCs</text>
+  <ellipse cx="128" cy="140" fill="rgb(255,255,255)" rx="64.0" ry="20.0" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="108" x="128.0" y="146">generated services</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="200" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="36" x="320.0" y="226">Server</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="200" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="96" x="128.0" y="226">internal::Method</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="200" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="512.0" y="226">Channel</text>
+  <ellipse cx="128" cy="300" fill="rgb(0,0,0)" rx="8.0" ry="8.0" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="42" x="157.0" y="296">packets</text>
+  <path d="M 128 80 L 128 112" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,119 124,112 132,112 128,119" stroke="rgb(0,0,0)" />
+  <path d="M 128 160 L 128 192" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,199 124,192 132,192 128,199" stroke="rgb(0,0,0)" />
+  <path d="M 384 220 L 440 220" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="447,220 440,216 440,224 447,220" stroke="rgb(0,0,0)" />
+  <path d="M 192 220 L 248 220" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="255,220 248,216 248,224 255,220" stroke="rgb(0,0,0)" />
+  <path d="M 512 240 L 512 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 260 L 512 260" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 260 L 128 284" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,291 124,284 132,284 128,291" stroke="rgb(0,0,0)" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="11" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="320.0" y="196">pw_rpc library</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nanopb/docs.html" class="btn btn-neutral float-right" title="nanopb" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_ring_buffer/docs.html" class="btn btn-neutral float-left" title="pw_ring_buffer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

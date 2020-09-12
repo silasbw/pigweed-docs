@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Module Structure &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Module Guides" href="../module_guides.html" />
+    <link rel="prev" title="Frequently Asked Questions" href="faq.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Module Structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-module-structure">Example module structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-name">Module name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-module-structure">C++ module structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c-public-headers">C++ public headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-public-override-headers">C++ public override headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#c-implementation-files">C++ implementation files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-new-pigweed-module">Creating a new Pigweed module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Module Structure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-structure">
+<span id="chapter-module-guide"></span><h1>Module Structure<a class="headerlink" href="#module-structure" title="Permalink to this headline">¶</a></h1>
+<p>The Pigweed module structure is designed to keep as much code as possible for a
+particular slice of functionality in one place. That means including the code
+from multiple languages, as well as all the related documentation and tests.</p>
+<p>Additionally, the structure is designed to limit the number of places a file
+could go, so that when reading callsites it is obvious where a header is from.
+That is where the duplicated <code class="docutils literal notranslate"><span class="pre">&lt;module&gt;</span></code> occurrences in file paths comes from.</p>
+<div class="section" id="example-module-structure">
+<h2>Example module structure<a class="headerlink" href="#example-module-structure" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pw_foo</span><span class="o">/...</span>
+
+  <span class="n">docs</span><span class="o">.</span><span class="n">rst</span>   <span class="c1"># If there is just 1 docs file, call it docs.rst</span>
+  <span class="n">README</span><span class="o">.</span><span class="n">md</span>  <span class="c1"># All modules must have a short README for gittiles</span>
+
+  <span class="n">BUILD</span><span class="o">.</span><span class="n">gn</span>   <span class="c1"># GN build required</span>
+  <span class="n">BUILD</span>      <span class="c1"># Bazel build required</span>
+
+  <span class="c1"># C++ public headers; the repeated module name is required</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">baz</span><span class="o">.</span><span class="n">h</span>
+
+  <span class="c1"># Exposed public headers go under internal/</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">bar</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">qux</span><span class="o">.</span><span class="n">h</span>
+
+  <span class="c1"># Public override headers must go in &#39;public_overrides&#39;</span>
+  <span class="n">public_overrides</span><span class="o">/</span><span class="n">gtest</span><span class="o">/</span><span class="n">gtest</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public_overrides</span><span class="o">/</span><span class="n">string</span><span class="o">.</span><span class="n">h</span>
+
+  <span class="c1"># Private headers go into &lt;module&gt;_*/...</span>
+  <span class="n">pw_foo_internal</span><span class="o">/</span><span class="n">zap</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">pw_foo_private</span><span class="o">/</span><span class="nb">zip</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">pw_foo_secret</span><span class="o">/</span><span class="n">alxx</span><span class="o">.</span><span class="n">h</span>
+
+  <span class="c1"># C++ implementations go in the root</span>
+  <span class="n">foo_impl</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">foo</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">baz</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">bar</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">zap</span><span class="o">.</span><span class="n">cc</span>
+  <span class="nb">zip</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">alxx</span><span class="o">.</span><span class="n">cc</span>
+
+  <span class="c1"># C++ tests also go in the root</span>
+  <span class="n">foo_test</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">bar_test</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">zip_test</span><span class="o">.</span><span class="n">cc</span>
+
+  <span class="c1"># Python files go into &#39;py/&lt;module&gt;/...&#39;</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span>     <span class="c1"># All Python must be a Python module with setup.py</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">foo_test</span><span class="o">.</span><span class="n">py</span>  <span class="c1"># Tests go in py/ but outside of the Python module</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">bar_test</span><span class="o">.</span><span class="n">py</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">__main__</span><span class="o">.</span><span class="n">py</span>
+  <span class="n">py</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">bar</span><span class="o">.</span><span class="n">py</span>
+
+  <span class="c1"># Go files go into &#39;go/...&#39;</span>
+  <span class="n">go</span><span class="o">/...</span>
+
+  <span class="c1"># Examples go in examples/, mixing different languages</span>
+  <span class="n">examples</span><span class="o">/</span><span class="n">demo</span><span class="o">.</span><span class="n">py</span>
+  <span class="n">examples</span><span class="o">/</span><span class="n">demo</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">examples</span><span class="o">/</span><span class="n">demo</span><span class="o">.</span><span class="n">go</span>
+  <span class="n">examples</span><span class="o">/</span><span class="n">BUILD</span><span class="o">.</span><span class="n">gn</span>
+  <span class="n">examples</span><span class="o">/</span><span class="n">BUILD</span>
+
+  <span class="c1"># Size reports go under size_report/</span>
+  <span class="n">size_report</span><span class="o">/</span><span class="n">BUILD</span><span class="o">.</span><span class="n">gn</span>
+  <span class="n">size_report</span><span class="o">/</span><span class="n">base</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">size_report</span><span class="o">/</span><span class="n">use_case_a</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">size_report</span><span class="o">/</span><span class="n">use_case_b</span><span class="o">.</span><span class="n">cc</span>
+
+  <span class="c1"># Protobuf definition files go into &lt;module&gt;_protos/...</span>
+  <span class="n">pw_foo_protos</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">proto</span>
+  <span class="n">pw_foo_protos</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">zap</span><span class="o">.</span><span class="n">proto</span>
+
+  <span class="c1"># Other directories are fine, but should be private.</span>
+  <span class="n">data</span><span class="o">/...</span>
+  <span class="n">graphics</span><span class="o">/...</span>
+  <span class="n">collection_of_tests</span><span class="o">/...</span>
+  <span class="n">code_relating_to_subfeature</span><span class="o">/...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-name">
+<h2>Module name<a class="headerlink" href="#module-name" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed upstream modules are always named with a prefix <code class="docutils literal notranslate"><span class="pre">pw_</span></code> to enforce
+namespacing. Projects using Pigweed that wish to make their own modules can use
+whatever name they like, but we suggest picking a short prefix to namespace
+your product (e.g. for an Internet of Toast project, perhaps the prefix could
+be <code class="docutils literal notranslate"><span class="pre">it_</span></code>).</p>
+</div>
+<div class="section" id="c-module-structure">
+<h2>C++ module structure<a class="headerlink" href="#c-module-structure" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="c-public-headers">
+<h3>C++ public headers<a class="headerlink" href="#c-public-headers" title="Permalink to this headline">¶</a></h3>
+<p>Located <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;</span></code>. These are headers that must be
+exposed due to C++ limitations (i.e. are included from the public interface,
+but are not intended for public use).</p>
+<p><strong>Public headers</strong> should take the form:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;/*.h</span></code></p>
+<p><strong>Exposed private headers</strong> should take the form:</p>
+<p><code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;/internal/*.h</span></code></p>
+<p>Examples:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_foo/...
+  public/pw_foo/foo.h
+  public/pw_foo/a_header.h
+  public/pw_foo/baz.h
+</pre></div>
+</div>
+<p>For headers that must be exposed due to C++ limitations (i.e. are included from
+the public interface, but are not intended for use), place the headers in a
+<code class="docutils literal notranslate"><span class="pre">internal</span></code> subfolder under the public headers directory; as
+<code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;/internal/*.h</span></code>. For example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_foo/...
+  public/pw_foo/internal/secret.h
+  public/pw_foo/internal/business.h
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These headers must not override headers from other modules. For
+that, there is the <code class="docutils literal notranslate"><span class="pre">public_overrides/</span></code> directory.</p>
+</div>
+</div>
+<div class="section" id="c-public-override-headers">
+<h3>C++ public override headers<a class="headerlink" href="#c-public-override-headers" title="Permalink to this headline">¶</a></h3>
+<p>Located <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public_overrides/&lt;module&gt;</span></code>. In general, the Pigweed
+philosophy is to avoid having “things hiding under rocks”, and having header
+files with the same name that can override each other is considered a rock
+where surprising things can hide. Additionally, a design goal of the Pigweed
+module structure is to make it so there is ideally exactly one obvious place
+to find a header based on an <code class="docutils literal notranslate"><span class="pre">#include</span></code>.</p>
+<p>However, in some cases header overrides are necessary to enable flexibly
+combining modules. To make this as explicit as possible, headers which override
+other headers must go in</p>
+<p><code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public_overrides/...`</span></code></p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> module provides a header override for
+<code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code>. The structure of the module is (omitting some files):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_unit_test/...
+
+  public_overrides/gtest
+  public_overrides/gtest/gtest.h
+
+  public/pw_unit_test
+  public/pw_unit_test/framework.h
+  public/pw_unit_test/simple_printing_event_handler.h
+  public/pw_unit_test/event_handler.h
+</pre></div>
+</div>
+<p>Note that the overrides are in a separate directory <code class="docutils literal notranslate"><span class="pre">public_overrides</span></code>.</p>
+</div>
+<div class="section" id="c-implementation-files">
+<h3>C++ implementation files<a class="headerlink" href="#c-implementation-files" title="Permalink to this headline">¶</a></h3>
+<p>Located <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/</span></code>. C++ implementation files go at the top level of
+the module. Implementation files must always use “” style includes.</p>
+<p>Example:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_unit_test/...
+  main.cc
+  framework.cc
+  test.gni
+  BUILD.gn
+  README.md
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Documentation should go in the root module folder, typically in the
+<code class="docutils literal notranslate"><span class="pre">docs.rst</span></code> file. There must be a docgen entry for the documentation in the
+<code class="docutils literal notranslate"><span class="pre">BUILD.gn</span></code> file with the target name <code class="docutils literal notranslate"><span class="pre">docs</span></code>; so the full target for the
+docs would be <code class="docutils literal notranslate"><span class="pre">&lt;module&gt;:docs</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_example_module/...
+
+  docs.rst
+</pre></div>
+</div>
+<p>For modules with more involved documentation, create a separate directory
+called <code class="docutils literal notranslate"><span class="pre">docs/</span></code> under the module root, and put the <code class="docutils literal notranslate"><span class="pre">.rst</span></code> files and other
+related files (like images and diagrams) there.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_example_module/...
+
+  docs/docs.rst
+  docs/bar.rst
+  docs/foo.rst
+  docs/image/screenshot.png
+  docs/image/diagram.svg
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-new-pigweed-module">
+<h2>Creating a new Pigweed module<a class="headerlink" href="#creating-a-new-pigweed-module" title="Permalink to this headline">¶</a></h2>
+<p>To create a new Pigweed module, follow the below steps.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Connect with the Pigweed community (by <a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">mailing the Pigweed list</a> or <a class="reference external" href="https://discord.gg/M9NSeTA">raising your idea
+in the Pigweed chat</a>) to discuss your module
+idea before getting too far into the implementation. This can prevent
+accidentally duplicating work, or avoiding writing code that won’t get
+accepted.</p>
+</div>
+<ol class="arabic">
+<li><p>Create module folder following <a class="reference internal" href="#module-name">Module name</a> guidelines</p></li>
+<li><p>Add <a class="reference internal" href="#c-public-headers">C++ public headers</a> files in
+<code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/{pw_module_name}/</span></code></p></li>
+<li><p>Add <a class="reference internal" href="#c-implementation-files">C++ implementation files</a> files in <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/</span></code></p></li>
+<li><p>Add module documentation</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/README.md</span></code> that has a module summary</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/docs.rst</span></code> that contains the main module
+documentation</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Add build support inside of new module</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Add GN with <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/BUILD.gn</span></code></p></li>
+<li><p>Add Bazel with <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/BUILD</span></code></p></li>
+<li><p>Add CMake with <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/CMakeLists.txt</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Add folder alias for new module variable in <code class="docutils literal notranslate"><span class="pre">/modules.gni</span></code></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>dir_pw_new = “$dir_pigweed/pw_new”</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Add new module to main GN build</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>in <code class="docutils literal notranslate"><span class="pre">/BUILD.gn</span></code> to <code class="docutils literal notranslate"><span class="pre">group(&quot;pw_modules&quot;)</span></code> using folder alias variable</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Add test target for new module in <code class="docutils literal notranslate"><span class="pre">/BUILD.gn</span></code> to
+<code class="docutils literal notranslate"><span class="pre">pw_test_group(&quot;pw_module_tests&quot;)</span></code></p></li>
+<li><p>Add new module to CMake build</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">/CMakeLists.txt</span></code> add <code class="docutils literal notranslate"><span class="pre">add_subdirectory(pw_new)</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Add the new module to docs module</p>
+<ul class="simple">
+<li><p>Add in <code class="docutils literal notranslate"><span class="pre">docs/BUILD.gn</span></code> to <code class="docutils literal notranslate"><span class="pre">pw_doc_gen(&quot;docs&quot;)</span></code></p></li>
+</ul>
+</li>
+<li><p>Run <a class="reference internal" href="../pw_module/docs.html#chapter-module-module-check"><span class="std std-ref">pw module-check</span></a></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pw</span> <span class="pre">module-check</span> <span class="pre">{pw_module_dir}</span></code></p></li>
+</ul>
+</li>
+<li><p>Contribute your module to upstream Pigweed (optional but encouraged!)</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../module_guides.html" class="btn btn-neutral float-right" title="Module Guides" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="faq.html" class="btn btn-neutral float-left" title="Frequently Asked Questions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

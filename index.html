@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pigweed &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="docs/getting_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Pigweed</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pigweed">
+<h1>Pigweed<a class="headerlink" href="#pigweed" title="Permalink to this headline">¶</a></h1>
+<p>Pigweed is an open source collection of embedded-targeted libraries–or as we
+like to call them, modules. These modules are building blocks and infrastructure
+that enable faster and more reliable development on small-footprint MMU-less
+32-bit microcontrollers like the STMicroelectronics STM32L452 or the Nordic
+nRF52832.</p>
+<p>Pigweed is in the early stages of development, <strong>and should be considered
+experimental</strong>. We’re continuing to evolve the platform and add new modules. We
+value developer feedback along the way.</p>
+</div>
+<div class="section" id="quick-links">
+<h1>Quick links<a class="headerlink" href="#quick-links" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="docs/getting_started.html"><span class="doc">Getting started guide</span></a></p></li>
+<li><p><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source code</a></p></li>
+<li><p><a class="reference external" href="https://pigweed-review.googlesource.com/">Code reviews</a></p></li>
+<li><p><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue tracker</a></p></li>
+<li><p><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing list</a></p></li>
+<li><p><a class="reference external" href="https://discord.gg/M9NSeTA">Chat room (Discord)</a></p></li>
+<li><p><a class="reference external" href="https://opensource.googleblog.com/2020/03/pigweed-collection-of-embedded-libraries.html">Open Source blog post</a></p></li>
+</ul>
+<p>Get the code: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://pigweed.googlesource.com/pigweed/pigweed</span></code></p>
+</div>
+<div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>If you’d like to get set up with Pigweed, please visit the
+<a class="reference internal" href="docs/getting_started.html"><span class="doc">getting started guide</span></a>.</p>
+</div>
+<div class="section" id="what-does-pigweed-offer">
+<h1>What does Pigweed offer?<a class="headerlink" href="#what-does-pigweed-offer" title="Permalink to this headline">¶</a></h1>
+<p>There are many modules in Pigweed, and this section only showcases a small
+selection that happen to produce visual output. For more information about the
+different Pigweed module offerings, refer to “Module Guides” section in the full
+documentation.</p>
+<p>Note: For now the full documentation is not available online; you must build
+it. Building the docs is easy; see the <a class="reference internal" href="docs/getting_started.html"><span class="doc">getting started
+guide</span></a> for how.</p>
+<div class="section" id="pw-watch-build-flash-run-test-on-save">
+<h2><code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> - Build, flash, run, &amp; test on save<a class="headerlink" href="#pw-watch-build-flash-run-test-on-save" title="Permalink to this headline">¶</a></h2>
+<p>In the web development space, file system watchers are prevalent. These watchers
+trigger a web server reload on source change, making development much faster. In
+the embedded space, file system watchers are less prevalent; however, they are
+no less useful! The Pigweed watcher module makes it easy to instantly compile,
+flash, and run tests upon save. Combined with the GN-based build which expresses
+the full dependency tree, only the exact tests affected by a file change are run
+on saves.</p>
+<p>The demo below shows <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> building for a STMicroelectronics
+STM32F429I-DISC1 development board, flashing the board with the affected test,
+and verifying the test runs as expected. Once this is set up, you can attach
+multiple devices to run tests in a distributed manner to reduce the time it
+takes to run tests.</p>
+<a class="reference external image-reference" href="docs/images/pw_watch_on_device_demo.gif"><img alt="pw watch running on-device tests" src="_images/pw_watch_on_device_demo.gif" /></a>
+</div>
+<div class="section" id="pw-presubmit-vacuum-code-lint-on-every-commit">
+<h2><code class="docutils literal notranslate"><span class="pre">pw_presubmit</span></code> - Vacuum code lint on every commit<a class="headerlink" href="#pw-presubmit-vacuum-code-lint-on-every-commit" title="Permalink to this headline">¶</a></h2>
+<p>Presubmit checks are essential tools, but they take work to set up, and projects
+don’t always get around to it. The <code class="docutils literal notranslate"><span class="pre">pw_presubmit</span></code> module provides tools for
+setting up high quality presubmit checks for any project. We use this framework
+to run Pigweed’s presubmit on our workstations and in our automated building
+tools.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_presubmit</span></code> module includes <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">format</span></code> command, a tool that provides a
+unified interface for automatically formatting code in a variety of languages.
+With <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">format</span></code>, you can format C, C++, Python, GN, and Go code according to
+configurations defined by your project. <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">format</span></code> leverages existing tools
+like <code class="docutils literal notranslate"><span class="pre">clang-format</span></code>, and it’s simple to add support for new languages.</p>
+<a class="reference external image-reference" href="pw_presubmit/docs/pw_presubmit_demo.gif"><img alt="pw presubmit demo" src="_images/pw_presubmit_demo.gif" /></a>
+</div>
+<div class="section" id="pw-env-setup-cross-platform-embedded-compiler-setup">
+<h2><code class="docutils literal notranslate"><span class="pre">pw_env_setup</span></code> - Cross platform embedded compiler setup<a class="headerlink" href="#pw-env-setup-cross-platform-embedded-compiler-setup" title="Permalink to this headline">¶</a></h2>
+<p>A classic problem in the embedded space is reducing the time from git clone to
+having a binary executing on a device. The issue is that an entire suite of
+tools is needed for non-trivial production embedded projects. For example:</p>
+<ul class="simple">
+<li><p>A C++ compiler for your target device, and also for your host</p></li>
+<li><p>A build system or three; for example, GN, Ninja, CMake, Bazel</p></li>
+<li><p>A code formatting program like clang-format</p></li>
+<li><p>A debugger like OpenOCD to flash and debug your embedded device</p></li>
+<li><p>A known Python version with known modules installed for scripting</p></li>
+<li><p>A Go compiler for the Go-based command line tools</p></li>
+<li><p>… and so on</p></li>
+</ul>
+<p>In the server space, container solutions like Docker or Podman solve this;
+however, in our experience container solutions are a mixed bag for embedded
+systems development where one frequently needs access to native system resources
+like USB devices, or must operate on Windows.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_env_setup</span></code> is our compromise solution for this problem that works on Mac,
+Windows, and Linux. It leverages the Chrome packaging system CIPD to bootstrap a
+Python installation, which in turn inflates a virtual environment. The tooling
+is installed into your workspace, and makes no changes to your system. This
+tooling is designed to be reused by any project.</p>
+<a class="reference external image-reference" href="docs/images/pw_env_setup_demo.gif"><img alt="pw environment setup demo" src="_images/pw_env_setup_demo.gif" /></a>
+</div>
+<div class="section" id="pw-unit-test-embedded-testing-for-mcus">
+<h2><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> - Embedded testing for MCUs<a class="headerlink" href="#pw-unit-test-embedded-testing-for-mcus" title="Permalink to this headline">¶</a></h2>
+<p>Unit testing is important, and Pigweed offers a portable library that’s broadly
+compatible with <a class="reference external" href="https://github.com/google/googletest">Google Test</a>. Unlike
+Google Test, <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> is built on top of embedded friendly primitives; for
+example, it does not use dynamic memory allocation. Additionally, it is easy to
+port to new target platforms by implementing the
+<a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master/pw_unit_test/public/pw_unit_test/event_handler.h">test event handler interface</a>.</p>
+<p>Like other modules in Pigweed, <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> is designed for use in
+established codebases with their own build system, without the rest of Pigweed
+or the Pigweed integrated GN build. However, when combined with Pigweed’s
+build, the result is a flexible and powerful setup that enables easily
+developing code on your desktop (with tests), then running the same tests
+on-device.</p>
+<a class="reference external image-reference" href="docs/images/pw_status_test.png"><img alt="pw_status test run natively on host" src="_images/pw_status_test.png" /></a>
+</div>
+<div class="section" id="and-more">
+<h2>And more!<a class="headerlink" href="#and-more" title="Permalink to this headline">¶</a></h2>
+<p>See the “Module Guides” in the documentation for the complete list and
+documentation for each, but is a selection of some others:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_cpu_exception_armv7m</span></code>: Robust low level hardware fault handler for ARM
+Cortex-M; the handler even has unit tests written in assembly to verify
+nested-hardware-fault handling!</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_polyfill</span></code>: Similar to JavaScript “polyfill” libraries, this module
+provides selected C++17 standard library components that are compatible with
+C++11 and C++14.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_minimal_cpp_stdlib</span></code>: An entirely incomplete implementation of the C++17
+standard library, that provides some of the primitives needed by Pigweed
+itself. Useful for projects that want to use Pigweed, but don’t enable the
+typical standard C++ libraries like GNU’s libstdc++ or LLVM’s libc++. Don’t
+use this module unless you know what you are doing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_tokenizer</span></code>: Replace string literals from log statements with 32-bit
+tokens, to reduce flash use, reduce logging bandwidth, and save formatting
+cycles from log statements at runtime.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_kvs</span></code>: A key-value-store implementation for flash-backed persistent
+storage with integrated wear levelling. This is a lightweight alternative to
+a file system for embedded devices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_protobuf</span></code>: An early preview of our wire-format-oriented protocol buffer
+implementation. This protobuf compiler makes a different set of
+implementation tradeoffs than the most popular protocol buffer library in
+this space, nanopb.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docs/getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

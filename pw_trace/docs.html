@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_trace &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_trace_tokenized" href="../pw_trace_tokenized/docs.html" />
+    <link rel="prev" title="pw_toolchain" href="../pw_toolchain/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_trace</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#status">Status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trace-macros">Trace macros</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modules">Modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#flags">Flags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data">Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#c-only-traces">C++ Only Traces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend-api">Backend API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#trace-types">Trace types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#defaults">Defaults</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-app">Sample App</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-trace-generator">Python Trace Generator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_trace</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-trace">
+<h1>pw_trace<a class="headerlink" href="#pw-trace" title="Permalink to this headline">¶</a></h1>
+<p>Pigweed’s tracing module provides facilities for applications to trace
+information about the execution of their application. The module is split into
+two components:</p>
+<ol class="arabic simple">
+<li><p>The facade (this module) which is only a macro interface layer</p></li>
+<li><p>The backend, provided elsewhere, implements the low level tracing.</p></li>
+</ol>
+<div class="section" id="status">
+<h2>Status<a class="headerlink" href="#status" title="Permalink to this headline">¶</a></h2>
+<p>This module is currently in development, and is therefore still undergoing
+significant changes.</p>
+<p>Future work will add:</p>
+<ol class="arabic simple">
+<li><p>A Python library to generate trace files which can be viewed. (pwbug/205)</p></li>
+<li><p>Add more examples with sample output. (pwbug/207)</p></li>
+<li><p>Implement a trace backend module. (pwbug/260)</p></li>
+</ol>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Traces provide a useful view which shows the flow of events through a system,
+and can greatly assist in understanding complex software problems. These traces
+can either show what tasks are running at any given time, or use added code
+(similar to logging), to help annotate specific interesting flows.</p>
+<p>Fundamentally, tracing is similar to logging in that it provides the developer
+with a view into what the system was doing at a particular time. The fundamental
+difference between logs and tracing is that logs present information as ad-hoc
+human-readable strings and are better suited to providing the current state of
+the system. Instead, traces capture sequences of events with precise timestamps,
+and are therefore useful at understanding the flow of events in the system over
+time.</p>
+<div class="section" id="compatibility">
+<h3>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h3>
+<p>Most of the facade is compatible with C and C++, the only exception to this is
+the Scope and Function tracing macros which are convenience wrappers only
+available in C++.</p>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_preprocessor</span></code></p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define PW_TRACE_MODULE_NAME &quot;Input&quot;</span>
+<span class="cp">#include</span> <span class="cpf">&quot;pw_trace/trace.h&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">SendButton</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_TRACE_FUNCTION</span><span class="p">()</span>
+  <span class="c1">// do something</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">InputLoop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">auto</span> <span class="n">event</span> <span class="o">=</span> <span class="n">WaitNewInputEvent</span><span class="p">()</span>
+    <span class="n">TRACE_SCOPE</span><span class="p">(</span><span class="s">&quot;Handle Event&quot;</span><span class="p">);</span>  <span class="c1">// measure until loop finished</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">event</span> <span class="o">==</span> <span class="n">kNewButton</span><span class="p">){</span>
+      <span class="n">SendButton</span><span class="p">();</span>
+      <span class="n">PW_TRACE_END</span><span class="p">(</span><span class="s">&quot;button&quot;</span><span class="p">);</span>  <span class="c1">// Trace event was started in ButtonIsr</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">PW_TRACE_INSTANT</span><span class="p">(</span><span class="s">&quot;Unknown event&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">ButtonIsr</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_TRACE_START</span><span class="p">(</span><span class="s">&quot;button&quot;</span><span class="p">);</span>
+  <span class="n">SendNewInputEvent</span><span class="p">(</span><span class="n">kNewButton</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trace-macros">
+<h2>Trace macros<a class="headerlink" href="#trace-macros" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_trace</span></code> public API provides three basic trace events:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_TRACE_INSTANT</span></code> - This is used to trace an instant event, which has no
+duration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_TRACE_START</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">PW_TRACE_END</span></code> - Trace ‘start’ and ‘end’ events are
+paired together to measure the duration of an event.</p></li>
+</ul>
+<p>These trace event macros all have the same arguments:</p>
+<ul class="simple">
+<li><p><em>label</em> - Each of these trace events must have a label, which is a string
+describing the event. In addition to the required label, each of these traces
+can optionally provide a group label and trace id.</p></li>
+<li><p><em>group_label</em> - The <em>optional</em> group label is used if many traces are all
+measuring the same thing and should be grouped together. This information will
+be used when visualizing the trace to ensure the information appears together.</p></li>
+<li><p><em>trace_id</em> - The <em>optional</em> trace id is similar to the group_id, but instead
+groups events using a runtime value. This can be used if multiple trace flow
+might happen at the same time and need to be grouped together.
+For example, this could be used to trace data packets flowing through the
+system; when a new sample might arrive before the previous packet is finished
+processing. This would result in two start events occurring before the end
+event. By providing a trace id with a different value for each packet, these
+can be separated when decoding.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All of these arguments must be the same for a <em>start</em> and <em>end</em> pair.</p>
+</div>
+<p>This results in 9 different trace calls:</p>
+<dl class="function">
+<dt id="_CPPv416PW_TRACE_INSTANT5label">
+<span id="_CPPv316PW_TRACE_INSTANT5label"></span><span id="_CPPv216PW_TRACE_INSTANT5label"></span><span id="PW_TRACE_INSTANT__label"></span><code class="sig-name descname">PW_TRACE_INSTANT</code><span class="sig-paren">(</span>label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_TRACE_INSTANT5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_TRACE_INSTANT5label11group_label">
+<span id="_CPPv316PW_TRACE_INSTANT5label11group_label"></span><span id="_CPPv216PW_TRACE_INSTANT5label11group_label"></span><span id="PW_TRACE_INSTANT__label.group_label"></span><code class="sig-name descname">PW_TRACE_INSTANT</code><span class="sig-paren">(</span>label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_TRACE_INSTANT5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_TRACE_INSTANT5label11group_label8trace_id">
+<span id="_CPPv316PW_TRACE_INSTANT5label11group_label8trace_id"></span><span id="_CPPv216PW_TRACE_INSTANT5label11group_label8trace_id"></span><span id="PW_TRACE_INSTANT__label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_INSTANT</code><span class="sig-paren">(</span>label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_TRACE_INSTANT5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv414PW_TRACE_START5label">
+<span id="_CPPv314PW_TRACE_START5label"></span><span id="_CPPv214PW_TRACE_START5label"></span><span id="PW_TRACE_START__label"></span><code class="sig-name descname">PW_TRACE_START</code><span class="sig-paren">(</span>label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414PW_TRACE_START5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv414PW_TRACE_START5label11group_label">
+<span id="_CPPv314PW_TRACE_START5label11group_label"></span><span id="_CPPv214PW_TRACE_START5label11group_label"></span><span id="PW_TRACE_START__label.group_label"></span><code class="sig-name descname">PW_TRACE_START</code><span class="sig-paren">(</span>label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414PW_TRACE_START5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv414PW_TRACE_START5label11group_label8trace_id">
+<span id="_CPPv314PW_TRACE_START5label11group_label8trace_id"></span><span id="_CPPv214PW_TRACE_START5label11group_label8trace_id"></span><span id="PW_TRACE_START__label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_START</code><span class="sig-paren">(</span>label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414PW_TRACE_START5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv412PW_TRACE_END5label">
+<span id="_CPPv312PW_TRACE_END5label"></span><span id="_CPPv212PW_TRACE_END5label"></span><span id="PW_TRACE_END__label"></span><code class="sig-name descname">PW_TRACE_END</code><span class="sig-paren">(</span>label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_TRACE_END5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv412PW_TRACE_END5label11group_label">
+<span id="_CPPv312PW_TRACE_END5label11group_label"></span><span id="_CPPv212PW_TRACE_END5label11group_label"></span><span id="PW_TRACE_END__label.group_label"></span><code class="sig-name descname">PW_TRACE_END</code><span class="sig-paren">(</span>label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_TRACE_END5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv412PW_TRACE_END5label11group_label8trace_id">
+<span id="_CPPv312PW_TRACE_END5label11group_label8trace_id"></span><span id="_CPPv212PW_TRACE_END5label11group_label8trace_id"></span><span id="PW_TRACE_END__label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_END</code><span class="sig-paren">(</span>label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_TRACE_END5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<div class="section" id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h3>
+<p>In addition to these arguments, traces can be grouped into modules similar to
+logging. This is done by redefining the <code class="docutils literal notranslate"><span class="pre">PW_TRACE_MODULE_NAME</span></code>.</p>
+</div>
+<div class="section" id="flags">
+<h3>Flags<a class="headerlink" href="#flags" title="Permalink to this headline">¶</a></h3>
+<p>Each trace event also has a flags field which can be used to provide additional
+compile time trace information. Each trace macro has a matching macro which
+allows specifying the flag:</p>
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_FLAG4flag5label">
+<span id="_CPPv321PW_TRACE_INSTANT_FLAG4flag5label"></span><span id="_CPPv221PW_TRACE_INSTANT_FLAG4flag5label"></span><span id="PW_TRACE_INSTANT_FLAG__flag.label"></span><code class="sig-name descname">PW_TRACE_INSTANT_FLAG</code><span class="sig-paren">(</span>flag, label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_FLAG4flag5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_FLAG4flag5label11group_label">
+<span id="_CPPv321PW_TRACE_INSTANT_FLAG4flag5label11group_label"></span><span id="_CPPv221PW_TRACE_INSTANT_FLAG4flag5label11group_label"></span><span id="PW_TRACE_INSTANT_FLAG__flag.label.group_label"></span><code class="sig-name descname">PW_TRACE_INSTANT_FLAG</code><span class="sig-paren">(</span>flag, label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_FLAG4flag5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_FLAG4flag5label11group_label8trace_id">
+<span id="_CPPv321PW_TRACE_INSTANT_FLAG4flag5label11group_label8trace_id"></span><span id="_CPPv221PW_TRACE_INSTANT_FLAG4flag5label11group_label8trace_id"></span><span id="PW_TRACE_INSTANT_FLAG__flag.label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_INSTANT_FLAG</code><span class="sig-paren">(</span>flag, label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_FLAG4flag5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_FLAG4flag5label">
+<span id="_CPPv319PW_TRACE_START_FLAG4flag5label"></span><span id="_CPPv219PW_TRACE_START_FLAG4flag5label"></span><span id="PW_TRACE_START_FLAG__flag.label"></span><code class="sig-name descname">PW_TRACE_START_FLAG</code><span class="sig-paren">(</span>flag, label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_FLAG4flag5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_FLAG4flag5label11group_label">
+<span id="_CPPv319PW_TRACE_START_FLAG4flag5label11group_label"></span><span id="_CPPv219PW_TRACE_START_FLAG4flag5label11group_label"></span><span id="PW_TRACE_START_FLAG__flag.label.group_label"></span><code class="sig-name descname">PW_TRACE_START_FLAG</code><span class="sig-paren">(</span>flag, label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_FLAG4flag5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_FLAG4flag5label11group_label8trace_id">
+<span id="_CPPv319PW_TRACE_START_FLAG4flag5label11group_label8trace_id"></span><span id="_CPPv219PW_TRACE_START_FLAG4flag5label11group_label8trace_id"></span><span id="PW_TRACE_START_FLAG__flag.label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_START_FLAG</code><span class="sig-paren">(</span>flag, label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_FLAG4flag5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_FLAG4flag5label">
+<span id="_CPPv317PW_TRACE_END_FLAG4flag5label"></span><span id="_CPPv217PW_TRACE_END_FLAG4flag5label"></span><span id="PW_TRACE_END_FLAG__flag.label"></span><code class="sig-name descname">PW_TRACE_END_FLAG</code><span class="sig-paren">(</span>flag, label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_FLAG4flag5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_FLAG4flag5label11group_label">
+<span id="_CPPv317PW_TRACE_END_FLAG4flag5label11group_label"></span><span id="_CPPv217PW_TRACE_END_FLAG4flag5label11group_label"></span><span id="PW_TRACE_END_FLAG__flag.label.group_label"></span><code class="sig-name descname">PW_TRACE_END_FLAG</code><span class="sig-paren">(</span>flag, label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_FLAG4flag5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_FLAG4flag5label11group_label8trace_id">
+<span id="_CPPv317PW_TRACE_END_FLAG4flag5label11group_label8trace_id"></span><span id="_CPPv217PW_TRACE_END_FLAG4flag5label11group_label8trace_id"></span><span id="PW_TRACE_END_FLAG__flag.label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE_END_FLAG</code><span class="sig-paren">(</span>flag, label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_FLAG4flag5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>When not specified the flag uses the value of the macro <code class="docutils literal notranslate"><span class="pre">PW_TRACE_FLAGS</span></code>.</p>
+</div>
+<div class="section" id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h3>
+<p>Each macro also has a variant which allows appending additional data:</p>
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_DATA5label18data_format_string4data4size">
+<span id="_CPPv321PW_TRACE_INSTANT_DATA5label18data_format_string4data4size"></span><span id="_CPPv221PW_TRACE_INSTANT_DATA5label18data_format_string4data4size"></span><span id="PW_TRACE_INSTANT_DATA__label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_INSTANT_DATA</code><span class="sig-paren">(</span>label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_DATA5label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_DATA5label11group_label18data_format_string4data4size">
+<span id="_CPPv321PW_TRACE_INSTANT_DATA5label11group_label18data_format_string4data4size"></span><span id="_CPPv221PW_TRACE_INSTANT_DATA5label11group_label18data_format_string4data4size"></span><span id="PW_TRACE_INSTANT_DATA__label.group_label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_INSTANT_DATA</code><span class="sig-paren">(</span>label, group_label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_DATA5label11group_label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv421PW_TRACE_INSTANT_DATA5label11group_label8trace_id18data_format_string4data4size">
+<span id="_CPPv321PW_TRACE_INSTANT_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="_CPPv221PW_TRACE_INSTANT_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="PW_TRACE_INSTANT_DATA__label.group_label.trace_id.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_INSTANT_DATA</code><span class="sig-paren">(</span>label, group_label, trace_id, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv421PW_TRACE_INSTANT_DATA5label11group_label8trace_id18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_DATA5label18data_format_string4data4size">
+<span id="_CPPv319PW_TRACE_START_DATA5label18data_format_string4data4size"></span><span id="_CPPv219PW_TRACE_START_DATA5label18data_format_string4data4size"></span><span id="PW_TRACE_START_DATA__label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_START_DATA</code><span class="sig-paren">(</span>label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_DATA5label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_DATA5label11group_label18data_format_string4data4size">
+<span id="_CPPv319PW_TRACE_START_DATA5label11group_label18data_format_string4data4size"></span><span id="_CPPv219PW_TRACE_START_DATA5label11group_label18data_format_string4data4size"></span><span id="PW_TRACE_START_DATA__label.group_label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_START_DATA</code><span class="sig-paren">(</span>label, group_label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_DATA5label11group_label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_TRACE_START_DATA5label11group_label8trace_id18data_format_string4data4size">
+<span id="_CPPv319PW_TRACE_START_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="_CPPv219PW_TRACE_START_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="PW_TRACE_START_DATA__label.group_label.trace_id.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_START_DATA</code><span class="sig-paren">(</span>label, group_label, trace_id, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_TRACE_START_DATA5label11group_label8trace_id18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_DATA5label18data_format_string4data4size">
+<span id="_CPPv317PW_TRACE_END_DATA5label18data_format_string4data4size"></span><span id="_CPPv217PW_TRACE_END_DATA5label18data_format_string4data4size"></span><span id="PW_TRACE_END_DATA__label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_END_DATA</code><span class="sig-paren">(</span>label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_DATA5label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_DATA5label11group_label18data_format_string4data4size">
+<span id="_CPPv317PW_TRACE_END_DATA5label11group_label18data_format_string4data4size"></span><span id="_CPPv217PW_TRACE_END_DATA5label11group_label18data_format_string4data4size"></span><span id="PW_TRACE_END_DATA__label.group_label.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_END_DATA</code><span class="sig-paren">(</span>label, group_label, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_DATA5label11group_label18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_END_DATA5label11group_label8trace_id18data_format_string4data4size">
+<span id="_CPPv317PW_TRACE_END_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="_CPPv217PW_TRACE_END_DATA5label11group_label8trace_id18data_format_string4data4size"></span><span id="PW_TRACE_END_DATA__label.group_label.trace_id.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_END_DATA</code><span class="sig-paren">(</span>label, group_label, trace_id, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_END_DATA5label11group_label8trace_id18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>These macros require 3 additional arguments:</p>
+<ul class="simple">
+<li><p><em>data_format_string</em> - A string which is used by the decoder to identify the
+data. This could for example either be printf style tokens, python struct
+packed fmt string or a custom label recognized by the decoder.</p></li>
+<li><p><em>data</em> - A pointer to a buffer of arbitrary caller-provided data (void*).</p></li>
+<li><p><em>size</em> - The size of the data (size_t).</p></li>
+</ul>
+<p>Currently the included python tool supports a few different options for
+<em>data_format_string</em>:</p>
+<ul class="simple">
+<li><p><em>&#64;pw_arg_label</em> - Uses the string in the data as the trace event label.</p></li>
+<li><p><em>&#64;pw_arg_group</em> - Uses the string in the data as the trace event group.</p></li>
+<li><p><em>&#64;pw_arg_counter</em> - Uses the data as a little endian integer value, and
+visualizes it as a counter value in the trace (on a graph).</p></li>
+<li><p><em>&#64;pw_py_struct_fmt:</em> - Interprets the string after the “:” as a python struct
+format string, and uses that format string to unpack the data elements. This
+can be used to either provide a single value type, or provide multiple
+different values with a variety of types. Options for format string types can
+be found here: <a class="reference external" href="https://docs.python.org/3/library/struct.html#format-characters">https://docs.python.org/3/library/struct.html#format-characters</a></p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is ok for only one event of a start/end pair to contain data, as long the
+<em>label</em>, <em>group_label</em>, and <em>trace_id</em>, are all the same.</p>
+</div>
+</div>
+<div class="section" id="c-only-traces">
+<h3>C++ Only Traces<a class="headerlink" href="#c-only-traces" title="Permalink to this headline">¶</a></h3>
+<p>Scope API measures durations until the object loses scope. This can for
+example, provide a convenient method of tracing functions or loops.</p>
+<dl class="function">
+<dt id="_CPPv414PW_TRACE_SCOPE5label">
+<span id="_CPPv314PW_TRACE_SCOPE5label"></span><span id="_CPPv214PW_TRACE_SCOPE5label"></span><span id="PW_TRACE_SCOPE__label"></span><code class="sig-name descname">PW_TRACE_SCOPE</code><span class="sig-paren">(</span>label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414PW_TRACE_SCOPE5label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv414PW_TRACE_SCOPE5label11group_label">
+<span id="_CPPv314PW_TRACE_SCOPE5label11group_label"></span><span id="_CPPv214PW_TRACE_SCOPE5label11group_label"></span><span id="PW_TRACE_SCOPE__label.group_label"></span><code class="sig-name descname">PW_TRACE_SCOPE</code><span class="sig-paren">(</span>label, group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv414PW_TRACE_SCOPE5label11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>Function API measures durations until the function returns. This is the only
+macro which does not require a <em>label</em>, and instead uses the function name as the
+label. It still can optionally be provided a <em>group_id</em>.</p>
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_FUNCTIONv">
+<span id="_CPPv317PW_TRACE_FUNCTIONv"></span><span id="_CPPv217PW_TRACE_FUNCTIONv"></span><span id="PW_TRACE_FUNCTION"></span><code class="sig-name descname">PW_TRACE_FUNCTION</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_FUNCTIONv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_TRACE_FUNCTION11group_label">
+<span id="_CPPv317PW_TRACE_FUNCTION11group_label"></span><span id="_CPPv217PW_TRACE_FUNCTION11group_label"></span><span id="PW_TRACE_FUNCTION__group_label"></span><code class="sig-name descname">PW_TRACE_FUNCTION</code><span class="sig-paren">(</span>group_label<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_TRACE_FUNCTION11group_label" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="backend-api">
+<h2>Backend API<a class="headerlink" href="#backend-api" title="Permalink to this headline">¶</a></h2>
+<p>Each of the trace event macros get sent to one of two macros which are
+implemented by the backend:</p>
+<dl class="function">
+<dt id="_CPPv48PW_TRACE10event_type5flags5label11group_label8trace_id">
+<span id="_CPPv38PW_TRACE10event_type5flags5label11group_label8trace_id"></span><span id="_CPPv28PW_TRACE10event_type5flags5label11group_label8trace_id"></span><span id="PW_TRACE__event_type.flags.label.group_label.trace_id"></span><code class="sig-name descname">PW_TRACE</code><span class="sig-paren">(</span>event_type, flags, label, group_label, trace_id<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48PW_TRACE10event_type5flags5label11group_label8trace_id" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv413PW_TRACE_DATA10event_type5flags5label11group_label8trace_id18data_format_string4data4size">
+<span id="_CPPv313PW_TRACE_DATA10event_type5flags5label11group_label8trace_id18data_format_string4data4size"></span><span id="_CPPv213PW_TRACE_DATA10event_type5flags5label11group_label8trace_id18data_format_string4data4size"></span><span id="PW_TRACE_DATA__event_type.flags.label.group_label.trace_id.data_format_string.data.size"></span><code class="sig-name descname">PW_TRACE_DATA</code><span class="sig-paren">(</span>event_type, flags, label, group_label, trace_id, data_format_string, data, size<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv413PW_TRACE_DATA10event_type5flags5label11group_label8trace_id18data_format_string4data4size" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">event_type</span></code> value will be whatever the backend defined for that specific
+trace type using the macros defined below.</p>
+<p>The backend can optionally not define <code class="docutils literal notranslate"><span class="pre">PW_TRACE_DATA</span></code> to have those traces
+disabled.</p>
+<div class="section" id="trace-types">
+<h3>Trace types<a class="headerlink" href="#trace-types" title="Permalink to this headline">¶</a></h3>
+<p>Although there are only 3 basic trace types, each has 3 variants:</p>
+<ul class="simple">
+<li><p>Label only</p></li>
+<li><p>Label and group</p></li>
+<li><p>Label, group, and trace_id</p></li>
+</ul>
+<p>This combination creates 9 different trace event types:</p>
+<ul class="simple">
+<li><p><em>PW_TRACE_TYPE_INSTANT</em>: Instant trace, with only a label.</p></li>
+<li><p><em>PW_TRACE_TYPE_DURATION_START</em>: Start trace, with only a label.</p></li>
+<li><p><em>PW_TRACE_TYPE_DURATION_END</em>: End trace, with only a label.</p></li>
+<li><p><em>PW_TRACE_TYPE_INSTANT_GROUP</em>: Instant trace, with a label and a group.</p></li>
+<li><p><em>PW_TRACE_TYPE_DURATION_GROUP_START</em>: Start trace, with a label and a group.</p></li>
+<li><p><em>PW_TRACE_TYPE_DURATION_GROUP_END</em>: End trace, with a label and a group.</p></li>
+<li><p><em>PW_TRACE_TYPE_ASYNC_INSTANT</em>: Instant trace, with label, group, and trace_id</p></li>
+<li><p><em>PW_TRACE_TYPE_ASYNC_START</em>: Start trace, with label, group, and trace_id.</p></li>
+<li><p><em>PW_TRACE_TYPE_ASYNC_END</em>: End trace, with label, group, and trace_id.</p></li>
+</ul>
+<p>The backend must define these macros to have them enabled. If any are left
+undefined, any traces of that type are removed.</p>
+</div>
+<div class="section" id="defaults">
+<h3>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h3>
+<p>The backend can use these macros to change what the default value is if not
+provided.</p>
+<ul class="simple">
+<li><p><em>PW_TRACE_FLAGS_DEFAULT</em>: Default value if no flags are provided.</p></li>
+<li><p><em>PW_TRACE_TRACE_ID_DEFAULT</em>: Default value if no trace_id provided.</p></li>
+<li><p><em>PW_TRACE_GROUP_LABEL_DEFAULT</em>: Default value if no group_label provided.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="sample-app">
+<h2>Sample App<a class="headerlink" href="#sample-app" title="Permalink to this headline">¶</a></h2>
+<p>A sample application is provided in the examples folder. This code attempts to
+provide examples of the multiple ways tracing can be used. Furthermore,
+trace backends can include the sample app in their own examples to show how to
+use other features.</p>
+<p>The sample app contains 3 “fake” tasks, which are each in their own
+<cite>PW_TRACE_MODULE</cite>.</p>
+<ul class="simple">
+<li><p><em>Input</em>: Simulating a driver, which gets data periodically, and sends to
+<em>Processing</em> task.</p></li>
+<li><p><em>Processing</em>: Has a work queue, which handles processing the jobs.</p></li>
+<li><p><em>Kernel</em>: A simple work loop which demonstrates a possible integration of
+tracing with a RTOS/Kernel.</p></li>
+</ul>
+<p>Jobs are intentionally made to have multiple stages of processing (simulated by
+being re-added to the work-queue). This results in multiple jobs being handled
+at the same time, the trace_id is used to separate these traces.</p>
+</div>
+<div class="section" id="python-trace-generator">
+<h2>Python Trace Generator<a class="headerlink" href="#python-trace-generator" title="Permalink to this headline">¶</a></h2>
+<p>The Python tool is still in early developments, but currently it supports
+generating a list of json lines from a list of trace events.</p>
+<p>To view the trace, these lines can be saved to a file and loaded into
+chrome://tracing.</p>
+<p>Future work will look to add:</p>
+<ul class="simple">
+<li><p>Config options to customize output.</p></li>
+<li><p>A method of providing custom data formatters.</p></li>
+<li><p>Perfetto support.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_trace_tokenized/docs.html" class="btn btn-neutral float-right" title="pw_trace_tokenized" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_toolchain/docs.html" class="btn btn-neutral float-left" title="pw_toolchain" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

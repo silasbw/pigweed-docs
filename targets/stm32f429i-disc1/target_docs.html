@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>stm32f429i-disc1 &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Build system" href="../../build_system.html" />
+    <link rel="prev" title="lm3s6965evb-qemu" href="../lm3s6965evb-qemu/target_docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../targets.html">Targets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../targets.html#defining-a-target">Defining a target</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../targets.html#example-pigweed-target">Example Pigweed target</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../targets.html#upstream-targets">Upstream targets</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../docs/target_docs.html">docs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../host/target_docs.html">host</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lm3s6965evb-qemu/target_docs.html">lm3s6965evb-qemu</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">stm32f429i-disc1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugging">Debugging</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../targets.html">Targets</a> &raquo;</li>
+        
+      <li>stm32f429i-disc1</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stm32f429i-disc1">
+<h1>stm32f429i-disc1<a class="headerlink" href="#stm32f429i-disc1" title="Permalink to this headline">¶</a></h1>
+<p>The STMicroelectronics STM32F429I-DISC1 development board is currently Pigweed’s
+primary target for on-device testing and development.</p>
+<div class="section" id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>To build for this Pigweed target, simply build the top-level “stm32f429i” Ninja
+target.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ninja -C out stm32f429i
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>When working in upstream Pigweed, building this target will build all Pigweed modules’ unit tests.
+These tests can be run on-device in a few different ways.</p>
+<div class="section" id="run-a-unit-test">
+<h3>Run a unit test<a class="headerlink" href="#run-a-unit-test" title="Permalink to this headline">¶</a></h3>
+<p>If using <code class="docutils literal notranslate"><span class="pre">out</span></code> as a build directory, tests will be located in
+<code class="docutils literal notranslate"><span class="pre">out/stm32f429i_disc1_debug/obj/[module</span> <span class="pre">name]/[test_name].elf</span></code>. To run these
+on device, the stm32f429i-disc1 target provides a helper script that flashes the
+test to a device and then runs it.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup pigweed environment.</span>
+$ <span class="nb">source</span> activate.sh
+<span class="c1"># Run test.</span>
+$ stm32f429i_disc1_unit_test_runner /path/to/binary
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-multiple-tests">
+<h3>Run multiple tests<a class="headerlink" href="#run-multiple-tests" title="Permalink to this headline">¶</a></h3>
+<p>Running all tests one-by-one is rather tedious. To make running multiple
+tests easier, use Pigweed’s <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">test</span></code> command and pass it a path to the build
+directory and the name of the test runner. By default, <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">test</span></code> will run all
+tests, but it can be restricted it to specific <code class="docutils literal notranslate"><span class="pre">pw_test_group</span></code> targets using
+the <code class="docutils literal notranslate"><span class="pre">--group</span></code> argument. Alternatively, individual test binaries can be
+specified with the <code class="docutils literal notranslate"><span class="pre">--test</span></code> option.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup Pigweed environment.</span>
+$ <span class="nb">source</span> activate.sh
+<span class="c1"># Run test.</span>
+$ pw <span class="nb">test</span> --root out/stm32f429i_disc_debug/  <span class="se">\</span>
+      --runner stm32f429i_disc1_unit_test_runner
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-tests-affected-by-code-changes">
+<h3>Run tests affected by code changes<a class="headerlink" href="#run-tests-affected-by-code-changes" title="Permalink to this headline">¶</a></h3>
+<p>When writing code that will impact multiple modules, it’s helpful to only run
+all tests that are affected by a given code change. Thanks to the GN/Ninja
+build, this is possible! This is done by using a <code class="docutils literal notranslate"><span class="pre">pw_target_runner_server</span></code>
+that Ninja can send the tests to as it rebuilds affected targets.</p>
+<p>Additionally, this method enables distributed testing. If multiple devices are
+connected, the tests will be run across all attached devices to further speed up
+testing.</p>
+<div class="section" id="step-1-start-test-server">
+<h4>Step 1: Start test server<a class="headerlink" href="#step-1-start-test-server" title="Permalink to this headline">¶</a></h4>
+<p>To allow Ninja to properly serialize tests to run on an arbitrary number of
+devices, Ninja will send test requests to a server running in the background.
+The first step is to launch this server. By default, the script will attempt
+to automatically detect all attached STM32f429I-DISC1 boards and use them for
+testing. To override this behavior, provide a custom server configuration file
+with <code class="docutils literal notranslate"><span class="pre">--server-config</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you unplug or plug in any boards, you’ll need to restart the test server
+for hardware changes to properly be detected.</p>
+</div>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ stm32f429i_disc1_test_server
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-configure-gn">
+<h4>Step 2: Configure GN<a class="headerlink" href="#step-2-configure-gn" title="Permalink to this headline">¶</a></h4>
+<p>By default, this hardware target has incremental testing via
+<code class="docutils literal notranslate"><span class="pre">pw_target_runner</span></code> disabled. Enabling the <code class="docutils literal notranslate"><span class="pre">pw_use_test_server</span></code> build arg
+tells GN to send requests to a running <code class="docutils literal notranslate"><span class="pre">stm32f429i_disc1_test_server</span></code>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ gn args out
+<span class="c1"># Modify and save the args file to use pw_target_runner.</span>
+<span class="nv">pw_use_test_server</span> <span class="o">=</span> <span class="nb">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-build-changes">
+<h4>Step 3: Build changes<a class="headerlink" href="#step-3-build-changes" title="Permalink to this headline">¶</a></h4>
+<p>Whenever you run <code class="docutils literal notranslate"><span class="pre">ninja</span> <span class="pre">-C</span> <span class="pre">out</span> <span class="pre">stm32f429i</span></code>, affected tests will be built and
+run on the attached device(s). Alternatively, you may use <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">watch</span></code> to set up
+Pigweed to build/test whenever it sees changes to source files.</p>
+</div>
+</div>
+</div>
+<div class="section" id="debugging">
+<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>There are multiple ways to debug the device, including using commercial tools
+like SEGGER’s J-Link. However, the Discovery board has an on-board STLink
+debugger, which is supported by the open source OpenOCD debugger. To debug with
+OpenOCD requires a few steps. Summary version of the steps:</p>
+<ol class="arabic">
+<li><p>Connect OpenOCD to the device in terminal A. Leave this running</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openocd -f targets/stm32f429i-disc1/py/stm32f429i_disc1_utils/openocd_stm32f4xx.cfg
+</pre></div>
+</div>
+</li>
+<li><p>Connect GDB to the running OpenOCD instance in terminal B</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ arm-none-eabi-gdb -ex <span class="s2">&quot;target remote :3333&quot;</span> <span class="se">\</span>
+  out/stm32f429i_disc1_debug/obj/pw_assert/test/assert_facade_test.elf
+</pre></div>
+</div>
+</li>
+<li><p>Flash (<code class="docutils literal notranslate"><span class="pre">load</span></code>), run (<code class="docutils literal notranslate"><span class="pre">mon</span> <span class="pre">reset</span> <span class="pre">init;</span> <span class="pre">continue</span></code>), and debug</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(gdb) set print pretty on
+(gdb) load
+(gdb) mon reset init
+(gdb) continue
+</pre></div>
+</div>
+</li>
+<li><p>You can re-flash the device after compiling by running <code class="docutils literal notranslate"><span class="pre">load</span></code>.</p></li>
+</ol>
+<div class="section" id="step-1-start-an-openocd-server-and-connect-to-the-device">
+<h3>Step 1: Start an OpenOCD server and connect to the device<a class="headerlink" href="#step-1-start-an-openocd-server-and-connect-to-the-device" title="Permalink to this headline">¶</a></h3>
+<p>OpenOCD is a persistent server that you run and leave running to bridge between
+GDB and the device. To run it for the Discovery board:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ openocd -f targets/stm32f429i-disc1/py/stm32f429i_disc1_utils/openocd_stm32f4xx.cfg
+</pre></div>
+</div>
+<p>Typical output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Open On-Chip Debugger 0.10.0+dev-01243-ge41c0f49-dirty (2020-05-21-10:27)
+Licensed under GNU GPL v2
+For bug reports, read
+        http://openocd.org/doc/doxygen/bugs.html
+DEPRECATED! use &#39;adapter driver&#39; not &#39;interface&#39;
+Info : The selected transport took over low-level target control. The results might differ compared to plain JTAG/SWD
+srst_only separate srst_nogate srst_open_drain connect_deassert_srst
+
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : clock speed 2000 kHz
+Info : STLINK V2J25M14 (API v2) VID:PID 0483:374B
+Info : Target voltage: 2.871879
+Info : stm32f4x.cpu: hardware has 6 breakpoints, 4 watchpoints
+Info : starting gdb server for stm32f4x.cpu on 3333
+Info : Listening on port 3333 for gdb connections
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-start-gdb-and-connect-to-the-openocd-server">
+<h3>Step 2: Start GDB and connect to the OpenOCD server<a class="headerlink" href="#step-2-start-gdb-and-connect-to-the-openocd-server" title="Permalink to this headline">¶</a></h3>
+<p>Start GDB pointing to the correct .elf file, and tell it to connect to the
+OpenOCD server (running on port 333 by default).</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ arm-none-eabi-gdb -ex <span class="s2">&quot;target remote :3333&quot;</span> <span class="se">\</span>
+  out/stm32f429i_disc1_debug/obj/pw_assert/test/assert_facade_test.elf
+</pre></div>
+</div>
+<p>In this case the assert facade test is debugged, but substitute your own ELF
+file. This should produce output similar to the following:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GNU gdb (GNU Arm Embedded Toolchain 9-2020-q2-update) 8.3.1.20191211-git
+Copyright (C) 2019 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type &quot;show copying&quot; and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;--host=x86_64-apple-darwin10 --target=arm-none-eabi&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from out/stm32f429i_disc1_debug/obj/pw_assert//test/assert_facade_test.elf...
+Remote debugging using :3333
+pw_BootEntry () at ../pw_boot_armv7m/core_init.c:117
+117     }
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-3-flash-run-and-debug">
+<h3>Step 3: Flash, run, and debug<a class="headerlink" href="#step-3-flash-run-and-debug" title="Permalink to this headline">¶</a></h3>
+<p>Now that the GDB instance is connected to the device, you can flash, run, and debug.</p>
+<p>To flash</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(gdb) load
+</pre></div>
+</div>
+<p>This will produce output similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(gdb) load
+Loading section .vector_table, size 0x10 lma 0x8000000
+Loading section .code, size 0xdb8c lma 0x8000200
+Loading section .ARM, size 0x8 lma 0x800dd90
+Loading section .static_init_ram, size 0x1d0 lma 0x800dd98
+Start address 0x8007c48, load size 56692
+Transfer rate: 25 KB/sec, 8098 bytes/write.
+</pre></div>
+</div>
+<p>To reset the device and halt on the first instruction (before main):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(gdb) mon reset init
+</pre></div>
+</div>
+<p>This will produce output similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(gdb) mon reset init
+Unable to match requested speed 2000 kHz, using 1800 kHz
+Unable to match requested speed 2000 kHz, using 1800 kHz
+target halted due to debug-request, current mode: Thread
+xPSR: 0x01000000 pc: 0x08007930 msp: 0x20030000
+Unable to match requested speed 8000 kHz, using 4000 kHz
+Unable to match requested speed 8000 kHz, using 4000 kHz
+</pre></div>
+</div>
+<p>The device is now ready for debugging. You can place breakpoints and start the
+device with <code class="docutils literal notranslate"><span class="pre">continue</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../build_system.html" class="btn btn-neutral float-right" title="Build system" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../lm3s6965evb-qemu/target_docs.html" class="btn btn-neutral float-left" title="lm3s6965evb-qemu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

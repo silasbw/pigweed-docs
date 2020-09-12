@@ -1,0 +1,1157 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_assert &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_assert_basic" href="../pw_assert_basic/docs.html" />
+    <link rel="prev" title="pw_allocator" href="../pw_allocator/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_assert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#structure-of-assert-modules">Structure of assert modules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#facade-api-reference">Facade API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backend-api-reference">Backend API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frequently-asked-questions">Frequently asked questions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#when-should-dcheck-be-used-instead-of-check-and-vice-versa">When should DCHECK_* be used instead of CHECK_* and vice versa?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-should-objects-be-asserted-against-or-compared">How should objects be asserted against or compared?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-was-the-assert-facade-designed-this-way">Why was the assert facade designed this way?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#why-isn-t-there-a-pw-check-le-why-is-the-type-e-g-int-needed">Why isn’t there a <code class="docutils literal notranslate"><span class="pre">PW_CHECK_LE</span></code>? Why is the type (e.g. <code class="docutils literal notranslate"><span class="pre">INT</span></code>) needed?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compatibility">Compatibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roadmap-status">Roadmap &amp; Status</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#currently-implemented-modules">Currently implemented modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-yet-written-modules">Not yet written modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#missing-functionality">Missing functionality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_assert</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-assert">
+<h1>pw_assert<a class="headerlink" href="#pw-assert" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Pigweed’s assert module enables applications to check preconditions, triggering
+a crash if the condition is not met. Consistent use of asserts is one aspect of
+defensive programming that can lead to more reliable and less buggy code.</p>
+<p>The assert API facilitates flexible crash handling through Pigweed’s facade
+mechanism. The API is desigend to enable features like:</p>
+<ul class="simple">
+<li><p>Optional ancillary printf-style messages along assertions</p></li>
+<li><p>Capturing actual values of binary operator assertions like <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span></code></p></li>
+<li><p>Compatibility with pw_tokenizer for reduced binary code size</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_assert</span></code> API provides three classes of macros:</p>
+<ul class="simple">
+<li><p><strong>PW_CRASH(format, …)</strong> - Trigger a crash with a message.</p></li>
+<li><p><strong>PW_CHECK(condition[, format, …])</strong> - Assert a condition, optionally with
+a message.</p></li>
+<li><p><strong>PW_CHECK_&lt;type&gt;_&lt;cmp&gt;(a, b[, fmt, …])</strong> - Assert that the expression <code class="docutils literal notranslate"><span class="pre">a</span>
+<span class="pre">&lt;cmp&gt;</span> <span class="pre">b</span></code> is true, optionally with a message.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All of the assert macros optionally support a message with additional
+arguments, to assist in debugging when an assert triggers:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">ItemCount</span><span class="p">(),</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">ItemCount</span><span class="p">(),</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&quot;System state: %s&quot;</span><span class="p">,</span> <span class="n">GetStateStr</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_assert/assert.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">sensor_running</span> <span class="o">=</span> <span class="n">StartSensor</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+  <span class="n">PW_CHECK</span><span class="p">(</span><span class="n">sensor_running</span><span class="p">,</span> <span class="s">&quot;Sensor failed to start; code: %s&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+
+  <span class="kt">int</span> <span class="n">temperature_c</span> <span class="o">=</span> <span class="n">ReadSensorCelcius</span><span class="p">();</span>
+  <span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">temperature_c</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span>
+                  <span class="s">&quot;System is way out of heat spec; state=%s&quot;</span><span class="p">,</span>
+                  <span class="n">ReadSensorStateString</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>All macros have both a <code class="docutils literal notranslate"><span class="pre">CHECK</span></code> and <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variant. The <code class="docutils literal notranslate"><span class="pre">CHECK</span></code>
+variant is always enabled, even in production. Generally, we advise making
+most asserts <code class="docutils literal notranslate"><span class="pre">CHECK</span></code> rather than <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code>, unless there is a critical
+performance or code size reason to use <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This assert is always enabled, even in production.</span>
+<span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">ItemCount</span><span class="p">(),</span> <span class="mi">100</span><span class="p">);</span>
+
+<span class="c1">// This assert disabled for release builds, where NDEBUG is defined.</span>
+<span class="c1">// The functions ItemCount() and GetStateStr() are never called.</span>
+<span class="n">PW_DCHECK_INT_LE</span><span class="p">(</span><span class="n">ItemCount</span><span class="p">(),</span> <span class="mi">100</span><span class="p">,</span> <span class="s">&quot;System state: %s&quot;</span><span class="p">,</span> <span class="n">GetStateStr</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="structure-of-assert-modules">
+<h3>Structure of assert modules<a class="headerlink" href="#structure-of-assert-modules" title="Permalink to this headline">¶</a></h3>
+<p>The module is split into two components:</p>
+<ol class="arabic simple">
+<li><p>The <strong>facade</strong> (this module) which is only a macro interface layer, and
+performs the actual checks for the conditions.</p></li>
+<li><p>The <strong>backend</strong>, provided elsewhere, that handles the consequences of an
+assert failing. Example backends include <code class="docutils literal notranslate"><span class="pre">pw_assert_basic</span></code>, which prints a
+useful message and either quits the application (on host) or hangs in a
+while loop (on device). In the future, there will be a tokenized assert
+backend. This is also where application or product specific crash handling
+would go.</p></li>
+</ol>
+<div><svg height="120" viewBox="0 0 448 120" width="448" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs_block">
+    <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
+      <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
+    </filter>
+  </defs>
+  <title>blockdiag</title>
+  <desc />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="67" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="16" font-style="normal" font-weight="normal" text-anchor="middle" textLength="52" x="128.0" y="68">facade</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="16" font-style="normal" font-weight="normal" text-anchor="middle" textLength="61" x="320.5" y="68">backend</text>
+  <path d="M 192 60 L 248 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="255,60 248,56 248,64 255,60" stroke="rgb(0,0,0)" />
+</svg>
+</div>
+<p>See the Backend API section below for more details.</p>
+</div>
+</div>
+<div class="section" id="facade-api-reference">
+<h2>Facade API reference<a class="headerlink" href="#facade-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>The below functions describe the assert API functions that applications should
+invoke to assert.</p>
+<dl class="function">
+<dt id="_CPPv48PW_CRASH6formatz">
+<span id="_CPPv38PW_CRASH6formatz"></span><span id="_CPPv28PW_CRASH6formatz"></span><span id="PW_CRASH__format.z"></span><code class="sig-name descname">PW_CRASH</code><span class="sig-paren">(</span>format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48PW_CRASH6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Trigger a crash with a message. Replaces LOG_FATAL() in other systems. Can
+include a message with format arguments; for example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CRASH</span><span class="p">(</span><span class="s">&quot;Unexpected: frobnitz in state: %s&quot;</span><span class="p">,</span> <span class="n">frobnitz_state</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note: <code class="docutils literal notranslate"><span class="pre">PW_CRASH</span></code> is the equivalent of <code class="docutils literal notranslate"><span class="pre">LOG_FATAL</span></code> in other systems, where
+a device crash is triggered with a message. In Pigweed, logging and
+crashing/asserting are separated. There is a <code class="docutils literal notranslate"><span class="pre">LOG_CRITICAL</span></code> level in the
+logging module, but it does not have side effects; for <code class="docutils literal notranslate"><span class="pre">LOG_FATAL</span></code>, instead
+use this macro (<code class="docutils literal notranslate"><span class="pre">PW_CRASH</span></code>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv48PW_CHECK9condition">
+<span id="_CPPv38PW_CHECK9condition"></span><span id="_CPPv28PW_CHECK9condition"></span><span id="PW_CHECK__condition"></span><code class="sig-name descname">PW_CHECK</code><span class="sig-paren">(</span>condition<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48PW_CHECK9condition" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv48PW_CHECK9condition6formatz">
+<span id="_CPPv38PW_CHECK9condition6formatz"></span><span id="_CPPv28PW_CHECK9condition6formatz"></span><span id="PW_CHECK__condition.format.z"></span><code class="sig-name descname">PW_CHECK</code><span class="sig-paren">(</span>condition, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48PW_CHECK9condition6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv49PW_DCHECK9condition">
+<span id="_CPPv39PW_DCHECK9condition"></span><span id="_CPPv29PW_DCHECK9condition"></span><span id="PW_DCHECK__condition"></span><code class="sig-name descname">PW_DCHECK</code><span class="sig-paren">(</span>condition<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49PW_DCHECK9condition" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv49PW_DCHECK9condition6formatz">
+<span id="_CPPv39PW_DCHECK9condition6formatz"></span><span id="_CPPv29PW_DCHECK9condition6formatz"></span><span id="PW_DCHECK__condition.format.z"></span><code class="sig-name descname">PW_DCHECK</code><span class="sig-paren">(</span>condition, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49PW_DCHECK9condition6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Assert that a condition is true, optionally including a message with
+arguments to report if the codition is false.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variants only run if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> is defined; otherwise, the
+entire statement is removed (and the expression not evaluated).</p>
+<p>Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK</span><span class="p">(</span><span class="n">StartTurbines</span><span class="p">());</span>
+<span class="n">PW_CHECK</span><span class="p">(</span><span class="n">StartWarpDrive</span><span class="p">(),</span> <span class="s">&quot;Oddly warp drive couldn&#39;t start; ruh-roh!&quot;</span><span class="p">);</span>
+<span class="n">PW_CHECK</span><span class="p">(</span><span class="n">RunSelfTest</span><span class="p">(),</span> <span class="s">&quot;Failure in self test; try %d&quot;</span><span class="p">,</span> <span class="n">TestAttempts</span><span class="p">());</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Don’t use use <code class="docutils literal notranslate"><span class="pre">PW_CHECK</span></code> for binary comparisons or status checks!</p>
+<p>Instead, use the <code class="docutils literal notranslate"><span class="pre">PW_CHECK_&lt;TYPE&gt;_&lt;OP&gt;</span></code> macros. These macros enable
+capturing the value of the operands, and also tokenizing them if using a
+tokenizing assert backend. For example, if <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are integers,
+use instead <code class="docutils literal notranslate"><span class="pre">PW_CHECK_INT_LT(x,</span> <span class="pre">b)</span></code>.</p>
+<p>Additionally, use <code class="docutils literal notranslate"><span class="pre">PW_CHECK_OK(status)</span></code> when checking for a
+<code class="docutils literal notranslate"><span class="pre">Status::OK</span></code>, since it enables showing a human-readable status string
+rather than an integer (e.g. <code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">==</span> <span class="pre">RESOURCE_EXHAUSTED</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">==</span> <span class="pre">5</span></code>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 51%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Do NOT do this</strong></p></td>
+<td><p><strong>Do this instead</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK(a_int</span> <span class="pre">&lt;</span> <span class="pre">b_int)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_INT_LT(a_int,</span> <span class="pre">b_int)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK(a_ptr</span> <span class="pre">&lt;=</span> <span class="pre">b_ptr)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_PTR_LE(a_ptr,</span> <span class="pre">b_ptr)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK(Temp()</span> <span class="pre">&lt;=</span> <span class="pre">10.0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_FLOAT_EXACT_LE(</span></code>
+``    Temp(), 10.0)``</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK(Foo()</span> <span class="pre">==</span> <span class="pre">Status::OK)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_OK(Foo())</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_CHECK_NOTNULL3ptr">
+<span id="_CPPv316PW_CHECK_NOTNULL3ptr"></span><span id="_CPPv216PW_CHECK_NOTNULL3ptr"></span><span id="PW_CHECK_NOTNULL__ptr"></span><code class="sig-name descname">PW_CHECK_NOTNULL</code><span class="sig-paren">(</span>ptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_CHECK_NOTNULL3ptr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_CHECK_NOTNULL3ptr6formatz">
+<span id="_CPPv316PW_CHECK_NOTNULL3ptr6formatz"></span><span id="_CPPv216PW_CHECK_NOTNULL3ptr6formatz"></span><span id="PW_CHECK_NOTNULL__ptr.format.z"></span><code class="sig-name descname">PW_CHECK_NOTNULL</code><span class="sig-paren">(</span>ptr, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_CHECK_NOTNULL3ptr6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_DCHECK_NOTNULL3ptr">
+<span id="_CPPv317PW_DCHECK_NOTNULL3ptr"></span><span id="_CPPv217PW_DCHECK_NOTNULL3ptr"></span><span id="PW_DCHECK_NOTNULL__ptr"></span><code class="sig-name descname">PW_DCHECK_NOTNULL</code><span class="sig-paren">(</span>ptr<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_DCHECK_NOTNULL3ptr" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_DCHECK_NOTNULL3ptr6formatz">
+<span id="_CPPv317PW_DCHECK_NOTNULL3ptr6formatz"></span><span id="_CPPv217PW_DCHECK_NOTNULL3ptr6formatz"></span><span id="PW_DCHECK_NOTNULL__ptr.format.z"></span><code class="sig-name descname">PW_DCHECK_NOTNULL</code><span class="sig-paren">(</span>ptr, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_DCHECK_NOTNULL3ptr6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Assert that the given pointer is not <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, optionally including a message
+with arguments to report if the pointer is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variants only run if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> is defined; otherwise, the
+entire statement is removed (and the expression not evaluated).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Foo</span><span class="o">*</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">GetTheFoo</span><span class="p">()</span>
+<span class="n">PW_CHECK_NOTNULL</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span>
+
+<span class="n">Bar</span><span class="o">*</span> <span class="n">bar</span> <span class="o">=</span> <span class="n">GetSomeBar</span><span class="p">();</span>
+<span class="n">PW_CHECK_NOTNULL</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="s">&quot;Weirdly got NULL bar; state: %d&quot;</span><span class="p">,</span> <span class="n">MyState</span><span class="p">());</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_CHECK_TYPE_OP1a1b">
+<span id="_CPPv316PW_CHECK_TYPE_OP1a1b"></span><span id="_CPPv216PW_CHECK_TYPE_OP1a1b"></span><span id="PW_CHECK_TYPE_OP__a.b"></span><code class="sig-name descname">PW_CHECK_TYPE_OP</code><span class="sig-paren">(</span>a, b<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_CHECK_TYPE_OP1a1b" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv416PW_CHECK_TYPE_OP1a1b6formatz">
+<span id="_CPPv316PW_CHECK_TYPE_OP1a1b6formatz"></span><span id="_CPPv216PW_CHECK_TYPE_OP1a1b6formatz"></span><span id="PW_CHECK_TYPE_OP__a.b.format.z"></span><code class="sig-name descname">PW_CHECK_TYPE_OP</code><span class="sig-paren">(</span>a, b, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv416PW_CHECK_TYPE_OP1a1b6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_DCHECK_TYPE_OP1a1b">
+<span id="_CPPv317PW_DCHECK_TYPE_OP1a1b"></span><span id="_CPPv217PW_DCHECK_TYPE_OP1a1b"></span><span id="PW_DCHECK_TYPE_OP__a.b"></span><code class="sig-name descname">PW_DCHECK_TYPE_OP</code><span class="sig-paren">(</span>a, b<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_DCHECK_TYPE_OP1a1b" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv417PW_DCHECK_TYPE_OP1a1b6formatz">
+<span id="_CPPv317PW_DCHECK_TYPE_OP1a1b6formatz"></span><span id="_CPPv217PW_DCHECK_TYPE_OP1a1b6formatz"></span><span id="PW_DCHECK_TYPE_OP__a.b.format.z"></span><code class="sig-name descname">PW_DCHECK_TYPE_OP</code><span class="sig-paren">(</span>a, b, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv417PW_DCHECK_TYPE_OP1a1b6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Asserts that <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">OP</span> <span class="pre">b</span></code> is true, where <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are converted to
+<code class="docutils literal notranslate"><span class="pre">TYPE</span></code>; with <code class="docutils literal notranslate"><span class="pre">OP</span></code> and <code class="docutils literal notranslate"><span class="pre">TYPE</span></code> described below.</p>
+<p>If present, the optional format message is reported on failure. Depending on
+the backend, values of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> will also be reported.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variants only run if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> is defined; otherwise, the
+entire statement is removed (and the expression not evaluated).</p>
+<p>Example, with no message:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">CurrentTemperature</span><span class="p">(),</span> <span class="mi">100</span><span class="p">);</span>
+<span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">ItemCount</span><span class="p">(),</span> <span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Example, with an included message and arguments:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK_FLOAT_EXACT_GE</span><span class="p">(</span><span class="n">BatteryVoltage</span><span class="p">(),</span> <span class="mf">3.2</span><span class="p">,</span>
+                        <span class="s">&quot;System state=%s&quot;</span><span class="p">,</span> <span class="n">SysState</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>Below is the full list of binary comparison assert macros, along with the
+type specifier. The specifier is irrelevant to application authors but is
+needed for backend implementers.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 19%" />
+<col style="width: 15%" />
+<col style="width: 32%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Macro</p></td>
+<td><p>a, b type</p></td>
+<td><p>condition</p></td>
+<td><p>a, b format specifier</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_INT_LE</p></td>
+<td><p>int</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_INT_LT</p></td>
+<td><p>int</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_INT_GE</p></td>
+<td><p>int</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_INT_GT</p></td>
+<td><p>int</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_INT_EQ</p></td>
+<td><p>int</p></td>
+<td><p>a == b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_INT_NE</p></td>
+<td><p>int</p></td>
+<td><p>a != b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_UINT_LE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_UINT_LT</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_UINT_GE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_UINT_GT</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_UINT_EQ</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a == b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_UINT_NE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a != b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_PTR_LE</p></td>
+<td><p>void*</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_PTR_LT</p></td>
+<td><p>void*</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_PTR_GE</p></td>
+<td><p>void*</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_PTR_GT</p></td>
+<td><p>void*</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_PTR_EQ</p></td>
+<td><p>void*</p></td>
+<td><p>a == b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_PTR_NE</p></td>
+<td><p>void*</p></td>
+<td><p>a != b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_FLOAT_EXACT_LE</p></td>
+<td><p>float</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_FLOAT_EXACT_LT</p></td>
+<td><p>float</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_FLOAT_EXACT_GE</p></td>
+<td><p>float</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_FLOAT_EXACT_GT</p></td>
+<td><p>float</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_CHECK_FLOAT_EXACT_EQ</p></td>
+<td><p>float</p></td>
+<td><p>a == b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_CHECK_FLOAT_EXACT_NE</p></td>
+<td><p>float</p></td>
+<td><p>a != b</p></td>
+<td><p>%f</p></td>
+</tr>
+</tbody>
+</table>
+<p>The above <code class="docutils literal notranslate"><span class="pre">CHECK_*_*()</span></code> are also available in DCHECK variants, which will
+only evaluate their arguments and trigger if the <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> macro is defined.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 19%" />
+<col style="width: 15%" />
+<col style="width: 30%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Macro</p></td>
+<td><p>a, b type</p></td>
+<td><p>condition</p></td>
+<td><p>a, b format
+specifier</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_INT_LE</p></td>
+<td><p>int</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_INT_LT</p></td>
+<td><p>int</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_INT_GE</p></td>
+<td><p>int</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_INT_GT</p></td>
+<td><p>int</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_INT_EQ</p></td>
+<td><p>int</p></td>
+<td><p>a == b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_INT_NE</p></td>
+<td><p>int</p></td>
+<td><p>a != b</p></td>
+<td><p>%d</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_UINT_LE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_UINT_LT</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_UINT_GE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_UINT_GT</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_UINT_EQ</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a == b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_UINT_NE</p></td>
+<td><p>unsigned int</p></td>
+<td><p>a != b</p></td>
+<td><p>%u</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_PTR_LE</p></td>
+<td><p>void*</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_PTR_LT</p></td>
+<td><p>void*</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_PTR_GE</p></td>
+<td><p>void*</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_PTR_GT</p></td>
+<td><p>void*</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_PTR_EQ</p></td>
+<td><p>void*</p></td>
+<td><p>a == b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_PTR_NE</p></td>
+<td><p>void*</p></td>
+<td><p>a != b</p></td>
+<td><p>%p</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_FLOAT_EXACT_LE</p></td>
+<td><p>float</p></td>
+<td><p>a &lt;= b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_FLOAT_EXACT_LT</p></td>
+<td><p>float</p></td>
+<td><p>a &lt;  b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_FLOAT_EXACT_GE</p></td>
+<td><p>float</p></td>
+<td><p>a &gt;= b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_FLOAT_EXACT_GT</p></td>
+<td><p>float</p></td>
+<td><p>a &gt;  b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-even"><td><p>PW_DCHECK_FLOAT_EXACT_EQ</p></td>
+<td><p>float</p></td>
+<td><p>a == b</p></td>
+<td><p>%f</p></td>
+</tr>
+<tr class="row-odd"><td><p>PW_DCHECK_FLOAT_EXACT_NE</p></td>
+<td><p>float</p></td>
+<td><p>a != b</p></td>
+<td><p>%f</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>For float, proper comparator checks which take floating point
+precision and ergo error accumulation into account are not provided on
+purpose as this comes with some complexity and requires application
+specific tolerances in terms of Units of Least Precision (ULP). Instead,
+we recommend developers carefully consider how floating point precision and
+error impact the data they are bounding and whether checks are appropriate.</p>
+</div>
+<dl class="function">
+<dt id="_CPPv419PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance">
+<span id="_CPPv319PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance"></span><span id="_CPPv219PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance"></span><span id="PW_CHECK_FLOAT_NEAR__a.b.abs_tolerance"></span><code class="sig-name descname">PW_CHECK_FLOAT_NEAR</code><span class="sig-paren">(</span>a, b, abs_tolerance<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv419PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz">
+<span id="_CPPv319PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz"></span><span id="_CPPv219PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz"></span><span id="PW_CHECK_FLOAT_NEAR__a.b.abs_tolerance.format.z"></span><code class="sig-name descname">PW_CHECK_FLOAT_NEAR</code><span class="sig-paren">(</span>a, b, abs_tolerance, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419PW_CHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv420PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance">
+<span id="_CPPv320PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance"></span><span id="_CPPv220PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance"></span><span id="PW_DCHECK_FLOAT_NEAR__a.b.abs_tolerance"></span><code class="sig-name descname">PW_DCHECK_FLOAT_NEAR</code><span class="sig-paren">(</span>a, b, abs_tolerance<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv420PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz">
+<span id="_CPPv320PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz"></span><span id="_CPPv220PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz"></span><span id="PW_DCHECK_FLOAT_NEAR__a.b.abs_tolerance.format.z"></span><code class="sig-name descname">PW_DCHECK_FLOAT_NEAR</code><span class="sig-paren">(</span>a, b, abs_tolerance, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv420PW_DCHECK_FLOAT_NEAR1a1b13abs_tolerance6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Asserts that <code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">&gt;=</span> <span class="pre">b</span> <span class="pre">-</span> <span class="pre">abs_tolerance)</span> <span class="pre">&amp;&amp;</span> <span class="pre">(a</span> <span class="pre">&lt;=</span> <span class="pre">b</span> <span class="pre">+</span> <span class="pre">abs_tolerance)</span></code> is true,
+where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">abs_tolerance</span></code> are converted to <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This also asserts that <code class="docutils literal notranslate"><span class="pre">abs_tolerance</span> <span class="pre">&gt;=</span> <span class="pre">0</span></code>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variants only run if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> is defined; otherwise, the
+entire statement is removed (and the expression not evaluated).</p>
+<p>Example, with no message:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK_FLOAT_NEAR</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Example, with an included message and arguments:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_CHECK_FLOAT_NEAR</span><span class="p">(</span><span class="n">FirstOperation</span><span class="p">(),</span> <span class="n">RedundantOperation</span><span class="p">(),</span> <span class="mf">0.1</span><span class="p">,</span>
+                    <span class="s">&quot;System state=%s&quot;</span><span class="p">,</span> <span class="n">SysState</span><span class="p">());</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv411PW_CHECK_OK6status">
+<span id="_CPPv311PW_CHECK_OK6status"></span><span id="_CPPv211PW_CHECK_OK6status"></span><span id="PW_CHECK_OK__status"></span><code class="sig-name descname">PW_CHECK_OK</code><span class="sig-paren">(</span>status<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411PW_CHECK_OK6status" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv411PW_CHECK_OK6status6formatz">
+<span id="_CPPv311PW_CHECK_OK6status6formatz"></span><span id="_CPPv211PW_CHECK_OK6status6formatz"></span><span id="PW_CHECK_OK__status.format.z"></span><code class="sig-name descname">PW_CHECK_OK</code><span class="sig-paren">(</span>status, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv411PW_CHECK_OK6status6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv412PW_DCHECK_OK6status">
+<span id="_CPPv312PW_DCHECK_OK6status"></span><span id="_CPPv212PW_DCHECK_OK6status"></span><span id="PW_DCHECK_OK__status"></span><code class="sig-name descname">PW_DCHECK_OK</code><span class="sig-paren">(</span>status<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_DCHECK_OK6status" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv412PW_DCHECK_OK6status6formatz">
+<span id="_CPPv312PW_DCHECK_OK6status6formatz"></span><span id="_CPPv212PW_DCHECK_OK6status6formatz"></span><span id="PW_DCHECK_OK__status.format.z"></span><code class="sig-name descname">PW_DCHECK_OK</code><span class="sig-paren">(</span>status, format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv412PW_DCHECK_OK6status6formatz" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Assert that <code class="docutils literal notranslate"><span class="pre">status</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">pw::Status::OK</span></code> (in C++) or
+<code class="docutils literal notranslate"><span class="pre">PW_STATUS_OK</span></code> (in C). Optionally include a message with arguments to
+report.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DCHECK</span></code> variants only run if <code class="docutils literal notranslate"><span class="pre">NDEBUG</span></code> is defined; otherwise, the
+entire statement is removed (and the expression not evaluated).</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pw</span><span class="o">::</span><span class="n">Status</span> <span class="n">operation_status</span> <span class="o">=</span> <span class="n">DoSomeOperation</span><span class="p">();</span>
+<span class="n">PW_CHECK_OK</span><span class="p">(</span><span class="n">operation_status</span><span class="p">);</span>
+
+<span class="c1">// Any expression that evaluates to a pw::Status or pw_Status works.</span>
+<span class="n">PW_CHECK_OK</span><span class="p">(</span><span class="n">DoTheThing</span><span class="p">(),</span> <span class="s">&quot;System state: %s&quot;</span><span class="p">,</span> <span class="n">SystemState</span><span class="p">());</span>
+
+<span class="c1">// C works too.</span>
+<span class="n">pw_Status</span> <span class="n">c_status</span> <span class="o">=</span> <span class="n">DoMoreThings</span><span class="p">();</span>
+<span class="n">PW_CHECK_OK</span><span class="p">(</span><span class="n">c_status</span><span class="p">,</span> <span class="s">&quot;System state: %s&quot;</span><span class="p">,</span> <span class="n">SystemState</span><span class="p">());</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">PW_CHECK_OK(status)</span></code> instead of <code class="docutils literal notranslate"><span class="pre">PW_CHECK(status</span> <span class="pre">==</span> <span class="pre">Status::OK)</span></code>
+enables displaying an error message with a string version of the error
+code; for example <code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">==</span> <span class="pre">RESOURCE_EXHAUSTED</span></code> instead of <code class="docutils literal notranslate"><span class="pre">status</span> <span class="pre">==</span>
+<span class="pre">5</span></code>.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="backend-api-reference">
+<h2>Backend API reference<a class="headerlink" href="#backend-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>The backend controls what to do in the case of an assertion failure. In the
+most basic cases, the backend could display the assertion failure on something
+like sys_io and halt in a while loop waiting for a debugger. In other cases,
+the backend could store crash details like the current thread’s stack to flash.</p>
+<p>This facade module (<code class="docutils literal notranslate"><span class="pre">pw_assert</span></code>) does not provide a backend. See
+<a class="reference internal" href="../pw_assert_basic/docs.html#chapter-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for a basic implementation.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The facade macros (<code class="docutils literal notranslate"><span class="pre">PW_CRASH</span></code> and related) are expected to behave like they
+have the <code class="docutils literal notranslate"><span class="pre">[[</span> <span class="pre">noreturn</span> <span class="pre">]]</span></code> attribute set. This implies that the backend
+handler functions, <code class="docutils literal notranslate"><span class="pre">PW_HANDLE_*</span></code> defined by the backend, must not return.</p>
+<p>In other words, the device must reboot.</p>
+</div>
+<p>The backend must provide the header</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw_assert_backend/backend.h</span></code></p>
+<p>and that header must define the following macros:</p>
+<dl class="function">
+<dt id="_CPPv415PW_HANDLE_CRASH7messagez">
+<span id="_CPPv315PW_HANDLE_CRASH7messagez"></span><span id="_CPPv215PW_HANDLE_CRASH7messagez"></span><span id="PW_HANDLE_CRASH__message.z"></span><code class="sig-name descname">PW_HANDLE_CRASH</code><span class="sig-paren">(</span>message, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv415PW_HANDLE_CRASH7messagez" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Trigger a system crash or halt, and if possible, deliver the specified
+message and arguments to the user or developer.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv424PW_HANDLE_ASSERT_FAILURE13condition_str7messagez">
+<span id="_CPPv324PW_HANDLE_ASSERT_FAILURE13condition_str7messagez"></span><span id="_CPPv224PW_HANDLE_ASSERT_FAILURE13condition_str7messagez"></span><span id="PW_HANDLE_ASSERT_FAILURE__condition_str.message.z"></span><code class="sig-name descname">PW_HANDLE_ASSERT_FAILURE</code><span class="sig-paren">(</span>condition_str, message, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv424PW_HANDLE_ASSERT_FAILURE13condition_str7messagez" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Trigger a system crash or halt, and if possible, deliver the condition string
+(indicating what expression was false) and the message with format arguments,
+to the user or developer.</p>
+<p>This macro is invoked from the <code class="docutils literal notranslate"><span class="pre">PW_CHECK</span></code> facade macro if condition is
+false.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv439PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE5a_str5a_val6op_str5b_str5b_val8type_fmt7messagez">
+<span id="_CPPv339PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE5a_str5a_val6op_str5b_str5b_val8type_fmt7messagez"></span><span id="_CPPv239PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE5a_str5a_val6op_str5b_str5b_val8type_fmt7messagez"></span><span id="PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE__a_str.a_val.op_str.b_str.b_val.type_fmt.message.z"></span><code class="sig-name descname">PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE</code><span class="sig-paren">(</span>a_str, a_val, op_str, b_str, b_val, type_fmt, message, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv439PW_HANDLE_ASSERT_BINARY_COMPARE_FAILURE5a_str5a_val6op_str5b_str5b_val8type_fmt7messagez" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Trigger a system crash or halt for a failed binary comparison assert (e.g.
+any of the <code class="docutils literal notranslate"><span class="pre">PW_CHECK_&lt;type&gt;_&lt;op&gt;</span></code> macros). The handler should combine the
+assert components into a useful message for the user; though in some cases
+this may not be possible.</p>
+<p>Consider the following example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">max_temp</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="n">PW_CHECK_INT_LE</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">MAX_TEMP</span><span class="p">,</span> <span class="s">&quot;Got too hot; state: %s&quot;</span><span class="p">,</span> <span class="n">GetSystemState</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>In this block, the assert will trigger, which will cause the facade to invoke
+the handler macro. Below is the meaning of the arguments, referencing to the
+example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a_str</span></code> - Stringified first operand. In the example: <code class="docutils literal notranslate"><span class="pre">&quot;temp&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a_val</span></code> - The value of the first operand. In the example: <code class="docutils literal notranslate"><span class="pre">16</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">op_str</span></code> - The string version of the operator. In the example: “&lt;=”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b_str</span></code> - Stringified second operand. In the example: <code class="docutils literal notranslate"><span class="pre">&quot;max_temp&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b_val</span></code> - The value of the second operand. In the example: <code class="docutils literal notranslate"><span class="pre">15</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type_fmt</span></code> - The format code for the type. In the example: <code class="docutils literal notranslate"><span class="pre">&quot;%d&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message,</span> <span class="pre">...</span></code> - A formatted message to go with the assert. In the
+example: <code class="docutils literal notranslate"><span class="pre">&quot;Got</span> <span class="pre">too</span> <span class="pre">hot;</span> <span class="pre">state:</span> <span class="pre">%s&quot;,</span> <span class="pre">&quot;ON_FIRE&quot;</span></code>.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>See <a class="reference internal" href="../pw_assert_basic/docs.html#chapter-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for one way to combine these arguments
+into a meaningful error message.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="frequently-asked-questions">
+<h2>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="when-should-dcheck-be-used-instead-of-check-and-vice-versa">
+<h3>When should DCHECK_* be used instead of CHECK_* and vice versa?<a class="headerlink" href="#when-should-dcheck-be-used-instead-of-check-and-vice-versa" title="Permalink to this headline">¶</a></h3>
+<p>There is no hard and fast rule for when to use one or the other.</p>
+<p>In theory, <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code> macros should never be used and all the asserts should
+remain active in production. In practice, <strong>assert statements come at a binary
+size and runtime cost</strong>, even when using extensions like a tokenized assert
+backend that strips the stringified assert expression from the binary. Each
+assert is <strong>at least a branch with a function call</strong>; depending on the assert
+backend, that function call may take several arguments (like the message, the
+file line number, the module, etc). These function calls can take 10-20 bytes
+or more of ROM each. Thus, there is a balance to be struct between <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code>
+and <code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code>.</p>
+<p>Pigweed uses these conventions to decide between <code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code> and <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Prefer to use CHECK_* at public API boundaries</strong> of modules, where an
+invalid value is a clear programmer bug. In certain cases use <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code> to
+keep binary size small when in production; for example, in modules with a
+large public API surface, or modules with many inlined functions in headers.</p></li>
+<li><p><strong>Avoid using CHECK_* macros in headers.</strong> It is still OK to use <code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code>
+macros in headers, but carefully consider the cost, since inlined use of the
+<code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code> macros in headers will expand to the full assert cost for every
+translation unit that includes the header and calls the function with the
+<code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code> instance. <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code> macros are are better, but even they come
+at a cost, since it is preferable to be able to compile a binary in debug
+mode for as long as possible on the road to production.</p></li>
+<li><p><strong>Prefer to use DCHECK_* variants for internal asserts</strong> that attempt to
+catch module-author level programming errors. For example, use DCHECKs to
+verify internal function preconditions, or other invariants that should
+always be true but will likely never fire in production. In some cases using
+<code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code> macros for internal consistency checking can make sense, if the
+runtime cost is low and there are only a couple of instances.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Do not return error status codes for obvious API misuse</strong></p>
+<p>Returning an error code may <strong>mask the earliest sign of a bug</strong> because
+notifying the developer of the problem depends on correct propagation of the
+error to upper levels of the system. Instead, prefer to use the <code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code>
+or <code class="docutils literal notranslate"><span class="pre">DCHECK_*</span></code> macros to ensure a prompt termination and warning to the
+developer.</p>
+<p><strong>Error status codes should be reserved for system misbehaviour or expected
+exceptional cases</strong>, like a sensor is not yet ready, or a storage subsystem
+is full when writing. Doing <code class="docutils literal notranslate"><span class="pre">CHECK_*</span></code> assertions in those cases would be a
+mistake; so use error codes in those cases instead.</p>
+</div>
+</div>
+<div class="section" id="how-should-objects-be-asserted-against-or-compared">
+<h3>How should objects be asserted against or compared?<a class="headerlink" href="#how-should-objects-be-asserted-against-or-compared" title="Permalink to this headline">¶</a></h3>
+<p>Unfortunatly, there is no native mechanism for this, and instead the way to
+assert object states or comparisons is with the normal <code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> macros
+that operate on booleans, ints, and floats.</p>
+<p>This is due to the requirement of supporting C and also tokenization. It may be
+possible support rich object comparions by defining a convention for
+stringifying objects; however, this hasn’t been added yet. Additionally, such a
+mechanism would not work well with tokenization. In particular, it would
+require runtime stringifying arguments and rendering them with <code class="docutils literal notranslate"><span class="pre">%s</span></code>, which
+leads to binary bloat even with tokenization. So it is likely that a rich
+object assert API won’t be added.</p>
+</div>
+<div class="section" id="why-was-the-assert-facade-designed-this-way">
+<h3>Why was the assert facade designed this way?<a class="headerlink" href="#why-was-the-assert-facade-designed-this-way" title="Permalink to this headline">¶</a></h3>
+<p>The Pigweed assert API was designed taking into account the needs of several
+past projects the team members were involved with. Based on those experiences,
+the following were key requirements for the API:</p>
+<ol class="arabic simple">
+<li><p><strong>C compatibility</strong> - Since asserts are typically invoked from arbitrary
+contexts, including from vendor or third party code, the assert system must
+have a C-compatible API. Some API functions working only in C++ is
+acceptable, as long as the key functions work in C.</p></li>
+<li><p><strong>Capturing both expressions and values</strong> - Since asserts can trigger in
+ways that are not repeatable, it is important to capture rich diagnostic
+information to help identifying the root cause of the fault. For asserts,
+this means including the failing expression text, and optionally also
+capturing failing expression values. For example, instead of capturing an
+error with the expression (<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code>), capturing an error with the
+expression and values(<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y,</span> <span class="pre">with</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">10,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">0</span></code>).</p></li>
+<li><p><strong>Tokenization compatible</strong> - It’s important that the assert expressions
+support tokenization; both the expression itself (e.g. <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">&lt;</span> <span class="pre">b</span></code>) and the
+message attached to the expression. For example: <code class="docutils literal notranslate"><span class="pre">PW_CHECK(ItWorks(),</span> <span class="pre">&quot;Ruh</span>
+<span class="pre">roh:</span> <span class="pre">%d&quot;,</span> <span class="pre">some_int)</span></code>.</p></li>
+<li><p><strong>Customizable assert handling</strong> - Most products need to support custom
+handling of asserts. In some cases, an assert might trigger printing out
+details to a UART; in other cases, it might trigger saving a log entry to
+flash. The assert system must support this customization.</p></li>
+</ol>
+<p>The combination of #1, #2, and #3 led to the structure of the API. In
+particular, the need to support tokenized asserts and the need to support
+capturing values led to the choice of having <code class="docutils literal notranslate"><span class="pre">PW_CHECK_INT_LE(a,</span> <span class="pre">b)</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">PW_CHECK(a</span> <span class="pre">&lt;=</span> <span class="pre">b)</span></code>. Needing to support tokenization is what drove the
+facade &amp; backend arrangement, since the backend must provide the raw macros for
+asserting in that case, rather than terminating at a C-style API.</p>
+</div>
+<div class="section" id="why-isn-t-there-a-pw-check-le-why-is-the-type-e-g-int-needed">
+<h3>Why isn’t there a <code class="docutils literal notranslate"><span class="pre">PW_CHECK_LE</span></code>? Why is the type (e.g. <code class="docutils literal notranslate"><span class="pre">INT</span></code>) needed?<a class="headerlink" href="#why-isn-t-there-a-pw-check-le-why-is-the-type-e-g-int-needed" title="Permalink to this headline">¶</a></h3>
+<p>The problem with asserts like <code class="docutils literal notranslate"><span class="pre">PW_CHECK_LE(a,</span> <span class="pre">b)</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">PW_CHECK_INT_LE(a,</span> <span class="pre">b)</span></code> or <code class="docutils literal notranslate"><span class="pre">PW_CHECK_FLOAT_EXACT_LE(a,</span> <span class="pre">b)</span></code> is that to
+capture the arguments with the tokenizer, we need to know the types. Using the
+preprocessor, it is impossible to dispatch based on the types of <code class="docutils literal notranslate"><span class="pre">a</span></code> and
+<code class="docutils literal notranslate"><span class="pre">b</span></code>, so unfortunately having a separate macro for each of the types commonly
+asserted on is necessary.</p>
+</div>
+</div>
+<div class="section" id="compatibility">
+<h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
+<p>The facade is compatible with both C and C++.</p>
+</div>
+<div class="section" id="roadmap-status">
+<h2>Roadmap &amp; Status<a class="headerlink" href="#roadmap-status" title="Permalink to this headline">¶</a></h2>
+<p>The Pigweed assert subsystem consiststs of several modules that work in
+coordination. In particular, there is the facade (this module), then a number
+of backends to handle assert failures. In some cases, the backends will have
+backends (like log_tokenized). Not all of those modules are ready today. Below
+is a brief summary of what modules are ready now, and which need to be written
+or need more work:</p>
+<div class="section" id="currently-implemented-modules">
+<h3>Currently implemented modules<a class="headerlink" href="#currently-implemented-modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert</span></code> - <strong>Stable</strong> - The assert facade (this module). This module is
+stable, and in production use. The documentation is comprehensive and covers
+the functionality. There are (a) tests for the facade macro processing logic,
+using a fake assert backend; and (b) compile tests to verify that the
+selected backend compiles with all supported assert constructions and types.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_basic</span></code> - <strong>Stable</strong> - The assert basic module is a simple assert
+handler that displays the failed assert line and the values of captured
+arguments. Output is directed to <code class="docutils literal notranslate"><span class="pre">pw_sys_io</span></code>. This module is a great
+ready-to-roll module when bringing up a system, but is likely not the best
+choice for production.</p></li>
+</ul>
+</div>
+<div class="section" id="not-yet-written-modules">
+<h3>Not yet written modules<a class="headerlink" href="#not-yet-written-modules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_tokenized</span></code> - <strong>Not started</strong> - Just like there is a
+<code class="docutils literal notranslate"><span class="pre">pw_log_tokenized</span></code> module that leverages the tokenizer to strip log string
+literals from binaries, there will be an implementation that tokenizes the
+assert contents (such as the captured source expression string). We may
+combine <code class="docutils literal notranslate"><span class="pre">pw_log_tokenized</span></code> and <code class="docutils literal notranslate"><span class="pre">pw_assert_tokenized</span></code> into
+<code class="docutils literal notranslate"><span class="pre">pw_log_assert_tokenized</span></code> since much of the details would be shared between
+them.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_log</span></code> - <strong>Not started</strong> - This would use <code class="docutils literal notranslate"><span class="pre">pw_log</span></code> on assert
+failure to communicate the failure information. Instead of being a separate
+module, this might be an optional flag added to <code class="docutils literal notranslate"><span class="pre">pw_assert_basic</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="missing-functionality">
+<h3>Missing functionality<a class="headerlink" href="#missing-functionality" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>Stack traces</strong> - Pigweed doesn’t have a reliable stack walker, which makes
+displaying a stack trace on crash harder. We plan to add this eventually.</p></li>
+<li><p><strong>Snapshot integration</strong> - Pigweed doesn’t yet have a rich system state
+capture system that can capture state like number of tasks, available memory,
+and so on. Snapshot facilities are the obvious ones to run inside an assert
+handler. It’ll happen someday.</p></li>
+<li><p><strong>Light asserts to break circular dependencies</strong> - The Pigweed assert API is
+flexible thanks to the facade structure; however, this can trigger circular
+header dependencies due to facade directly including the backend. This can
+happen when adding asserts to low-level functionality in headers, like for
+example inside <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>. Our polyfill span is used extensively in low level
+components (like malloc and vector), including in some assert backends, which
+leads to circular dependencies when span itself tries to assert.</p>
+<p>There is no solution to this problem that doesn’t require a compromise. The
+easiest solution to enabling asserts everywhere is to shift to a C ABI with
+link time dependency resolution; this breaks the header cycles. However, such
+a structure would prevent custom compile-time filtering and tokenization.</p>
+<p>Our current plan is to offer a simple C-function based assert API, with the
+backend provided at link time rather than through header redirection. For
+example, the API could be as simple as <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">pw_assert(bool</span> <span class="pre">condition)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">pw_assert_crash()</span></code> if the condition check was done in a macro. This assert
+API is intended for contexts where including the backend header would trigger
+these problems, for use in common low level headers like <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_assert_basic/docs.html" class="btn btn-neutral float-right" title="pw_assert_basic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../pw_allocator/docs.html" class="btn btn-neutral float-left" title="pw_allocator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

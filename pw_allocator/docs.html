@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pw_allocator &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pw_assert" href="../pw_assert/docs.html" />
+    <link rel="prev" title="docker" href="../docker/docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../targets.html">Targets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pw_allocator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#heap-integrity-check">Heap Integrity Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heap-poisoning">Heap Poisoning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heap-visualizer">Heap Visualizer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#functionality">Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_base64/docs.html">pw_base64</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bloat/docs.html">pw_bloat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_blob_store/docs.html">pw_blob_store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_boot_armv7m/docs.html">pw_boot_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_build/docs.html">pw_build</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_bytes/docs.html">pw_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_checksum/docs.html">pw_checksum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cli/docs.html">pw_cli</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_containers/docs.html">pw_containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception/docs.html">pw_cpu_exception</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_cpu_exception_armv7m/docs.html">pw_cpu_exception_armv7m</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_docgen/docs.html">pw_docgen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_doctor/docs.html">pw_doctor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hdlc_lite/docs.html">pw_hdlc_lite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_kvs/docs.html">pw_kvs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_module/docs.html">pw_module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_polyfill/docs.html">pw_polyfill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_preprocessor/docs.html">pw_preprocessor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_presubmit/docs.html">pw_presubmit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf/docs.html">pw_protobuf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_protobuf_compiler/docs.html">pw_protobuf_compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_random/docs.html">pw_random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_result/docs.html">pw_result</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_ring_buffer/docs.html">pw_ring_buffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_status/docs.html">pw_status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_tokenizer/docs.html">pw_tokenizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_toolchain/docs.html">pw_toolchain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace/docs.html">pw_trace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_trace_tokenized/docs.html">pw_trace_tokenized</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_unit_test/docs.html">pw_unit_test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_varint/docs.html">pw_varint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_watch/docs.html">pw_watch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_web_ui/docs.html">pw_web_ui</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../module_guides.html">Module Guides</a> &raquo;</li>
+        
+      <li>pw_allocator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pw-allocator">
+<span id="chapter-pw-allocator"></span><h1>pw_allocator<a class="headerlink" href="#pw-allocator" title="Permalink to this headline">¶</a></h1>
+<p>This module provides various building blocks
+for a dynamic allocator. This is composed of the following parts:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">block</span></code>: An implementation of a linked list of memory blocks, supporting
+splitting and merging of blocks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">freelist</span></code>: A freelist, suitable for fast lookups of available memory
+chunks (i.e. <code class="docutils literal notranslate"><span class="pre">block</span></code> s).</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="heap-integrity-check">
+<h2>Heap Integrity Check<a class="headerlink" href="#heap-integrity-check" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Block</span></code> class provides two sanity check functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">Block::IsValid()</span></code>: Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> is the given block is valid
+and <code class="docutils literal notranslate"><span class="pre">false</span></code> otherwise.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">Block::CrashIfInvalid()</span></code>: Crash the program and output the reason
+why sanity check fails using <code class="docutils literal notranslate"><span class="pre">PW_DCHECK</span></code>.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="heap-poisoning">
+<h2>Heap Poisoning<a class="headerlink" href="#heap-poisoning" title="Permalink to this headline">¶</a></h2>
+<p>By default, this module disables heap poisoning since it requires extra space.
+User can enable heap poisoning by enabling the <code class="docutils literal notranslate"><span class="pre">pw_allocator_POISON_HEAP</span></code>
+build arg.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ gn args out
+<span class="c1"># Modify and save the args file to use heap poison.</span>
+<span class="nv">pw_allocator_POISON_HEAP</span> <span class="o">=</span> <span class="nb">true</span>
+</pre></div>
+</div>
+<p>When heap poisoning is enabled, <code class="docutils literal notranslate"><span class="pre">pw_allocator</span></code> will add <code class="docutils literal notranslate"><span class="pre">sizeof(void*)</span></code>
+bytes before and after the usable space of each <code class="docutils literal notranslate"><span class="pre">Block</span></code>, and paint the space
+with a hard-coded randomized pattern. During each sanity check, <code class="docutils literal notranslate"><span class="pre">pw_allocator</span></code>
+will check if the painted space still remains the pattern, and return <code class="docutils literal notranslate"><span class="pre">false</span></code>
+if the pattern is damaged.</p>
+</div>
+<div class="section" id="heap-visualizer">
+<h2>Heap Visualizer<a class="headerlink" href="#heap-visualizer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functionality">
+<h3>Functionality<a class="headerlink" href="#functionality" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_allocator</span></code> supplies a pw command <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">heap-viewer</span></code> to help visualize
+the state of the heap at the end of a dump file. The heap is represented by
+ASCII characters, where each character represents 4 bytes in the heap.</p>
+<img alt="../_images/pw_allocator_heap_visualizer_demo.png" src="../_images/pw_allocator_heap_visualizer_demo.png" />
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>The heap visualizer can be launched from a shell using the Pigweed environment.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ pw heap-viewer --dump-file &lt;directory of dump file&gt; --heap-low-address
+&lt;hex address of heap lower address&gt; --heap-high-address &lt;hex address of heap
+lower address&gt; <span class="o">[</span>options<span class="o">]</span>
+</pre></div>
+</div>
+<p>The required arguments are:</p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--dump-file</span></code> is the path of a file that contains <code class="docutils literal notranslate"><span class="pre">malloc/free</span></code>
+information. Each line in the dump file represents a <code class="docutils literal notranslate"><span class="pre">malloc/free</span></code> call.
+<code class="docutils literal notranslate"><span class="pre">malloc</span></code> is represented as <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">&lt;size&gt;</span> <span class="pre">&lt;memory</span> <span class="pre">address&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">free</span></code> is
+represented as <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">&lt;memory</span> <span class="pre">address&gt;</span></code>. For example, a dump file should look
+like:</p>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>m <span class="m">20</span> 0x20004450  <span class="c1"># malloc 20 bytes, the pointer is 0x20004450</span>
+m <span class="m">8</span> 0x2000447c   <span class="c1"># malloc 8 bytes, the pointer is 0x2000447c</span>
+f 0x2000447c     <span class="c1"># free the pointer at 0x2000447c</span>
+...
+</pre></div>
+</div>
+<p>Any line not formatted as the above will be ignored.</p>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--heap-low-address</span></code> is the start of the heap. For example:</p>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>--heap-low-address 0x20004440
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--heap-high-address</span></code> is the end of the heap. For example:</p>
+<blockquote>
+<div><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>--heap-high-address 0x20006040
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>Options include the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--poison-enable</span></code>: If heap poisoning is enabled during the
+allocation or not. The value is <code class="docutils literal notranslate"><span class="pre">False</span></code> if the option is not specified and
+<code class="docutils literal notranslate"><span class="pre">True</span></code> otherwise.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--pointer-size</span> <span class="pre">&lt;integer</span> <span class="pre">of</span> <span class="pre">pointer</span> <span class="pre">size&gt;</span></code>: The size of a pointer on the
+machine where <code class="docutils literal notranslate"><span class="pre">malloc/free</span></code> is called. The default value is <code class="docutils literal notranslate"><span class="pre">4</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>Note, this module, and its documentation, is currently incomplete and
+experimental.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pw_assert/docs.html" class="btn btn-neutral float-right" title="pw_assert" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../docker/docs.html" class="btn btn-neutral float-left" title="docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

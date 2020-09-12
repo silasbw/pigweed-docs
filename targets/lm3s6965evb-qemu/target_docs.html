@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>lm3s6965evb-qemu &mdash; Pigweed</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="stm32f429i-disc1" href="../stm32f429i-disc1/target_docs.html" />
+    <link rel="prev" title="host" href="../host/target_docs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pigweed
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed.googlesource.com/pigweed/pigweed/+/refs/heads/master">Source Code</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://pigweed-review.googlesource.com">Code Reviews</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://groups.google.com/forum/#!forum/pigweed">Mailing List</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://discord.gg/M9NSeTA">Chat Room</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://bugs.chromium.org/p/pigweed/issues/list">Issue Tracker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/embedded_cpp_guide.html">Embedded C++ Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/style_guide.html">Code Style</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../targets.html">Targets</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../targets.html#defining-a-target">Defining a target</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../targets.html#example-pigweed-target">Example Pigweed target</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../targets.html#upstream-targets">Upstream targets</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../docs/target_docs.html">docs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../host/target_docs.html">host</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lm3s6965evb-qemu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#executing-binaries">Executing Binaries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../stm32f429i-disc1/target_docs.html">stm32f429i-disc1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../build_system.html">Build System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/faq.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/module_structure.html">Module Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_guides.html">Module Guides</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pigweed</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../targets.html">Targets</a> &raquo;</li>
+        
+      <li>lm3s6965evb-qemu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lm3s6965evb-qemu">
+<h1>lm3s6965evb-qemu<a class="headerlink" href="#lm3s6965evb-qemu" title="Permalink to this headline">¶</a></h1>
+<p>This target is specifically for emulation of the Texas Instruments Stellaris
+LM3S lm3s6965evb using QEMU. This may be useful for testing ARMv7-M code without
+physical hardware.</p>
+<p>This target configuration has <strong>not</strong> been tested on the physical Stellaris
+development board.</p>
+<div class="section" id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>To build for this Pigweed target, simply build the top-level “qemu” Ninja
+target.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ninja -C out qemu
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>This target does not yet support automatic test running (though it would be
+relatively easy to do so). To run a QEMU binary, see the instructions below.</p>
+</div>
+<div class="section" id="executing-binaries">
+<h2>Executing Binaries<a class="headerlink" href="#executing-binaries" title="Permalink to this headline">¶</a></h2>
+<p>When running a QEMU binary, you may chose to run it interactively with GDB, or
+allow the binary to run in a hands-off manner.</p>
+<div class="section" id="running-without-gdb">
+<h3>Running Without GDB<a class="headerlink" href="#running-without-gdb" title="Permalink to this headline">¶</a></h3>
+<p>When running without GDB, the firmware will execute normally without requiring
+further interaction.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb <span class="se">\</span>
+  -nographic -no-reboot <span class="se">\</span>
+  -kernel path/to/firmware.elf
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-with-gdb">
+<h3>Run With GDB<a class="headerlink" href="#run-with-gdb" title="Permalink to this headline">¶</a></h3>
+<p>When running with GDB, execution of the binary will begin in a halted state. To
+begin running the code, you must connect using GDB, set any breakpoints you
+wish, and then continue execution.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start the VM and GDB server.</span>
+$ qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb <span class="se">\</span>
+  -gdb tcp::3333 -S
+  -nographic -no-reboot <span class="se">\</span>
+  -kernel path/to/firmware.elf
+</pre></div>
+</div>
+<p>In another window</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ arm-none-eabi-gdb path/to/firmare.elf
+<span class="o">(</span>gdb<span class="o">)</span> target remote :3333
+<span class="o">(</span>gdb<span class="o">)</span> <span class="nb">break</span> SomeFunction<span class="o">()</span>
+<span class="o">(</span>gdb<span class="o">)</span> <span class="k">continue</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../stm32f429i-disc1/target_docs.html" class="btn btn-neutral float-right" title="stm32f429i-disc1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../host/target_docs.html" class="btn btn-neutral float-left" title="host" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020 The Pigweed Authors
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

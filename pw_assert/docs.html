@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pw_assert_basic" href="../pw_assert_basic/docs.html" />
-    <link rel="prev" title="pw_allocator" href="../pw_allocator/docs.html" /> 
+    <link rel="prev" title="pw_arduino_build" href="../pw_arduino_build/docs.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -103,14 +103,21 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pw_assert</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#structure-of-assert-modules">Structure of assert modules</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#facade-api-reference">Facade API reference</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#backend-api-reference">Backend API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#facade-api">Facade API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#light-api">Light API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#light-api-reference">Light API reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#light-api-backend">Light API backend</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#backend-api">Backend API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#frequently-asked-questions">Frequently asked questions</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#when-should-dcheck-be-used-instead-of-check-and-vice-versa">When should DCHECK_* be used instead of CHECK_* and vice versa?</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#how-should-objects-be-asserted-against-or-compared">How should objects be asserted against or compared?</a></li>
@@ -120,8 +127,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#compatibility">Compatibility</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#roadmap-status">Roadmap &amp; Status</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#currently-implemented-modules">Currently implemented modules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#not-yet-written-modules">Not yet written modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#available-assert-backends">Available assert backends</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#missing-functionality">Missing functionality</a></li>
 </ul>
 </li>
@@ -150,6 +156,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
@@ -168,6 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -246,7 +254,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-assert">
-<h1>pw_assert<a class="headerlink" href="#pw-assert" title="Permalink to this headline">¶</a></h1>
+<span id="module-pw-assert"></span><h1>pw_assert<a class="headerlink" href="#pw-assert" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Pigweed’s assert module enables applications to check preconditions, triggering
@@ -266,6 +274,7 @@ mechanism. The API is desigend to enable features like:</p>
 a message.</p></li>
 <li><p><strong>PW_CHECK_&lt;type&gt;_&lt;cmp&gt;(a, b[, fmt, …])</strong> - Assert that the expression <code class="docutils literal notranslate"><span class="pre">a</span>
 <span class="pre">&lt;cmp&gt;</span> <span class="pre">b</span></code> is true, optionally with a message.</p></li>
+<li><p><strong>PW_ASSERT(condition)</strong> - Header- and constexpr- assert.</p></li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -306,6 +315,11 @@ performance or code size reason to use <code class="docutils literal notranslate
 </pre></div>
 </div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">PW_ASSERT</span></code> from <code class="docutils literal notranslate"><span class="pre">pw_assert/light.h</span></code> for asserts in headers or
+asserting in <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> contexts.</p>
+</div>
 </div>
 <div class="section" id="structure-of-assert-modules">
 <h3>Structure of assert modules<a class="headerlink" href="#structure-of-assert-modules" title="Permalink to this headline">¶</a></h3>
@@ -341,10 +355,10 @@ would go.</p></li>
 <p>See the Backend API section below for more details.</p>
 </div>
 </div>
-<div class="section" id="facade-api-reference">
-<h2>Facade API reference<a class="headerlink" href="#facade-api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="facade-api">
+<h2>Facade API<a class="headerlink" href="#facade-api" title="Permalink to this headline">¶</a></h2>
 <p>The below functions describe the assert API functions that applications should
-invoke to assert.</p>
+invoke to assert. These macros found in the <code class="docutils literal notranslate"><span class="pre">pw_assert/assert.h</span></code> header.</p>
 <dl class="function">
 <dt id="_CPPv48PW_CRASH6formatz">
 <span id="_CPPv38PW_CRASH6formatz"></span><span id="_CPPv28PW_CRASH6formatz"></span><span id="PW_CRASH__format.z"></span><code class="sig-name descname">PW_CRASH</code><span class="sig-paren">(</span>format, ...<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48PW_CRASH6formatz" title="Permalink to this definition">¶</a><br /></dt>
@@ -859,14 +873,94 @@ code; for example <code class="docutils literal notranslate"><span class="pre">s
 </dd></dl>
 
 </div>
-<div class="section" id="backend-api-reference">
-<h2>Backend API reference<a class="headerlink" href="#backend-api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="light-api">
+<h2>Light API<a class="headerlink" href="#light-api" title="Permalink to this headline">¶</a></h2>
+<p>The normal <code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> and <code class="docutils literal notranslate"><span class="pre">PW_DCHECK_*</span></code> family of macros are intended to
+provide rich debug information, like the file, line number, value of operands
+in boolean comparisons, and more. However, this comes at a cost: these macros
+depend directly on the backend headers, and may perform complicated call-site
+transformations like tokenization.</p>
+<p>There are several issues with the normal <code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> suite of macros:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> in headers can cause ODR violations in the case of tokenized
+asserts, due to differing module choices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> is not constexpr-safe.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> can cause code bloat with some backends; this is the tradeoff
+to get rich assert information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PW_CHECK_*</span></code> can trigger circular dependencies when asserts are used from
+low-level contexts, like in <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>.</p></li>
+</ol>
+<p><strong>Light asserts</strong> solve all of the above three problems: No risk of ODR
+violations, are constexpr safe, and have a tiny call site footprint; and there
+is no header dependency on the backend preventing circular include issues.
+However, there are <strong>no format messages, no captured line number, no captured
+file, no captured expression, or anything other than a binary indication of
+failure</strong>.</p>
+<div class="section" id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This example demonstrates asserting in a header.</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;pw_assert/light.h&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">InlinedSubsystem</span> <span class="p">{</span>
+ <span class="k">public</span><span class="o">:</span>
+  <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// GOOD: No problem; PW_ASSERT is fine to inline and place in a header.</span>
+    <span class="n">PW_ASSERT</span><span class="p">(</span><span class="n">IsEnabled</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="kt">void</span> <span class="n">DoSomethingElse</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// BAD: Generally avoid using PW_DCHECK() or PW_CHECK in headers. If you</span>
+    <span class="c1">// want rich asserts or logs, move the function into the .cc file, and</span>
+    <span class="c1">// then use PW_CHECK there.</span>
+    <span class="n">PW_DCHECK</span><span class="p">(</span><span class="n">IsEnabled</span><span class="p">());</span>  <span class="c1">// DON&#39;T DO THIS</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="light-api-reference">
+<h3>Light API reference<a class="headerlink" href="#light-api-reference" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="_CPPv49PW_ASSERT9condition">
+<span id="_CPPv39PW_ASSERT9condition"></span><span id="_CPPv29PW_ASSERT9condition"></span><span id="PW_ASSERT__condition"></span><code class="sig-name descname">PW_ASSERT</code><span class="sig-paren">(</span>condition<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv49PW_ASSERT9condition" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A header- and constexpr-safe version of <code class="docutils literal notranslate"><span class="pre">PW_CHECK()</span></code>.</p>
+<p>If the given condition is false, crash the system. Otherwise, do nothing.
+The condition is guaranteed to be evaluated. This assert implementation is
+guaranteed to be constexpr-safe.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv410PW_DASSERT9condition">
+<span id="_CPPv310PW_DASSERT9condition"></span><span id="_CPPv210PW_DASSERT9condition"></span><span id="PW_DASSERT__condition"></span><code class="sig-name descname">PW_DASSERT</code><span class="sig-paren">(</span>condition<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv410PW_DASSERT9condition" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A header- and constexpr-safe version of <code class="docutils literal notranslate"><span class="pre">PW_DCHECK()</span></code>.</p>
+<p>Same as <code class="docutils literal notranslate"><span class="pre">PW_ASSERT()</span></code>, except that if <code class="docutils literal notranslate"><span class="pre">PW_ASSERT_ENABLE_DEBUG</span> <span class="pre">==</span> <span class="pre">1</span></code>, the
+assert is disabled and condition is not evaluated.</p>
+</dd></dl>
+
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Unlike the <code class="docutils literal notranslate"><span class="pre">PW_CHECK_*()</span></code> suite of macros, <code class="docutils literal notranslate"><span class="pre">PW_ASSERT()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">PW_DASSERT()</span></code> capture no rich information like line numbers, the file,
+expression arguments, or the stringified expression. Use these macros <strong>only
+when absolutely necessary</strong>–in headers, constexr contexts, or in rare cases
+where the call site overhead of a full PW_CHECK must be avoided.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">PW_CHECK_*()</span></code> whenever possible.</p>
+</div>
+</div>
+<div class="section" id="light-api-backend">
+<h3>Light API backend<a class="headerlink" href="#light-api-backend" title="Permalink to this headline">¶</a></h3>
+<p>The light API ultimately calls the C function <code class="docutils literal notranslate"><span class="pre">pw_assert_HandleFailure()</span></code>,
+which must be provided by the assert backend.</p>
+</div>
+</div>
+<div class="section" id="backend-api">
+<h2>Backend API<a class="headerlink" href="#backend-api" title="Permalink to this headline">¶</a></h2>
 <p>The backend controls what to do in the case of an assertion failure. In the
 most basic cases, the backend could display the assertion failure on something
 like sys_io and halt in a while loop waiting for a debugger. In other cases,
 the backend could store crash details like the current thread’s stack to flash.</p>
 <p>This facade module (<code class="docutils literal notranslate"><span class="pre">pw_assert</span></code>) does not provide a backend. See
-<a class="reference internal" href="../pw_assert_basic/docs.html#chapter-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for a basic implementation.</p>
+<a class="reference internal" href="../pw_assert_basic/docs.html#module-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for a basic implementation.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>The facade macros (<code class="docutils literal notranslate"><span class="pre">PW_CRASH</span></code> and related) are expected to behave like they
@@ -922,9 +1016,21 @@ example: <code class="docutils literal notranslate"><span class="pre">&quot;Got<
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>See <a class="reference internal" href="../pw_assert_basic/docs.html#chapter-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for one way to combine these arguments
+<p>See <a class="reference internal" href="../pw_assert_basic/docs.html#module-pw-assert-basic"><span class="std std-ref">pw_assert_basic</span></a> for one way to combine these arguments
 into a meaningful error message.</p>
 </div>
+</dd></dl>
+
+<p>Additionally, the backend must provide a link-time function for the light
+assert handler. This does not need to appear in the backend header, but instead
+is in a <code class="docutils literal notranslate"><span class="pre">.cc</span></code> file.</p>
+<dl class="function">
+<dt id="_CPPv423pw_assert_HandleFailurev">
+<span id="_CPPv323pw_assert_HandleFailurev"></span><span id="_CPPv223pw_assert_HandleFailurev"></span><span id="pw_assert_HandleFailure"></span><code class="sig-name descname">pw_assert_HandleFailure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv423pw_assert_HandleFailurev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Handle a low-level crash. This crash entry happens through
+<code class="docutils literal notranslate"><span class="pre">pw_assert/light.h</span></code>. In this crash handler, there is no access to line,
+file, expression, or other rich assert information. Backends should do
+something reasonable in this case; typically, capturing the stack is useful.</p>
 </dd></dl>
 
 </div>
@@ -1039,13 +1145,13 @@ asserted on is necessary.</p>
 <div class="section" id="roadmap-status">
 <h2>Roadmap &amp; Status<a class="headerlink" href="#roadmap-status" title="Permalink to this headline">¶</a></h2>
 <p>The Pigweed assert subsystem consiststs of several modules that work in
-coordination. In particular, there is the facade (this module), then a number
-of backends to handle assert failures. In some cases, the backends will have
-backends (like log_tokenized). Not all of those modules are ready today. Below
-is a brief summary of what modules are ready now, and which need to be written
-or need more work:</p>
-<div class="section" id="currently-implemented-modules">
-<h3>Currently implemented modules<a class="headerlink" href="#currently-implemented-modules" title="Permalink to this headline">¶</a></h3>
+coordination. This module is the facade (API), then a number of backends are
+available to handle assert failures. Products can also define their own
+backends. In some cases, the backends will have backends (like
+<code class="docutils literal notranslate"><span class="pre">pw_log_tokenized</span></code>).</p>
+<p>Below is a brief summary of what modules are ready for use:</p>
+<div class="section" id="available-assert-backends">
+<h3>Available assert backends<a class="headerlink" href="#available-assert-backends" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pw_assert</span></code> - <strong>Stable</strong> - The assert facade (this module). This module is
 stable, and in production use. The documentation is comprehensive and covers
@@ -1057,50 +1163,24 @@ handler that displays the failed assert line and the values of captured
 arguments. Output is directed to <code class="docutils literal notranslate"><span class="pre">pw_sys_io</span></code>. This module is a great
 ready-to-roll module when bringing up a system, but is likely not the best
 choice for production.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_log</span></code> - <strong>Stable</strong> - This assert backend redirects to logging,
+but with a logging flag set that indicates an assert failure. This is our
+advised approach to get <strong>tokenized asserts</strong>–by using tokenized logging,
+then using the <code class="docutils literal notranslate"><span class="pre">pw_assert_log</span></code> backend.</p></li>
 </ul>
-</div>
-<div class="section" id="not-yet-written-modules">
-<h3>Not yet written modules<a class="headerlink" href="#not-yet-written-modules" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_tokenized</span></code> - <strong>Not started</strong> - Just like there is a
-<code class="docutils literal notranslate"><span class="pre">pw_log_tokenized</span></code> module that leverages the tokenizer to strip log string
-literals from binaries, there will be an implementation that tokenizes the
-assert contents (such as the captured source expression string). We may
-combine <code class="docutils literal notranslate"><span class="pre">pw_log_tokenized</span></code> and <code class="docutils literal notranslate"><span class="pre">pw_assert_tokenized</span></code> into
-<code class="docutils literal notranslate"><span class="pre">pw_log_assert_tokenized</span></code> since much of the details would be shared between
-them.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_assert_log</span></code> - <strong>Not started</strong> - This would use <code class="docutils literal notranslate"><span class="pre">pw_log</span></code> on assert
-failure to communicate the failure information. Instead of being a separate
-module, this might be an optional flag added to <code class="docutils literal notranslate"><span class="pre">pw_assert_basic</span></code>.</p></li>
-</ul>
+<p>Note: If one desires a null assert module (where asserts are removed), use
+<code class="docutils literal notranslate"><span class="pre">pw_assert_log</span></code> in combination with <code class="docutils literal notranslate"><span class="pre">pw_log_null</span></code>. This will direct asserts
+to logs, then the logs are removed due to the null backend.</p>
 </div>
 <div class="section" id="missing-functionality">
 <h3>Missing functionality<a class="headerlink" href="#missing-functionality" title="Permalink to this headline">¶</a></h3>
-<ul>
+<ul class="simple">
 <li><p><strong>Stack traces</strong> - Pigweed doesn’t have a reliable stack walker, which makes
 displaying a stack trace on crash harder. We plan to add this eventually.</p></li>
 <li><p><strong>Snapshot integration</strong> - Pigweed doesn’t yet have a rich system state
 capture system that can capture state like number of tasks, available memory,
 and so on. Snapshot facilities are the obvious ones to run inside an assert
 handler. It’ll happen someday.</p></li>
-<li><p><strong>Light asserts to break circular dependencies</strong> - The Pigweed assert API is
-flexible thanks to the facade structure; however, this can trigger circular
-header dependencies due to facade directly including the backend. This can
-happen when adding asserts to low-level functionality in headers, like for
-example inside <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>. Our polyfill span is used extensively in low level
-components (like malloc and vector), including in some assert backends, which
-leads to circular dependencies when span itself tries to assert.</p>
-<p>There is no solution to this problem that doesn’t require a compromise. The
-easiest solution to enabling asserts everywhere is to shift to a C ABI with
-link time dependency resolution; this breaks the header cycles. However, such
-a structure would prevent custom compile-time filtering and tokenization.</p>
-<p>Our current plan is to offer a simple C-function based assert API, with the
-backend provided at link time rather than through header redirection. For
-example, the API could be as simple as <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">pw_assert(bool</span> <span class="pre">condition)</span></code> or
-<code class="docutils literal notranslate"><span class="pre">pw_assert_crash()</span></code> if the condition check was done in a macro. This assert
-API is intended for contexts where including the backend header would trigger
-these problems, for use in common low level headers like <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>.</p>
-</li>
 </ul>
 </div>
 </div>
@@ -1117,7 +1197,7 @@ these problems, for use in common low level headers like <code class="docutils l
         <a href="../pw_assert_basic/docs.html" class="btn btn-neutral float-right" title="pw_assert_basic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../pw_allocator/docs.html" class="btn btn-neutral float-left" title="pw_allocator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../pw_arduino_build/docs.html" class="btn btn-neutral float-left" title="pw_arduino_build" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

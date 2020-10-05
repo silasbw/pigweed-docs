@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
@@ -133,6 +134,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
@@ -151,6 +153,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -229,7 +232,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-fuzzer">
-<span id="chapter-pw-fuzzer"></span><h1>pw_fuzzer<a class="headerlink" href="#pw-fuzzer" title="Permalink to this headline">¶</a></h1>
+<span id="module-pw-fuzzer"></span><h1>pw_fuzzer<a class="headerlink" href="#pw-fuzzer" title="Permalink to this headline">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">pw_fuzzer</span></code> provides developers with tools to write <a class="reference external" href="https://llvm.org/docs/LibFuzzer.html">libFuzzer</a> based
 fuzzers.</p>
 <p>Fuzzing or fuzz testing is style of testing that stochastically generates inputs
@@ -257,10 +260,10 @@ LLVM’s <a class="reference external" href="https://compiler-rt.llvm.org/">comp
 <h2>Writing fuzzers<a class="headerlink" href="#writing-fuzzers" title="Permalink to this headline">¶</a></h2>
 <p>To write a fuzzer, a developer needs to write a fuzz target function follwing
 the <a class="reference external" href="https://llvm.org/docs/LibFuzzer.html#fuzz-target">fuzz target function</a> guidelines given by libFuzzer:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>extern <span class="s2">&quot;C&quot;</span> int LLVMFuzzerTestOneInput<span class="o">(</span>const uint8_t *data, size_t size<span class="o">)</span> <span class="o">{</span>
-  DoSomethingInterestingWithMyAPI<span class="o">(</span>data, size<span class="o">)</span><span class="p">;</span>
-  <span class="k">return</span> <span class="m">0</span><span class="p">;</span>  // Non-zero <span class="k">return</span> values are reserved <span class="k">for</span> future use.
-<span class="o">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extern</span> <span class="s2">&quot;C&quot;</span> <span class="nb">int</span> <span class="n">LLVMFuzzerTestOneInput</span><span class="p">(</span><span class="n">const</span> <span class="n">uint8_t</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">DoSomethingInterestingWithMyAPI</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>  <span class="o">//</span> <span class="n">Non</span><span class="o">-</span><span class="n">zero</span> <span class="k">return</span> <span class="n">values</span> <span class="n">are</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">future</span> <span class="n">use</span><span class="o">.</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>When writing you fuzz target function, you may want to consider:</p>
@@ -286,20 +289,20 @@ those <strong>only</strong> when fuzzing by using LLVM’s
 <li><p>Add the GN target using <code class="docutils literal notranslate"><span class="pre">pw_fuzzer</span></code> GN template, and add it to your the
 test group of the module:</p></li>
 </ol>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># In $dir_my_module/BUILD.gn</span>
-import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_fuzzer</span><span class="s2">/fuzzer.gni&quot;</span><span class="o">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># In $dir_my_module/BUILD.gn</span>
+<span class="n">import</span><span class="p">(</span><span class="s2">&quot;$dir_pw_fuzzer/fuzzer.gni&quot;</span><span class="p">)</span>
 
-pw_fuzzer<span class="o">(</span><span class="s2">&quot;my_fuzzer&quot;</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nv">sources</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;my_fuzzer.cc&quot;</span> <span class="o">]</span>
-  <span class="nv">deps</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;:my_lib&quot;</span> <span class="o">]</span>
-<span class="o">}</span>
+<span class="n">pw_fuzzer</span><span class="p">(</span><span class="s2">&quot;my_fuzzer&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;my_fuzzer.cc&quot;</span> <span class="p">]</span>
+  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;:my_lib&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
 
-pw_test_group<span class="o">(</span><span class="s2">&quot;tests&quot;</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nv">tests</span> <span class="o">=</span> <span class="o">[</span>
-    <span class="s2">&quot;:existing_tests&quot;</span>, ...
-    <span class="s2">&quot;:my_fuzzer&quot;</span>,     <span class="c1"># &lt;- Added!</span>
-  <span class="o">]</span>
-<span class="o">}</span>
+<span class="n">pw_test_group</span><span class="p">(</span><span class="s2">&quot;tests&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;:existing_tests&quot;</span><span class="p">,</span> <span class="o">...</span>
+    <span class="s2">&quot;:my_fuzzer&quot;</span><span class="p">,</span>     <span class="c1"># &lt;- Added!</span>
+  <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
@@ -322,53 +325,53 @@ the libFuzzer section on <a class="reference external" href="https://llvm.org/do
 <p>For example, the following invocation disables “one definition rule” detection,
 saves failing inputs to <code class="docutils literal notranslate"><span class="pre">artifacts/</span></code>, treats any input that takes longer than
 10 seconds as a failure, and stores the working corpus in <code class="docutils literal notranslate"><span class="pre">corpus/</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">ASAN_OPTIONS</span><span class="o">=</span><span class="nv">detect_odr_violation</span><span class="o">=</span><span class="m">0</span> ./out/host/obj/pw_fuzzer/toy_fuzzer -artifact_prefix<span class="o">=</span>artifacts/ -timeout<span class="o">=</span><span class="m">10</span> corpus
-INFO: Seed: <span class="m">305325345</span>
-INFO: Loaded <span class="m">1</span> modules   <span class="o">(</span><span class="m">46</span> inline <span class="m">8</span>-bit counters<span class="o">)</span>: <span class="m">46</span> <span class="o">[</span>0x38dfc0, 0x38dfee<span class="o">)</span>,
-INFO: Loaded <span class="m">1</span> PC tables <span class="o">(</span><span class="m">46</span> PCs<span class="o">)</span>: <span class="m">46</span> <span class="o">[</span>0x23aaf0,0x23add0<span class="o">)</span>,
-INFO:        <span class="m">0</span> files found in corpus
-INFO: -max_len is not provided<span class="p">;</span> libFuzzer will not generate inputs larger than <span class="m">4096</span> bytes
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ASAN_OPTIONS=detect_odr_violation=0 ./out/host/obj/pw_fuzzer/toy_fuzzer -artifact_prefix=artifacts/ -timeout=10 corpus
+INFO: Seed: 305325345
+INFO: Loaded 1 modules   (46 inline 8-bit counters): 46 [0x38dfc0, 0x38dfee),
+INFO: Loaded 1 PC tables (46 PCs): 46 [0x23aaf0,0x23add0),
+INFO:        0 files found in corpus
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
 INFO: A corpus is not provided, starting from an empty corpus
-<span class="c1">#2      INITED cov: 2 ft: 3 corp: 1/1b exec/s: 0 rss: 27Mb</span>
-<span class="c1">#4      NEW    cov: 3 ft: 4 corp: 2/3b lim: 4 exec/s: 0 rss: 27Mb L: 2/2 MS: 2 ShuffleBytes-InsertByte-</span>
-<span class="c1">#11     NEW    cov: 7 ft: 8 corp: 3/7b lim: 4 exec/s: 0 rss: 27Mb L: 4/4 MS: 2 EraseBytes-CrossOver-</span>
-<span class="c1">#27     REDUCE cov: 7 ft: 8 corp: 3/6b lim: 4 exec/s: 0 rss: 27Mb L: 3/3 MS: 1 EraseBytes-</span>
-<span class="c1">#29     REDUCE cov: 7 ft: 8 corp: 3/5b lim: 4 exec/s: 0 rss: 27Mb L: 2/2 MS: 2 ChangeBit-EraseBytes-</span>
-<span class="c1">#445    REDUCE cov: 9 ft: 10 corp: 4/13b lim: 8 exec/s: 0 rss: 27Mb L: 8/8 MS: 1 InsertRepeatedBytes-</span>
-<span class="c1">#12104  NEW    cov: 11 ft: 12 corp: 5/24b lim: 122 exec/s: 0 rss: 28Mb L: 11/11 MS: 4 CMP-InsertByte-ShuffleBytes-ChangeByte- DE: &quot;\xff\xff&quot;-</span>
-<span class="c1">#12321  NEW    cov: 12 ft: 13 corp: 6/31b lim: 122 exec/s: 0 rss: 28Mb L: 7/11 MS: 2 CopyPart-EraseBytes-</span>
-<span class="c1">#12459  REDUCE cov: 12 ft: 13 corp: 6/28b lim: 122 exec/s: 0 rss: 28Mb L: 8/8 MS: 3 CMP-InsertByte-EraseBytes- DE: &quot;\x00\x00&quot;-</span>
-<span class="c1">#12826  REDUCE cov: 12 ft: 13 corp: 6/26b lim: 122 exec/s: 0 rss: 28Mb L: 5/8 MS: 2 ShuffleBytes-EraseBytes-</span>
-<span class="c1">#14824  REDUCE cov: 12 ft: 13 corp: 6/25b lim: 135 exec/s: 0 rss: 28Mb L: 4/8 MS: 3 PersAutoDict-ShuffleBytes-EraseBytes- DE: &quot;\x00\x00&quot;-</span>
-<span class="c1">#15106  REDUCE cov: 12 ft: 13 corp: 6/24b lim: 135 exec/s: 0 rss: 28Mb L: 3/8 MS: 2 ChangeByte-EraseBytes-</span>
+#2      INITED cov: 2 ft: 3 corp: 1/1b exec/s: 0 rss: 27Mb
+#4      NEW    cov: 3 ft: 4 corp: 2/3b lim: 4 exec/s: 0 rss: 27Mb L: 2/2 MS: 2 ShuffleBytes-InsertByte-
+#11     NEW    cov: 7 ft: 8 corp: 3/7b lim: 4 exec/s: 0 rss: 27Mb L: 4/4 MS: 2 EraseBytes-CrossOver-
+#27     REDUCE cov: 7 ft: 8 corp: 3/6b lim: 4 exec/s: 0 rss: 27Mb L: 3/3 MS: 1 EraseBytes-
+#29     REDUCE cov: 7 ft: 8 corp: 3/5b lim: 4 exec/s: 0 rss: 27Mb L: 2/2 MS: 2 ChangeBit-EraseBytes-
+#445    REDUCE cov: 9 ft: 10 corp: 4/13b lim: 8 exec/s: 0 rss: 27Mb L: 8/8 MS: 1 InsertRepeatedBytes-
+#12104  NEW    cov: 11 ft: 12 corp: 5/24b lim: 122 exec/s: 0 rss: 28Mb L: 11/11 MS: 4 CMP-InsertByte-ShuffleBytes-ChangeByte- DE: &quot;\xff\xff&quot;-
+#12321  NEW    cov: 12 ft: 13 corp: 6/31b lim: 122 exec/s: 0 rss: 28Mb L: 7/11 MS: 2 CopyPart-EraseBytes-
+#12459  REDUCE cov: 12 ft: 13 corp: 6/28b lim: 122 exec/s: 0 rss: 28Mb L: 8/8 MS: 3 CMP-InsertByte-EraseBytes- DE: &quot;\x00\x00&quot;-
+#12826  REDUCE cov: 12 ft: 13 corp: 6/26b lim: 122 exec/s: 0 rss: 28Mb L: 5/8 MS: 2 ShuffleBytes-EraseBytes-
+#14824  REDUCE cov: 12 ft: 13 corp: 6/25b lim: 135 exec/s: 0 rss: 28Mb L: 4/8 MS: 3 PersAutoDict-ShuffleBytes-EraseBytes- DE: &quot;\x00\x00&quot;-
+#15106  REDUCE cov: 12 ft: 13 corp: 6/24b lim: 135 exec/s: 0 rss: 28Mb L: 3/8 MS: 2 ChangeByte-EraseBytes-
 ...
-<span class="c1">#197809 REDUCE cov: 35 ft: 36 corp: 22/129b lim: 1800 exec/s: 0 rss: 79Mb L: 9/9 MS: 1 InsertByte-</span>
-<span class="c1">#216250 REDUCE cov: 35 ft: 36 corp: 22/128b lim: 1980 exec/s: 0 rss: 87Mb L: 8/8 MS: 1 EraseBytes-</span>
-<span class="c1">#242761 REDUCE cov: 35 ft: 36 corp: 22/127b lim: 2237 exec/s: 0 rss: 101Mb L: 7/8 MS: 1 EraseBytes-</span>
-<span class="o">==</span><span class="nv">126148</span><span class="o">==</span> ERROR: libFuzzer: deadly signal
-    <span class="c1">#0 0x35b981 in __sanitizer_print_stack_trace ../recipe_cleanup/clangFu99hg/llvm_build_dir/tools/clang/stage2-bins/runtimes/runtimes-x86_64-unknown-linux-gnu-bins/compiler-rt/lib/asan/asan_stack.cpp:86:3</span>
-    <span class="c1">#1 0x2bcdb5 in fuzzer::PrintStackTrace() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2bcdb5)</span>
-    <span class="c1">#2 0x2a2ac9 in fuzzer::Fuzzer::CrashCallback() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a2ac9)</span>
-    <span class="c1">#3 0x7f866684151f  (/lib/x86_64-linux-gnu/libpthread.so.0+0x1351f)</span>
-    <span class="c1">#4 0x3831df in (anonymous namespace)::toy_example(char const*, char const*) /home/aarongreen/src/pigweed/out/host/../../pw_fuzzer/examples/toy_fuzzer.cc:49:15</span>
-    <span class="c1">#5 0x3831df in LLVMFuzzerTestOneInput /home/aarongreen/src/pigweed/out/host/../../pw_fuzzer/examples/toy_fuzzer.cc:80:3</span>
-    <span class="c1">#6 0x2a4025 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a4025)</span>
-    <span class="c1">#7 0x2a3774 in fuzzer::Fuzzer::RunOne(unsigned char const*, unsigned long, bool, fuzzer::InputInfo*, bool*) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a3774)</span>
-    <span class="c1">#8 0x2a5769 in fuzzer::Fuzzer::MutateAndTestOne() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a5769)</span>
-    <span class="c1">#9 0x2a6185 in fuzzer::Fuzzer::Loop(std::__Fuzzer::vector&lt;fuzzer::SizedFile, fuzzer::fuzzer_allocator&lt;fuzzer::SizedFile&gt; &gt;&amp;) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a6185)</span>
-    <span class="c1">#10 0x294c8a in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x294c8a)</span>
-    <span class="c1">#11 0x2bd422 in main ../recipe_cleanup/clangFu99hg/llvm_build_dir/tools/clang/stage2-bins/runtimes/runtimes-x86_64-unknown-linux-gnu-bins/compiler-rt/lib/fuzzer/FuzzerMain.cpp:19:10</span>
-    <span class="c1">#12 0x7f8666684bba in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x26bba)</span>
-    <span class="c1">#13 0x26ae19 in _start (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x26ae19)</span>
+#197809 REDUCE cov: 35 ft: 36 corp: 22/129b lim: 1800 exec/s: 0 rss: 79Mb L: 9/9 MS: 1 InsertByte-
+#216250 REDUCE cov: 35 ft: 36 corp: 22/128b lim: 1980 exec/s: 0 rss: 87Mb L: 8/8 MS: 1 EraseBytes-
+#242761 REDUCE cov: 35 ft: 36 corp: 22/127b lim: 2237 exec/s: 0 rss: 101Mb L: 7/8 MS: 1 EraseBytes-
+==126148== ERROR: libFuzzer: deadly signal
+    #0 0x35b981 in __sanitizer_print_stack_trace ../recipe_cleanup/clangFu99hg/llvm_build_dir/tools/clang/stage2-bins/runtimes/runtimes-x86_64-unknown-linux-gnu-bins/compiler-rt/lib/asan/asan_stack.cpp:86:3
+    #1 0x2bcdb5 in fuzzer::PrintStackTrace() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2bcdb5)
+    #2 0x2a2ac9 in fuzzer::Fuzzer::CrashCallback() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a2ac9)
+    #3 0x7f866684151f  (/lib/x86_64-linux-gnu/libpthread.so.0+0x1351f)
+    #4 0x3831df in (anonymous namespace)::toy_example(char const*, char const*) /home/aarongreen/src/pigweed/out/host/../../pw_fuzzer/examples/toy_fuzzer.cc:49:15
+    #5 0x3831df in LLVMFuzzerTestOneInput /home/aarongreen/src/pigweed/out/host/../../pw_fuzzer/examples/toy_fuzzer.cc:80:3
+    #6 0x2a4025 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a4025)
+    #7 0x2a3774 in fuzzer::Fuzzer::RunOne(unsigned char const*, unsigned long, bool, fuzzer::InputInfo*, bool*) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a3774)
+    #8 0x2a5769 in fuzzer::Fuzzer::MutateAndTestOne() (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a5769)
+    #9 0x2a6185 in fuzzer::Fuzzer::Loop(std::__Fuzzer::vector&lt;fuzzer::SizedFile, fuzzer::fuzzer_allocator&lt;fuzzer::SizedFile&gt; &gt;&amp;) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x2a6185)
+    #10 0x294c8a in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x294c8a)
+    #11 0x2bd422 in main ../recipe_cleanup/clangFu99hg/llvm_build_dir/tools/clang/stage2-bins/runtimes/runtimes-x86_64-unknown-linux-gnu-bins/compiler-rt/lib/fuzzer/FuzzerMain.cpp:19:10
+    #12 0x7f8666684bba in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x26bba)
+    #13 0x26ae19 in _start (/home/aarongreen/src/pigweed/out/host/obj/pw_fuzzer/toy_fuzzer+0x26ae19)
 
 NOTE: libFuzzer has rudimentary signal handlers.
-      Combine libFuzzer with AddressSanitizer or similar <span class="k">for</span> better crash reports.
+      Combine libFuzzer with AddressSanitizer or similar for better crash reports.
 SUMMARY: libFuzzer: deadly signal
-MS: <span class="m">1</span> CrossOver-<span class="p">;</span> base unit: 9f479f7a6e3a21363397a25da3168218ba182a16
+MS: 1 CrossOver-; base unit: 9f479f7a6e3a21363397a25da3168218ba182a16
 0x68,0x65,0x6c,0x6c,0x6f,0x0,0x77,0x6f,0x72,0x6c,0x64,0x0,0x0,0x0,
-hello<span class="se">\x</span>00world<span class="se">\x</span><span class="m">00</span><span class="se">\x</span><span class="m">00</span><span class="se">\x</span><span class="m">00</span>
-<span class="nv">artifact_prefix</span><span class="o">=</span><span class="s1">&#39;artifacts&#39;</span><span class="p">;</span> Test unit written to artifacts/crash-6e4fdc7ffd04131ea15dd243a0890b1b606f4831
-Base64: <span class="nv">aGVsbG8Ad29ybGQAAAA</span><span class="o">=</span>
+hello\x00world\x00\x00\x00
+artifact_prefix=&#39;artifacts&#39;; Test unit written to artifacts/crash-6e4fdc7ffd04131ea15dd243a0890b1b606f4831
+Base64: aGVsbG8Ad29ybGQAAAA=
 </pre></div>
 </div>
 </div>
@@ -393,23 +396,23 @@ the bug.</p></li>
 </ol>
 <p>For example, if the testcase is saved as “~/Downloads/testcase”
 and the fuzzer is the same as in the examples above, you could run:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./out/host/obj/pw_fuzzer/toy_fuzzer ~/Downloads/testcase
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ./out/host/obj/pw_fuzzer/toy_fuzzer ~/Downloads/testcase
 </pre></div>
 </div>
 <p>If you need to recreate the OSS-Fuzz environment locally, you can use its
 documentation on <a class="reference external" href="https://google.github.io/oss-fuzz/advanced-topics/reproducing/">reproducing</a> issues.</p>
 <p>In particular, you can recreate the OSS-Fuzz environment using:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ python infra/helper.py pull_images
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python infra/helper.py pull_images
 $ python infra/helper.py build_image pigweed
 $ python infra/helper.py build_fuzzers --sanitizer &lt;address/undefined&gt; pigweed
 </pre></div>
 </div>
 <p>With that environment, you can run the reproduce bugs using:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python infra/helper.py reproduce pigweed &lt;pw_module&gt;_&lt;fuzzer_name&gt; ~/Downloads/testcase
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">infra</span><span class="o">/</span><span class="n">helper</span><span class="o">.</span><span class="n">py</span> <span class="n">reproduce</span> <span class="n">pigweed</span> <span class="o">&lt;</span><span class="n">pw_module</span><span class="o">&gt;</span><span class="n">_</span><span class="o">&lt;</span><span class="n">fuzzer_name</span><span class="o">&gt;</span> <span class="o">~/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">testcase</span>
 </pre></div>
 </div>
 <p>You can even verify fixes in your local source checkout:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ python infra/helper.py build_fuzzers --sanitizer &lt;address/undefined&gt; pigweed <span class="nv">$PW_ROOT</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python infra/helper.py build_fuzzers --sanitizer &lt;address/undefined&gt; pigweed $PW_ROOT
 $ python infra/helper.py reproduce pigweed &lt;pw_module&gt;_&lt;fuzzer_name&gt; ~/Downloads/testcase
 </pre></div>
 </div>

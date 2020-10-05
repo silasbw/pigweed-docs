@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
@@ -127,6 +128,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pw_metric</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
@@ -173,6 +175,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -251,7 +254,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-metric">
-<h1>pw_metric<a class="headerlink" href="#pw-metric" title="Permalink to this headline">¶</a></h1>
+<span id="module-pw-metric"></span><h1>pw_metric<a class="headerlink" href="#pw-metric" title="Permalink to this headline">¶</a></h1>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>This module is <strong>not yet production ready</strong>; ask us if you are interested in
@@ -286,22 +289,22 @@ complicated aggregations like running average or min/max.</p></li>
 and metrics might look like. In this case, the object’s
 <code class="docutils literal notranslate"><span class="pre">MySubsystem::metrics()</span></code> member is not globally registered; the user is on
 their own for combining this subsystem’s metrics with others.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
 
 <span class="k">class</span> <span class="nc">MySubsystem</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
-  <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">attempts_</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+ <span class="n">public</span><span class="p">:</span>
+  <span class="n">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">attempts_</span><span class="o">.</span><span class="n">Increment</span><span class="p">();</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">ActionSucceeds</span><span class="p">())</span> <span class="p">{</span>
-      <span class="n">successes_</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+      <span class="n">successes_</span><span class="o">.</span><span class="n">Increment</span><span class="p">();</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;my_subsystem&quot;</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">attempts_</span><span class="p">,</span> <span class="s">&quot;attempts&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">successes_</span><span class="p">,</span> <span class="s">&quot;successes&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
+ <span class="n">private</span><span class="p">:</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s2">&quot;my_subsystem&quot;</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">attempts_</span><span class="p">,</span> <span class="s2">&quot;attempts&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="n">u</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">successes_</span><span class="p">,</span> <span class="s2">&quot;successes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="n">u</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -325,35 +328,35 @@ objects around with dependency injection. The alternative to plumbing metrics
 is to register the metrics through a global mechanism. <code class="docutils literal notranslate"><span class="pre">pw_metric</span></code> supports
 this use case. For example:</p>
 <p><strong>Before instrumenting:</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// This code was passed down from generations of developers before; no one</span>
-<span class="c1">// knows what it does or how it works. But it needs to be fixed!</span>
-<span class="kt">void</span> <span class="nf">OldCodeThatDoesntWorkButWeDontKnowWhy</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">some_variable</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">DoSomething</span><span class="p">();</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="n">DoSomethingElse</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// This code was passed down from generations of developers before; no one
+// knows what it does or how it works. But it needs to be fixed!
+void OldCodeThatDoesntWorkButWeDontKnowWhy() {
+  if (some_variable) {
+    DoSomething();
+  } else {
+    DoSomethingElse();
+  }
+}
 </pre></div>
 </div>
 <p><strong>After instrumenting:</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#include &quot;pw_metric/global.h&quot;
+#include &quot;pw_metric/metric.h&quot;
 
-<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">legacy_do_something</span><span class="p">,</span> <span class="s">&quot;legacy_do_something&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">legacy_do_something_else</span><span class="p">,</span> <span class="s">&quot;legacy_do_something_else&quot;</span><span class="p">);</span>
+PW_METRIC_GLOBAL(legacy_do_something, &quot;legacy_do_something&quot;);
+PW_METRIC_GLOBAL(legacy_do_something_else, &quot;legacy_do_something_else&quot;);
 
-<span class="c1">// This code was passed down from generations of developers before; no one</span>
-<span class="c1">// knows what it does or how it works. But it needs to be fixed!</span>
-<span class="kt">void</span> <span class="nf">OldCodeThatDoesntWorkButWeDontKnowWhy</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="n">some_variable</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">legacy_do_something</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
-    <span class="n">DoSomething</span><span class="p">();</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="n">legacy_do_something_else</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
-    <span class="n">DoSomethingElse</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+// This code was passed down from generations of developers before; no one
+// knows what it does or how it works. But it needs to be fixed!
+void OldCodeThatDoesntWorkButWeDontKnowWhy() {
+  if (some_variable) {
+    legacy_do_something.Increment();
+    DoSomething();
+  } else {
+    legacy_do_something_else.Increment();
+    DoSomethingElse();
+  }
+}
 </pre></div>
 </div>
 <p>In this case, the developer merely had to add the metrics header, define some
@@ -530,10 +533,10 @@ storage. These can be used in function scopes, but not in classes.</p>
 <li><p>At global scope:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">15.5f</span><span class="p">);</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">15.5</span><span class="n">f</span><span class="p">);</span>
 
-<span class="kt">void</span> <span class="nf">MyFunc</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">foo</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+<span class="n">void</span> <span class="n">MyFunc</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">foo</span><span class="o">.</span><span class="n">Increment</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -542,11 +545,11 @@ storage. These can be used in function scopes, but not in classes.</p>
 <li><p>At local function or member function scope:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">MyFunc</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">15.5f</span><span class="p">);</span>
-  <span class="n">foo</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
-  <span class="c1">// foo goes out of scope here; be careful!</span>
-<span class="p">}</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>void MyFunc() {
+  PW_METRIC(foo, &quot;foo&quot;, 15.5f);
+  foo.Increment();
+  // foo goes out of scope here; be careful!
+}
 </pre></div>
 </div>
 </div></blockquote>
@@ -554,22 +557,22 @@ storage. These can be used in function scopes, but not in classes.</p>
 <li><p>At member level inside a class or struct:</p></li>
 </ol>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">MyStructy</span> <span class="p">{</span>
-  <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">somethings</span><span class="p">.</span><span class="n">Increment</span><span class="p">();</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">MyStructy</span> <span class="p">{</span>
+  <span class="n">void</span> <span class="n">DoSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">somethings</span><span class="o">.</span><span class="n">Increment</span><span class="p">();</span>
   <span class="p">}</span>
-  <span class="c1">// Every instance of MyStructy will have a separate somethings counter.</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">somethings</span><span class="p">,</span> <span class="s">&quot;somethings&quot;</span><span class="p">,</span> <span class="mi">0u</span><span class="p">);</span>
+  <span class="o">//</span> <span class="n">Every</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">MyStructy</span> <span class="n">will</span> <span class="n">have</span> <span class="n">a</span> <span class="n">separate</span> <span class="n">somethings</span> <span class="n">counter</span><span class="o">.</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">somethings</span><span class="p">,</span> <span class="s2">&quot;somethings&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="n">u</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
 <p>You can also put a metric into a group with the macro. Metrics can belong to
 strictly one group, otherwise a assertion will fail. Example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s">&quot;my_group&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14f</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s2">&quot;my_group&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s2">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14</span><span class="n">f</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -604,10 +607,10 @@ local, and member). Optionally, the group can be added to a parent group.</p>
 <p>If the <cite>_STATIC</cite> variant is used, the macro declares a variable with static
 storage. These can be used in function scopes, but not in classes.</p>
 <p>Example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s">&quot;my_group&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14f</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="s2">&quot;my_group&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">my_group</span><span class="p">,</span> <span class="n">zap</span><span class="p">,</span> <span class="s2">&quot;zap&quot;</span><span class="p">,</span> <span class="mf">3.14</span><span class="n">f</span><span class="p">);</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -618,12 +621,12 @@ storage. These can be used in function scopes, but not in classes.</p>
 <dd><p>Declare a <code class="docutils literal notranslate"><span class="pre">pw::metric::Metric</span></code> with name name, and register it in the
 global metrics list <code class="docutils literal notranslate"><span class="pre">pw::metric::global_metrics</span></code>.</p>
 <p>Example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
+<span class="c1">#include &quot;pw_metric/global.h&quot;</span>
 
-<span class="c1">// No need to coordinate collection of foo and bar; they&#39;re autoregistered.</span>
-<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
-<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+<span class="o">//</span> <span class="n">No</span> <span class="n">need</span> <span class="n">to</span> <span class="n">coordinate</span> <span class="n">collection</span> <span class="n">of</span> <span class="n">foo</span> <span class="ow">and</span> <span class="n">bar</span><span class="p">;</span> <span class="n">they</span><span class="s1">&#39;re autoregistered.</span>
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+<span class="n">PW_METRIC_GLOBAL</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Note that metrics defined with <code class="docutils literal notranslate"><span class="pre">PW_METRIC_GLOBAL</span></code> should never be added to
@@ -647,13 +650,13 @@ global metric groups list <code class="docutils literal notranslate"><span class
 groups! Instead, just create a freestanding metric and register it into the
 global group (like in the example below).</p>
 <p>Example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
+<span class="c1">#include &quot;pw_metric/global.h&quot;</span>
 
-<span class="c1">// No need to coordinate collection of this group; it&#39;s globally registered.</span>
-<span class="n">PW_METRIC_GROUP_GLOBAL</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="s">&quot;legacy_system&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="mf">0.2f</span><span class="p">);</span>
-<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span><span class="mi">44000u</span><span class="p">);</span>
+<span class="o">//</span> <span class="n">No</span> <span class="n">need</span> <span class="n">to</span> <span class="n">coordinate</span> <span class="n">collection</span> <span class="n">of</span> <span class="n">this</span> <span class="n">group</span><span class="p">;</span> <span class="n">it</span><span class="s1">&#39;s globally registered.</span>
+<span class="n">PW_METRIC_GROUP_GLOBAL</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="s2">&quot;legacy_system&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span><span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+<span class="n">PW_METRIC</span><span class="p">(</span><span class="n">leagcy_system</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span><span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition attention">
@@ -678,58 +681,58 @@ reduce reliance on dynamic allocation (or eschew malloc entirely). This leads
 to a pattern where rich/large objects are statically constructed at global
 scope, then interacted with via tasks or threads. For example, consider a
 hypothetical global <code class="docutils literal notranslate"><span class="pre">Uart</span></code> object:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
-  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span> <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
-    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span> <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
+ <span class="n">public</span><span class="p">:</span>
+  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span> <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
+    <span class="p">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span> <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{}</span>
 
-  <span class="c1">// Send/receive here...</span>
+  <span class="o">//</span> <span class="n">Send</span><span class="o">/</span><span class="n">receive</span> <span class="n">here</span><span class="o">...</span>
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+ <span class="n">private</span><span class="p">:</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
-<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span> <span class="n">uart_tx_buffer</span><span class="p">);</span>
+<span class="n">std</span><span class="p">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="p">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
+<span class="n">Uart</span> <span class="n">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span> <span class="n">uart_tx_buffer</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Through the course of building a product, the team may want to add metrics to
 the UART to for example gain insight into which operations are triggering lots
 of data transfer. When adding metrics to the above imaginary UART object, one
 might consider the following approach:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
-  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span>
-       <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">,</span>
-       <span class="n">Group</span><span class="o">&amp;</span> <span class="n">parent_metrics</span><span class="p">)</span>
-    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span>
-      <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{</span>
-      <span class="c1">// PROBLEM! parent_metrics may not be constructed if it&#39;s a reference</span>
-      <span class="c1">// to a static global.</span>
-      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">);</span>
-      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">);</span>
-   <span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>class Uart {
+ public:
+  Uart(span&lt;std::byte&gt; rx_buffer,
+       span&lt;std::byte&gt; tx_buffer,
+       Group&amp; parent_metrics)
+    : rx_buffer_(rx_buffer),
+      tx_buffer_(tx_buffer) {
+      // PROBLEM! parent_metrics may not be constructed if it&#39;s a reference
+      // to a static global.
+      parent_metrics.Add(tx_bytes_);
+      parent_metrics.Add(rx_bytes_);
+   }
 
-  <span class="c1">// Send/receive here which increment tx/rx_bytes.</span>
+  // Send/receive here which increment tx/rx_bytes.
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+ private:
+  std::span&lt;std::byte&gt; rx_buffer;
+  std::span&lt;std::byte&gt; tx_buffer;
 
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">,</span> <span class="s">&quot;tx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">,</span> <span class="s">&quot;rx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-<span class="p">};</span>
+  PW_METRIC(tx_bytes_, &quot;tx_bytes&quot;, 0);
+  PW_METRIC(rx_bytes_, &quot;rx_bytes&quot;, 0);
+};
 
-<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">global_metrics</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">global_metrics</span><span class="p">,</span> <span class="n">uart1_metrics</span><span class="p">,</span> <span class="s">&quot;uart1&quot;</span><span class="p">);</span>
+PW_METRIC_GROUP(global_metrics, &quot;/&quot;);
+PW_METRIC_GROUP(global_metrics, uart1_metrics, &quot;uart1&quot;);
 
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
-<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span>
-           <span class="n">uart_tx_buffer</span><span class="p">,</span>
-           <span class="n">uart1_metrics</span><span class="p">);</span>
+std::array&lt;std::byte, 512&gt; uart_rx_buffer;
+std::array&lt;std::byte, 512&gt; uart_tx_buffer;
+Uart uart1(uart_rx_buffer,
+           uart_tx_buffer,
+           uart1_metrics);
 </pre></div>
 </div>
 <p>However, this <strong>is incorrect</strong>, since the <code class="docutils literal notranslate"><span class="pre">parent_metrics</span></code> (pointing to
@@ -744,42 +747,42 @@ methods on the dependencies are called.</p>
 phases: The constructor where references are stored, and a <code class="docutils literal notranslate"><span class="pre">Init()</span></code> function
 which is called after all static constructors have run. This approach works
 correctly, even when the objects are allocated globally:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
-  <span class="c1">// Note that metrics is not passed in here at all.</span>
-  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span>
-       <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
-    <span class="o">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Uart</span> <span class="p">{</span>
+ <span class="n">public</span><span class="p">:</span>
+  <span class="o">//</span> <span class="n">Note</span> <span class="n">that</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">passed</span> <span class="ow">in</span> <span class="n">here</span> <span class="n">at</span> <span class="nb">all</span><span class="o">.</span>
+  <span class="n">Uart</span><span class="p">(</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">,</span>
+       <span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">)</span>
+    <span class="p">:</span> <span class="n">rx_buffer_</span><span class="p">(</span><span class="n">rx_buffer</span><span class="p">),</span>
       <span class="n">tx_buffer_</span><span class="p">(</span><span class="n">tx_buffer</span><span class="p">)</span> <span class="p">{}</span>
 
-   <span class="c1">// Precondition: parent_metrics is already constructed.</span>
-   <span class="kt">void</span> <span class="n">Init</span><span class="p">(</span><span class="n">Group</span><span class="o">&amp;</span> <span class="n">parent_metrics</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">);</span>
-      <span class="n">parent_metrics</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">);</span>
+   <span class="o">//</span> <span class="n">Precondition</span><span class="p">:</span> <span class="n">parent_metrics</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">constructed</span><span class="o">.</span>
+   <span class="n">void</span> <span class="n">Init</span><span class="p">(</span><span class="n">Group</span><span class="o">&amp;</span> <span class="n">parent_metrics</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">parent_metrics</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">);</span>
+      <span class="n">parent_metrics</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">);</span>
    <span class="p">}</span>
 
-  <span class="c1">// Send/receive here which increment tx/rx_bytes.</span>
+  <span class="o">//</span> <span class="n">Send</span><span class="o">/</span><span class="n">receive</span> <span class="n">here</span> <span class="n">which</span> <span class="n">increment</span> <span class="n">tx</span><span class="o">/</span><span class="n">rx_bytes</span><span class="o">.</span>
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
+ <span class="n">private</span><span class="p">:</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">rx_buffer</span><span class="p">;</span>
+  <span class="n">std</span><span class="p">::</span><span class="n">span</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="o">&gt;</span> <span class="n">tx_buffer</span><span class="p">;</span>
 
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">,</span> <span class="s">&quot;tx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">,</span> <span class="s">&quot;rx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">tx_bytes_</span><span class="p">,</span> <span class="s2">&quot;tx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">rx_bytes_</span><span class="p">,</span> <span class="s2">&quot;rx_bytes&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
-<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="n">uart1_metrics</span><span class="p">,</span> <span class="s">&quot;uart1&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">);</span>
+<span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root_metrics</span><span class="p">,</span> <span class="n">uart1_metrics</span><span class="p">,</span> <span class="s2">&quot;uart1&quot;</span><span class="p">);</span>
 
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
-<span class="n">Uart</span> <span class="nf">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span>
+<span class="n">std</span><span class="p">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_rx_buffer</span><span class="p">;</span>
+<span class="n">std</span><span class="p">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">std</span><span class="p">::</span><span class="n">byte</span><span class="p">,</span> <span class="mi">512</span><span class="o">&gt;</span> <span class="n">uart_tx_buffer</span><span class="p">;</span>
+<span class="n">Uart</span> <span class="n">uart1</span><span class="p">(</span><span class="n">uart_rx_buffer</span><span class="p">,</span>
            <span class="n">uart_tx_buffer</span><span class="p">);</span>
 
-<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// uart1_metrics is guaranteed to be initialized by this point, so it is</span>
-  <span class="n">safe</span> <span class="n">to</span> <span class="n">pass</span> <span class="n">it</span> <span class="n">to</span> <span class="n">Init</span><span class="p">().</span>
-  <span class="n">uart1</span><span class="p">.</span><span class="n">Init</span><span class="p">(</span><span class="n">uart1_metrics</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="o">//</span> <span class="n">uart1_metrics</span> <span class="ow">is</span> <span class="n">guaranteed</span> <span class="n">to</span> <span class="n">be</span> <span class="n">initialized</span> <span class="n">by</span> <span class="n">this</span> <span class="n">point</span><span class="p">,</span> <span class="n">so</span> <span class="n">it</span> <span class="ow">is</span>
+  <span class="n">safe</span> <span class="n">to</span> <span class="k">pass</span> <span class="n">it</span> <span class="n">to</span> <span class="n">Init</span><span class="p">()</span><span class="o">.</span>
+  <span class="n">uart1</span><span class="o">.</span><span class="n">Init</span><span class="p">(</span><span class="n">uart1_metrics</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -794,33 +797,33 @@ the <code class="docutils literal notranslate"><span class="pre">Init()</span></
 <p>The order of declaring in-class groups and metrics matters if the metrics are
 within a group declared inside the class. For example, the following class will
 work fine:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
 
 <span class="k">class</span> <span class="nc">PowerSubsystem</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
+ <span class="n">public</span><span class="p">:</span>
    <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
-   <span class="k">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+   <span class="n">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="n">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;power&quot;</span><span class="p">);</span>  <span class="c1">// Note metrics_ declared first.</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
+ <span class="n">private</span><span class="p">:</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s2">&quot;power&quot;</span><span class="p">);</span>  <span class="o">//</span> <span class="n">Note</span> <span class="n">metrics_</span> <span class="n">declared</span> <span class="n">first</span><span class="o">.</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>but the following one will not since the group is constructed after the metrics
 (and will result in a compile error):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
 
 <span class="k">class</span> <span class="nc">PowerSubsystem</span> <span class="p">{</span>
- <span class="k">public</span><span class="o">:</span>
+ <span class="n">public</span><span class="p">:</span>
    <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
-   <span class="k">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
+   <span class="n">const</span> <span class="n">Group</span><span class="o">&amp;</span> <span class="n">metrics</span><span class="p">()</span> <span class="n">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">metrics_</span><span class="p">;</span> <span class="p">}</span>
 
- <span class="k">private</span><span class="o">:</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2f</span><span class="p">);</span>
-  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000u</span><span class="p">);</span>
-  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s">&quot;power&quot;</span><span class="p">);</span>  <span class="c1">// Error: metrics_ must be first.</span>
+ <span class="n">private</span><span class="p">:</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="n">f</span><span class="p">);</span>
+  <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="mi">44000</span><span class="n">u</span><span class="p">);</span>
+  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">metrics_</span><span class="p">,</span> <span class="s2">&quot;power&quot;</span><span class="p">);</span>  <span class="o">//</span> <span class="n">Error</span><span class="p">:</span> <span class="n">metrics_</span> <span class="n">must</span> <span class="n">be</span> <span class="n">first</span><span class="o">.</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -861,18 +864,18 @@ phases:</p>
 remove the given metric (or group) from the list it’s contained in. However,
 there are no helper functions for this, so be careful.</p>
 <p>Below is an example that <strong>is incorrect</strong>. Don’t do what follows!</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#include &quot;pw_metric/metric.h&quot;
 
-<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">PW_METRIC_GROUP</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;/&quot;</span><span class="p">);</span>
-  <span class="p">{</span>
-    <span class="c1">// BAD! The metrics have a different lifetime than the group.</span>
-    <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="s">&quot;temperature_f&quot;</span><span class="p">,</span> <span class="mf">72.3f</span><span class="p">);</span>
-    <span class="n">PW_METRIC</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="s">&quot;humidity_relative_percent&quot;</span><span class="p">,</span> <span class="mf">33.2f</span><span class="p">);</span>
-  <span class="p">}</span>
-  <span class="c1">// OOPS! root now has a linked list that points to the destructed</span>
-  <span class="c1">// &quot;humidity&quot; object.</span>
-<span class="p">}</span>
+void main() {
+  PW_METRIC_GROUP(root, &quot;/&quot;);
+  {
+    // BAD! The metrics have a different lifetime than the group.
+    PW_METRIC(root, temperature, &quot;temperature_f&quot;, 72.3f);
+    PW_METRIC(root, humidity, &quot;humidity_relative_percent&quot;, 33.2f);
+  }
+  // OOPS! root now has a linked list that points to the destructed
+  // &quot;humidity&quot; object.
+}
 </pre></div>
 </div>
 <div class="admonition attention">
@@ -919,34 +922,34 @@ metrics. Easy choices include for example the <code class="docutils literal notr
 <li><p>Register the service with your RPC server.</p></li>
 </ol>
 <p>For example:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_rpc/server.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/global.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;pw_metric/metric_service_nanopb.h&quot;</span><span class="cp"></span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;pw_rpc/server.h&quot;</span>
+<span class="c1">#include &quot;pw_metric/metric.h&quot;</span>
+<span class="c1">#include &quot;pw_metric/global.h&quot;</span>
+<span class="c1">#include &quot;pw_metric/metric_service_nanopb.h&quot;</span>
 
-<span class="c1">// Note: You must customize the RPC server setup; see pw_rpc.</span>
+<span class="o">//</span> <span class="n">Note</span><span class="p">:</span> <span class="n">You</span> <span class="n">must</span> <span class="n">customize</span> <span class="n">the</span> <span class="n">RPC</span> <span class="n">server</span> <span class="n">setup</span><span class="p">;</span> <span class="n">see</span> <span class="n">pw_rpc</span><span class="o">.</span>
 <span class="n">Channel</span> <span class="n">channels</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
- <span class="n">Channel</span><span class="o">::</span><span class="n">Create</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uart_output</span><span class="p">),</span>
+ <span class="n">Channel</span><span class="p">::</span><span class="n">Create</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">uart_output</span><span class="p">),</span>
 <span class="p">};</span>
-<span class="n">Server</span> <span class="nf">server</span><span class="p">(</span><span class="n">channels</span><span class="p">);</span>
+<span class="n">Server</span> <span class="n">server</span><span class="p">(</span><span class="n">channels</span><span class="p">);</span>
 
-<span class="c1">// Metric service instance, pointing to the global metric objects.</span>
-<span class="c1">// This could also point to custom per-product or application objects.</span>
-<span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">MetricService</span> <span class="n">metric_service</span><span class="p">(</span>
-    <span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">global_metrics</span><span class="p">,</span>
-    <span class="n">pw</span><span class="o">::</span><span class="n">metric</span><span class="o">::</span><span class="n">global_groups</span><span class="p">);</span>
+<span class="o">//</span> <span class="n">Metric</span> <span class="n">service</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pointing</span> <span class="n">to</span> <span class="n">the</span> <span class="k">global</span> <span class="n">metric</span> <span class="n">objects</span><span class="o">.</span>
+<span class="o">//</span> <span class="n">This</span> <span class="n">could</span> <span class="n">also</span> <span class="n">point</span> <span class="n">to</span> <span class="n">custom</span> <span class="n">per</span><span class="o">-</span><span class="n">product</span> <span class="ow">or</span> <span class="n">application</span> <span class="n">objects</span><span class="o">.</span>
+<span class="n">pw</span><span class="p">::</span><span class="n">metric</span><span class="p">::</span><span class="n">MetricService</span> <span class="n">metric_service</span><span class="p">(</span>
+    <span class="n">pw</span><span class="p">::</span><span class="n">metric</span><span class="p">::</span><span class="n">global_metrics</span><span class="p">,</span>
+    <span class="n">pw</span><span class="p">::</span><span class="n">metric</span><span class="p">::</span><span class="n">global_groups</span><span class="p">);</span>
 
-<span class="kt">void</span> <span class="nf">RegisterServices</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">server</span><span class="p">.</span><span class="n">RegisterService</span><span class="p">(</span><span class="n">metric_service</span><span class="p">);</span>
-  <span class="c1">// Register other services here.</span>
+<span class="n">void</span> <span class="n">RegisterServices</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">server</span><span class="o">.</span><span class="n">RegisterService</span><span class="p">(</span><span class="n">metric_service</span><span class="p">);</span>
+  <span class="o">//</span> <span class="n">Register</span> <span class="n">other</span> <span class="n">services</span> <span class="n">here</span><span class="o">.</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="c1">// ... system initialization ...</span>
+<span class="n">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="o">//</span> <span class="o">...</span> <span class="n">system</span> <span class="n">initialization</span> <span class="o">...</span>
 
   <span class="n">RegisterServices</span><span class="p">();</span>
 
-  <span class="c1">// ... start your applcation ...</span>
+  <span class="o">//</span> <span class="o">...</span> <span class="n">start</span> <span class="n">your</span> <span class="n">applcation</span> <span class="o">...</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -999,17 +1002,17 @@ metrics. This does not include the RPC service.</p>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">20,440</div>
-<div class="line">672</div>
+<div class="line">20,480</div>
+<div class="line">680</div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">+676</div>
-<div class="line">+40</div>
+<div class="line">+32</div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">21,116</div>
+<div class="line">21,156</div>
 <div class="line">712</div>
 </div>
 </td>
@@ -1021,17 +1024,17 @@ metrics. This does not include the RPC service.</p>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">20,440</div>
-<div class="line">672</div>
+<div class="line">20,480</div>
+<div class="line">680</div>
 </div>
 </td>
 <td><div class="line-block">
 <div class="line">+1,420</div>
-<div class="line">+40</div>
+<div class="line">+32</div>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">21,860</div>
+<div class="line">21,900</div>
 <div class="line">712</div>
 </div>
 </td>
@@ -1043,7 +1046,7 @@ metrics. This does not include the RPC service.</p>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">21,860</div>
+<div class="line">21,900</div>
 <div class="line">712</div>
 </div>
 </td>
@@ -1053,7 +1056,7 @@ metrics. This does not include the RPC service.</p>
 </div>
 </td>
 <td><div class="line-block">
-<div class="line">22,124</div>
+<div class="line">22,164</div>
 <div class="line">776</div>
 </div>
 </td>

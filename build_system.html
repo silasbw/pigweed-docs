@@ -138,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#configuration-buildconfig-gn">Configuration: BUILDCONFIG.gn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#top-level-gn-targets-build-gn">Top-level GN targets: //BUILD.gn</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#default-group">“default” group</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optimization-levels">Optimization levels</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#upstream-gn-target-groups">Upstream GN target groups</a></li>
 </ul>
 </li>
@@ -221,7 +222,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="build-system">
-<span id="chapter-build-system"></span><h1>Build system<a class="headerlink" href="#build-system" title="Permalink to this headline">¶</a></h1>
+<span id="docs-build-system"></span><h1>Build system<a class="headerlink" href="#build-system" title="Permalink to this headline">¶</a></h1>
 <p>Building software for embedded devices is a complex process. Projects often have
 custom toolchains, target different hardware platforms, and require additional
 configuration and post-processing of artifacts.</p>
@@ -267,13 +268,13 @@ include:</p>
 <li><p>Image signing</p></li>
 <li><p>Creating databases of symbols for debugging</p></li>
 <li><p>Extracting string tokens into a database (for example, with
-<a class="reference internal" href="pw_tokenizer/docs.html#chapter-pw-tokenizer"><span class="std std-ref">pw_tokenizer</span></a>)</p></li>
+<a class="reference internal" href="pw_tokenizer/docs.html#module-pw-tokenizer"><span class="std std-ref">pw_tokenizer</span></a>)</p></li>
 </ul>
 <p>These are run as steps during a build, facilitated by the build system.</p>
 <div class="section" id="see-also">
 <h4>See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><a class="reference internal" href="pw_build/docs.html#pw-build-python-script"><span class="std std-ref">pw_python_script</span></a></p></li>
+<li><p><a class="reference internal" href="pw_build/docs.html#module-pw-build-python-script"><span class="std std-ref">pw_python_script</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -295,7 +296,7 @@ up-to-date and allows space usage to be tracked over time.</p>
 <div class="section" id="id1">
 <h4>See also<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><a class="reference internal" href="pw_bloat/docs.html#chapter-pw-bloat"><span class="std std-ref">pw_bloat</span></a></p></li>
+<li><p><a class="reference internal" href="pw_bloat/docs.html#module-pw-bloat"><span class="std std-ref">pw_bloat</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -308,7 +309,7 @@ size reports, to provide high quality, up-to-date references for developers.</p>
 <div class="section" id="id2">
 <h4>See also<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><a class="reference internal" href="pw_docgen/docs.html#chapter-pw-docgen"><span class="std std-ref">pw_docgen</span></a></p></li>
+<li><p><a class="reference internal" href="pw_docgen/docs.html#module-pw-docgen"><span class="std std-ref">pw_docgen</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -335,8 +336,8 @@ across physical devices as part of a build.</p>
 <div class="section" id="id3">
 <h4>See also<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><a class="reference internal" href="pw_unit_test/docs.html#chapter-pw-unit-test"><span class="std std-ref">pw_unit_test</span></a></p></li>
-<li><p><a class="reference internal" href="pw_target_runner/docs.html#chapter-pw-target-runner"><span class="std std-ref">pw_target_runner</span></a></p></li>
+<li><p><a class="reference internal" href="pw_unit_test/docs.html#module-pw-unit-test"><span class="std std-ref">pw_unit_test</span></a></p></li>
+<li><p><a class="reference internal" href="pw_target_runner/docs.html#module-pw-target-runner"><span class="std std-ref">pw_target_runner</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -353,7 +354,7 @@ running in a terminal window.</p>
 <div class="section" id="id4">
 <h4>See also<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p><a class="reference internal" href="pw_watch/docs.html#chapter-pw-watch"><span class="std std-ref">pw_watch</span></a></p></li>
+<li><p><a class="reference internal" href="pw_watch/docs.html#module-pw-watch"><span class="std std-ref">pw_watch</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -461,23 +462,17 @@ GN target groups with each Pigweed target’s toolchain. For example, in upstrea
 all of Pigweed’s GN targets are contained within the <code class="docutils literal notranslate"><span class="pre">pigweed_default</span></code> group.
 This group is instantiated multiple times, with different Pigweed target
 toolchains.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Snippit from Pigweed&#39;s //BUILD.gn</span>
-
-<span class="n">group</span><span class="p">(</span><span class="s2">&quot;host_clang&quot;</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;:pigweed_default($dir_pigweed/targets/host:host_clang_$pw_optimization_level)&quot;</span> <span class="p">]</span>
-<span class="p">}</span>
-
-<span class="n">group</span><span class="p">(</span><span class="s2">&quot;stm32f429i&quot;</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;:pigweed_default($dir_pigweed/targets/stm32f429i-disc1:stm32f429i_disc1_$pw_optimization_level)&quot;</span> <span class="p">]</span>
-<span class="p">}</span>
-
-<span class="n">group</span><span class="p">(</span><span class="s2">&quot;docs&quot;</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;:pigweed_default($dir_pigweed/targets/docs)&quot;</span> <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
+<p>These groups include the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">host</span></code> – builds <code class="docutils literal notranslate"><span class="pre">pigweed_default</span></code> with Clang or GCC, depending on the
+platform</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host_clang</span></code> – builds <code class="docutils literal notranslate"><span class="pre">pigweed_default</span></code> for the host with Clang</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host_gcc</span></code> – builds <code class="docutils literal notranslate"><span class="pre">pigweed_default</span></code> for the host with GCC</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stm32f429i</span></code> – builds <code class="docutils literal notranslate"><span class="pre">pigweed_default</span></code> for STM32F429i Discovery board</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code> – builds the Pigweed documentation and size reports</p></li>
+</ul>
 <p>Pigweed projects are recommended to follow this pattern, creating a top-level
-group for each of its Pigweed targets, which builds a common GN target with the
+group for each of their Pigweed targets that builds a common GN target with the
 appropriate toolchain.</p>
 <p>It is important that no dependencies are listed under the default toolchain
 within <code class="docutils literal notranslate"><span class="pre">//BUILD.gn</span></code>, as it does not configure any build parameters, and
@@ -495,7 +490,7 @@ toolchain.</p>
 <span class="p">}</span>
 
 <span class="c1"># The images group is instantiated for each of the project&#39;s Pigweed targets.</span>
-<span class="n">group</span><span class="p">(</span><span class="s2">&quot;my_pigwed_target&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="n">group</span><span class="p">(</span><span class="s2">&quot;my_pigweed_target&quot;</span><span class="p">)</span> <span class="p">{</span>
   <span class="n">deps</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;:my_application_images(//toolchains:my_pigweed_target)&quot;</span> <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
@@ -517,6 +512,24 @@ present, Ninja will build this group when invoked without arguments.</p>
 <p class="admonition-title">Tip</p>
 <p>Defining a <code class="docutils literal notranslate"><span class="pre">default</span></code> group makes using <code class="docutils literal notranslate"><span class="pre">pw</span> <span class="pre">watch</span></code> simple!</p>
 </div>
+</div>
+<div class="section" id="optimization-levels">
+<h4>Optimization levels<a class="headerlink" href="#optimization-levels" title="Permalink to this headline">¶</a></h4>
+<p>Pigweed’s <code class="docutils literal notranslate"><span class="pre">//BUILD.gn</span></code> defines the <code class="docutils literal notranslate"><span class="pre">pw_default_optimization_level</span></code> build
+arg, which specifies the optimization level to use for the default groups
+(<code class="docutils literal notranslate"><span class="pre">host</span></code>, <code class="docutils literal notranslate"><span class="pre">stm32f429i</span></code>, etc.). The supported values for
+<code class="docutils literal notranslate"><span class="pre">pw_default_optimization_level</span></code> are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">debug</span></code> – create debugging-friendly binaries (<code class="docutils literal notranslate"><span class="pre">-Og</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size_optimized</span></code> – optimize for size (<code class="docutils literal notranslate"><span class="pre">-Os</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">speed_optimized</span></code> – optimized for speed, without increasing code size
+(<code class="docutils literal notranslate"><span class="pre">-O2</span></code>)</p></li>
+</ul>
+<p>Pigweed defines versions of its groups in <code class="docutils literal notranslate"><span class="pre">//BUILD.gn</span></code> for each optimization
+level. Rather than relying on <code class="docutils literal notranslate"><span class="pre">pw_default_optimization_level</span></code>, you may
+directly build a group at the desired optimization level:
+<code class="docutils literal notranslate"><span class="pre">&lt;group&gt;_&lt;optimization&gt;</span></code>. Examples include <code class="docutils literal notranslate"><span class="pre">host_clang_debug</span></code>,
+<code class="docutils literal notranslate"><span class="pre">host_gcc_size_optimized</span></code>, and <code class="docutils literal notranslate"><span class="pre">stm32f429i_speed_optimized</span></code>.</p>
 </div>
 <div class="section" id="upstream-gn-target-groups">
 <h4>Upstream GN target groups<a class="headerlink" href="#upstream-gn-target-groups" title="Permalink to this headline">¶</a></h4>
@@ -602,7 +615,7 @@ of GN builtins.</p>
 <p>To build for a specific hardware platform, builds define Pigweed targets. These
 are essentially GN toolchains which set special arguments telling Pigweed how to
 build. For information on Pigweed’s target system, refer to
-<a class="reference internal" href="targets.html#chapter-targets"><span class="std std-ref">Targets</span></a>.</p>
+<a class="reference internal" href="targets.html#docs-targets"><span class="std std-ref">Targets</span></a>.</p>
 </div>
 <div class="section" id="the-dummy-toolchain">
 <h3>The dummy toolchain<a class="headerlink" href="#the-dummy-toolchain" title="Permalink to this headline">¶</a></h3>

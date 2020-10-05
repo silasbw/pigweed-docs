@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
@@ -127,6 +128,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
@@ -145,6 +147,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -232,7 +235,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-unit-test">
-<span id="chapter-pw-unit-test"></span><h1>pw_unit_test<a class="headerlink" href="#pw-unit-test" title="Permalink to this headline">¶</a></h1>
+<span id="module-pw-unit-test"></span><h1>pw_unit_test<a class="headerlink" href="#pw-unit-test" title="Permalink to this headline">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> unit testing library with a <a class="reference external" href="https://github.com/google/googletest/blob/master/googletest/docs/primer.md">Google Test</a>-compatible API,
 built on top of embedded-friendly primitives.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> is a portable library which can run on almost any system from
@@ -278,25 +281,25 @@ of getting started using <code class="docutils literal notranslate"><span class=
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">SimplePrintingEventHandler</span></code>: An event handler that writes Google Test-style
 output to a specified sink.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">[==========]</span> Running all tests.
-<span class="o">[</span> RUN      <span class="o">]</span> Status.Default
-<span class="o">[</span>       OK <span class="o">]</span> Status.Default
-<span class="o">[</span> RUN      <span class="o">]</span> Status.ConstructWithStatusCode
-<span class="o">[</span>       OK <span class="o">]</span> Status.ConstructWithStatusCode
-<span class="o">[</span> RUN      <span class="o">]</span> Status.AssignFromStatusCode
-<span class="o">[</span>       OK <span class="o">]</span> Status.AssignFromStatusCode
-<span class="o">[</span> RUN      <span class="o">]</span> Status.CompareToStatusCode
-<span class="o">[</span>       OK <span class="o">]</span> Status.CompareToStatusCode
-<span class="o">[</span> RUN      <span class="o">]</span> Status.Ok_OkIsTrue
-<span class="o">[</span>       OK <span class="o">]</span> Status.Ok_OkIsTrue
-<span class="o">[</span> RUN      <span class="o">]</span> Status.NotOk_OkIsFalse
-<span class="o">[</span>       OK <span class="o">]</span> Status.NotOk_OkIsFalse
-<span class="o">[</span> RUN      <span class="o">]</span> Status.KnownString
-<span class="o">[</span>       OK <span class="o">]</span> Status.KnownString
-<span class="o">[</span> RUN      <span class="o">]</span> Status.UnknownString
-<span class="o">[</span>       OK <span class="o">]</span> Status.UnknownString
-<span class="o">[==========]</span> Done running all tests.
-<span class="o">[</span>  PASSED  <span class="o">]</span> <span class="m">8</span> test<span class="o">(</span>s<span class="o">)</span>.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="n">Running</span> <span class="nb">all</span> <span class="n">tests</span><span class="o">.</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">Default</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">Default</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">ConstructWithStatusCode</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">ConstructWithStatusCode</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">AssignFromStatusCode</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">AssignFromStatusCode</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">CompareToStatusCode</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">CompareToStatusCode</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">Ok_OkIsTrue</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">Ok_OkIsTrue</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">NotOk_OkIsFalse</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">NotOk_OkIsFalse</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">KnownString</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">KnownString</span>
+<span class="p">[</span> <span class="n">RUN</span>      <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">UnknownString</span>
+<span class="p">[</span>       <span class="n">OK</span> <span class="p">]</span> <span class="n">Status</span><span class="o">.</span><span class="n">UnknownString</span>
+<span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="n">Done</span> <span class="n">running</span> <span class="nb">all</span> <span class="n">tests</span><span class="o">.</span>
+<span class="p">[</span>  <span class="n">PASSED</span>  <span class="p">]</span> <span class="mi">8</span> <span class="n">test</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span>
 </pre></div>
 </div>
 </li>
@@ -333,11 +336,11 @@ framework, register an event handler, and call the <code class="docutils literal
 simple unit tests, set the <code class="docutils literal notranslate"><span class="pre">pw_unit_test_MAIN</span></code> build variable to a target
 which configures the test framework as described in the <a class="reference internal" href="#running-tests"><span class="std std-ref">Running tests</span></a>
 section, and use the <code class="docutils literal notranslate"><span class="pre">pw_test</span></code> template to register your test code.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">import</span><span class="p">(</span><span class="s2">&quot;$dir_pw_unit_test/test.gni&quot;</span><span class="p">)</span>
 
-pw_test<span class="o">(</span><span class="s2">&quot;foo_test&quot;</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nv">sources</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;foo_test.cc&quot;</span> <span class="o">]</span>
-<span class="o">}</span>
+<span class="n">pw_test</span><span class="p">(</span><span class="s2">&quot;foo_test&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;foo_test.cc&quot;</span> <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> module provides a few optional libraries to simplify setup:</p>
@@ -369,12 +372,12 @@ replaces the test with an empty target. Default true.</p></li>
 <code class="docutils literal notranslate"><span class="pre">main()</span></code> is implemented in the test’s <code class="docutils literal notranslate"><span class="pre">sources</span></code>.</p></li>
 </ul>
 <p><strong>Example</strong></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">import</span><span class="p">(</span><span class="s2">&quot;$dir_pw_unit_test/test.gni&quot;</span><span class="p">)</span>
 
-pw_test<span class="o">(</span><span class="s2">&quot;large_test&quot;</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nv">sources</span> <span class="o">=</span> <span class="o">[</span> <span class="s2">&quot;large_test.cc&quot;</span> <span class="o">]</span>
-  <span class="nv">enable_if</span> <span class="o">=</span> device_has_1m_flash
-<span class="o">}</span>
+<span class="n">pw_test</span><span class="p">(</span><span class="s2">&quot;large_test&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;large_test.cc&quot;</span> <span class="p">]</span>
+  <span class="n">enable_if</span> <span class="o">=</span> <span class="n">device_has_1m_flash</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -392,22 +395,22 @@ depends.</p></li>
 If false, an empty GN group is created instead. Default true.</p></li>
 </ul>
 <p><strong>Example</strong></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>import<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$dir_pw_unit_test</span><span class="s2">/test.gni&quot;</span><span class="o">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">import</span><span class="p">(</span><span class="s2">&quot;$dir_pw_unit_test/test.gni&quot;</span><span class="p">)</span>
 
-pw_test_group<span class="o">(</span><span class="s2">&quot;tests&quot;</span><span class="o">)</span> <span class="o">{</span>
-  <span class="nv">tests</span> <span class="o">=</span> <span class="o">[</span>
-    <span class="s2">&quot;:bar_test&quot;</span>,
-    <span class="s2">&quot;:foo_test&quot;</span>,
-  <span class="o">]</span>
-<span class="o">}</span>
+<span class="n">pw_test_group</span><span class="p">(</span><span class="s2">&quot;tests&quot;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">tests</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;:bar_test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;:foo_test&quot;</span><span class="p">,</span>
+  <span class="p">]</span>
+<span class="p">}</span>
 
-pw_test<span class="o">(</span><span class="s2">&quot;foo_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">pw_test</span><span class="p">(</span><span class="s2">&quot;foo_test&quot;</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1"># ...</span>
-<span class="o">}</span>
+<span class="p">}</span>
 
-pw_test<span class="o">(</span><span class="s2">&quot;bar_test&quot;</span><span class="o">)</span> <span class="o">{</span>
+<span class="n">pw_test</span><span class="p">(</span><span class="s2">&quot;bar_test&quot;</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1"># ...</span>
-<span class="o">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

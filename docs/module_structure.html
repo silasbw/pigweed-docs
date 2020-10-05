@@ -176,7 +176,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="module-structure">
-<span id="chapter-module-guide"></span><h1>Module Structure<a class="headerlink" href="#module-structure" title="Permalink to this headline">¶</a></h1>
+<span id="docs-module-structure"></span><h1>Module Structure<a class="headerlink" href="#module-structure" title="Permalink to this headline">¶</a></h1>
 <p>The Pigweed module structure is designed to keep as much code as possible for a
 particular slice of functionality in one place. That means including the code
 from multiple languages, as well as all the related documentation and tests.</p>
@@ -280,19 +280,19 @@ but are not intended for public use).</p>
 <p><strong>Exposed private headers</strong> should take the form:</p>
 <p><code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;/internal/*.h</span></code></p>
 <p>Examples:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_foo/...
-  public/pw_foo/foo.h
-  public/pw_foo/a_header.h
-  public/pw_foo/baz.h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_foo</span><span class="o">/...</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">a_header</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">baz</span><span class="o">.</span><span class="n">h</span>
 </pre></div>
 </div>
 <p>For headers that must be exposed due to C++ limitations (i.e. are included from
 the public interface, but are not intended for use), place the headers in a
 <code class="docutils literal notranslate"><span class="pre">internal</span></code> subfolder under the public headers directory; as
 <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public/&lt;module&gt;/internal/*.h</span></code>. For example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_foo/...
-  public/pw_foo/internal/secret.h
-  public/pw_foo/internal/business.h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_foo</span><span class="o">/...</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">secret</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_foo</span><span class="o">/</span><span class="n">internal</span><span class="o">/</span><span class="n">business</span><span class="o">.</span><span class="n">h</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -315,15 +315,15 @@ other headers must go in</p>
 <p><code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/public_overrides/...`</span></code></p>
 <p>For example, the <code class="docutils literal notranslate"><span class="pre">pw_unit_test</span></code> module provides a header override for
 <code class="docutils literal notranslate"><span class="pre">gtest/gtest.h</span></code>. The structure of the module is (omitting some files):</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_unit_test/...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_unit_test</span><span class="o">/...</span>
 
-  public_overrides/gtest
-  public_overrides/gtest/gtest.h
+  <span class="n">public_overrides</span><span class="o">/</span><span class="n">gtest</span>
+  <span class="n">public_overrides</span><span class="o">/</span><span class="n">gtest</span><span class="o">/</span><span class="n">gtest</span><span class="o">.</span><span class="n">h</span>
 
-  public/pw_unit_test
-  public/pw_unit_test/framework.h
-  public/pw_unit_test/simple_printing_event_handler.h
-  public/pw_unit_test/event_handler.h
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_unit_test</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_unit_test</span><span class="o">/</span><span class="n">framework</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_unit_test</span><span class="o">/</span><span class="n">simple_printing_event_handler</span><span class="o">.</span><span class="n">h</span>
+  <span class="n">public</span><span class="o">/</span><span class="n">pw_unit_test</span><span class="o">/</span><span class="n">event_handler</span><span class="o">.</span><span class="n">h</span>
 </pre></div>
 </div>
 <p>Note that the overrides are in a separate directory <code class="docutils literal notranslate"><span class="pre">public_overrides</span></code>.</p>
@@ -333,12 +333,12 @@ other headers must go in</p>
 <p>Located <code class="docutils literal notranslate"><span class="pre">{pw_module_dir}/</span></code>. C++ implementation files go at the top level of
 the module. Implementation files must always use “” style includes.</p>
 <p>Example:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_unit_test/...
-  main.cc
-  framework.cc
-  test.gni
-  BUILD.gn
-  README.md
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_unit_test</span><span class="o">/...</span>
+  <span class="n">main</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">framework</span><span class="o">.</span><span class="n">cc</span>
+  <span class="n">test</span><span class="o">.</span><span class="n">gni</span>
+  <span class="n">BUILD</span><span class="o">.</span><span class="n">gn</span>
+  <span class="n">README</span><span class="o">.</span><span class="n">md</span>
 </pre></div>
 </div>
 </div>
@@ -349,21 +349,21 @@ the module. Implementation files must always use “” style includes.</p>
 <code class="docutils literal notranslate"><span class="pre">docs.rst</span></code> file. There must be a docgen entry for the documentation in the
 <code class="docutils literal notranslate"><span class="pre">BUILD.gn</span></code> file with the target name <code class="docutils literal notranslate"><span class="pre">docs</span></code>; so the full target for the
 docs would be <code class="docutils literal notranslate"><span class="pre">&lt;module&gt;:docs</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_example_module/...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_example_module</span><span class="o">/...</span>
 
-  docs.rst
+  <span class="n">docs</span><span class="o">.</span><span class="n">rst</span>
 </pre></div>
 </div>
 <p>For modules with more involved documentation, create a separate directory
 called <code class="docutils literal notranslate"><span class="pre">docs/</span></code> under the module root, and put the <code class="docutils literal notranslate"><span class="pre">.rst</span></code> files and other
 related files (like images and diagrams) there.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pw_example_module/...
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pw_example_module</span><span class="o">/...</span>
 
-  docs/docs.rst
-  docs/bar.rst
-  docs/foo.rst
-  docs/image/screenshot.png
-  docs/image/diagram.svg
+  <span class="n">docs</span><span class="o">/</span><span class="n">docs</span><span class="o">.</span><span class="n">rst</span>
+  <span class="n">docs</span><span class="o">/</span><span class="n">bar</span><span class="o">.</span><span class="n">rst</span>
+  <span class="n">docs</span><span class="o">/</span><span class="n">foo</span><span class="o">.</span><span class="n">rst</span>
+  <span class="n">docs</span><span class="o">/</span><span class="n">image</span><span class="o">/</span><span class="n">screenshot</span><span class="o">.</span><span class="n">png</span>
+  <span class="n">docs</span><span class="o">/</span><span class="n">image</span><span class="o">/</span><span class="n">diagram</span><span class="o">.</span><span class="n">svg</span>
 </pre></div>
 </div>
 </div>
@@ -429,7 +429,7 @@ documentation</p></li>
 <li><p>Add in <code class="docutils literal notranslate"><span class="pre">docs/BUILD.gn</span></code> to <code class="docutils literal notranslate"><span class="pre">pw_doc_gen(&quot;docs&quot;)</span></code></p></li>
 </ul>
 </li>
-<li><p>Run <a class="reference internal" href="../pw_module/docs.html#chapter-module-module-check"><span class="std std-ref">pw module-check</span></a></p>
+<li><p>Run <a class="reference internal" href="../pw_module/docs.html#module-pw-module-module-check"><span class="std std-ref">pw module-check</span></a></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pw</span> <span class="pre">module-check</span> <span class="pre">{pw_module_dir}</span></code></p></li>
 </ul>

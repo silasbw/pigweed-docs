@@ -223,7 +223,7 @@ Done. Made <span class="m">1047</span> targets from <span class="m">91</span> fi
 <ol class="arabic simple" start="4">
 <li><p>Start the watcher. The watcher will invoke Ninja to build all the targets</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out default stm32f429i
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out default
 
  ▒█████▄   █▓  ▄███▒  ▒█    ▒█ ░▓████▒ ░▓████▒ ▒▓████▄
   ▒█░  █░ ░█▒ ██▒ ▀█▒ ▒█░ █ ▒█  ▒█   ▀  ▒█   ▀  ▒█  ▀█▌
@@ -232,7 +232,7 @@ Done. Made <span class="m">1047</span> targets from <span class="m">91</span> fi
   ▒█      ░█░ ░▓███▀   ▒█▓▀▓█░ ░▓████▒ ░▓████▒ ▒▓████▀
 
 <span class="m">20200707</span> <span class="m">17</span>:24:06 INF Starting Pigweed build watcher
-<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Will build <span class="o">[</span><span class="m">1</span>/1<span class="o">]</span>: out default stm32f429i
+<span class="m">20200707</span> <span class="m">17</span>:24:06 INF Will build <span class="o">[</span><span class="m">1</span>/1<span class="o">]</span>: out default
 <span class="m">20200707</span> <span class="m">17</span>:24:06 INF Attaching filesystem watcher to <span class="nv">$HOME</span>/wrk/pigweed/...
 <span class="m">20200707</span> <span class="m">17</span>:24:06 INF Triggering initial build...
 ...
@@ -377,25 +377,19 @@ be re-built and re-run.</p>
 </div>
 <div class="section" id="building-for-a-device">
 <h2>Building for a Device<a class="headerlink" href="#building-for-a-device" title="Permalink to this headline">¶</a></h2>
-<p>As mentioned previously, Pigweed builds for host by default. In the context of
-Pigweed, a Pigweed “target” is a build configuration that includes a toolchain,
-default library configurations, and more to result in binaries that run
-natively on the target.</p>
-<p>Switch to the window running <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code>, and quit using <code class="docutils literal notranslate"><span class="pre">ctrl+c</span></code>. To get
-<code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> to build the new STM32F429I-DISC1 target, re-launch by specifying
-which Ninja targets to build:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out default stm32f429i
+<p>A Pigweed “target” is a build configuration that includes a toolchain, default
+library configurations, and more to result in binaries that run natively on the
+target. With the default build invocation, you’re already building for a device
+target (the STMicroelectronics STM32F429I-DISC1) in parallel with the host
+build!</p>
+<p>If you want to build JUST for the device, you can kick of watch with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pw watch out stm32f429i
 </pre></div>
 </div>
 <p>This is equivalent to the following Ninja invocation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ninja -C out default stm32f429i
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ninja -C out stm32f429i
 </pre></div>
 </div>
-<p>Or since the “default” target builds host and docs,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ninja -C out host docs stm32f429i
-</pre></div>
-</div>
-<p>Now <code class="docutils literal notranslate"><span class="pre">pw_watch</span></code> is building for host and a device!</p>
 </div>
 <div class="section" id="running-tests-on-a-device">
 <h2>Running Tests on a Device<a class="headerlink" href="#running-tests-on-a-device" title="Permalink to this headline">¶</a></h2>

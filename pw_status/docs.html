@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
@@ -127,6 +128,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
@@ -142,12 +144,19 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_rpc/docs.html">pw_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_span/docs.html">pw_span</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pw_status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">pw::Status</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#c-compatibility">C compatibility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#statuswithsize">StatusWithSize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pw-try">PW_TRY</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#compatibility">Compatibility</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -226,13 +235,236 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-status">
-<h1>pw_status<a class="headerlink" href="#pw-status" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">pw::Status</span></code> (<code class="docutils literal notranslate"><span class="pre">pw_status/status.h</span></code>) is a simple, zero-overhead status
-object. It uses Google’s standard status codes, which are also used by projects
-such as <a class="reference external" href="https://github.com/grpc/grpc/blob/master/doc/statuscodes.md">gRPC</a>.</p>
+<span id="module-pw-status"></span><h1>pw_status<a class="headerlink" href="#pw-status" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">pw_status</span></code> provides features for communicating the result of an operation.
+The classes in <code class="docutils literal notranslate"><span class="pre">pw_status</span></code> are used extensively throughout Pigweed.</p>
+<div class="section" id="id1">
+<h2>pw::Status<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The primary feature of <code class="docutils literal notranslate"><span class="pre">pw_status</span></code> is the <code class="docutils literal notranslate"><span class="pre">pw::Status</span></code> class.
+<code class="docutils literal notranslate"><span class="pre">pw::Status</span></code> (<code class="docutils literal notranslate"><span class="pre">pw_status/status.h</span></code>) is a simple, zero-overhead status
+object that wraps a status code.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw::Status</span></code> uses Google’s standard status codes (see the <a class="reference external" href="https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto">Google APIs
+repository</a>).
+These codes are used extensively in Google projects including <a class="reference external" href="https://abseil.io">Abseil</a> (<a class="reference external" href="https://cs.opensource.google/abseil/abseil-cpp/+/master:absl/status/status.h">status/status.h</a>
+) and <a class="reference external" href="https://grpc.io">gRPC</a> (<a class="reference external" href="https://github.com/grpc/grpc/blob/master/doc/statuscodes.md">doc/statuscodes.md</a>).</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">Status</span></code> is created with a <code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">constexpr</span></code> member function
+corresponding to the code.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Ok (gRPC code &quot;OK&quot;) does not indicate an error; this value is returned on</span>
+<span class="c1">// success. It is typical to check for this value before proceeding on any</span>
+<span class="c1">// given call across an API or RPC boundary. To check this value, use the</span>
+<span class="c1">// `Status::ok()` member function rather than inspecting the raw code.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Ok</span><span class="p">()</span>
+
+<span class="c1">// Cancelled (gRPC code &quot;CANCELLED&quot;) indicates the operation was cancelled,</span>
+<span class="c1">// typically by the caller.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Cancelled</span><span class="p">()</span>
+
+<span class="c1">// Unknown (gRPC code &quot;UNKNOWN&quot;) indicates an unknown error occurred. In</span>
+<span class="c1">// general, more specific errors should be raised, if possible. Errors raised</span>
+<span class="c1">// by APIs that do not return enough error information may be converted to</span>
+<span class="c1">// this error.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Unknown</span><span class="p">()</span>
+
+<span class="c1">// InvalidArgument (gRPC code &quot;INVALID_ARGUMENT&quot;) indicates the caller</span>
+<span class="c1">// specified an invalid argument, such a malformed filename. Note that such</span>
+<span class="c1">// errors should be narrowly limited to indicate to the invalid nature of the</span>
+<span class="c1">// arguments themselves. Errors with validly formed arguments that may cause</span>
+<span class="c1">// errors with the state of the receiving system should be denoted with</span>
+<span class="c1">// `FailedPrecondition` instead.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">InvalidArgument</span><span class="p">()</span>
+
+<span class="c1">// DeadlineExceeded (gRPC code &quot;DEADLINE_EXCEEDED&quot;) indicates a deadline</span>
+<span class="c1">// expired before the operation could complete. For operations that may change</span>
+<span class="c1">// state within a system, this error may be returned even if the operation has</span>
+<span class="c1">// completed successfully. For example, a successful response from a server</span>
+<span class="c1">// could have been delayed long enough for the deadline to expire.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">DeadlineExceeded</span><span class="p">()</span>
+
+<span class="c1">// NotFound (gRPC code &quot;NOT_FOUND&quot;) indicates some requested entity (such as</span>
+<span class="c1">// a file or directory) was not found.</span>
+<span class="c1">//</span>
+<span class="c1">// `NotFound` is useful if a request should be denied for an entire class of</span>
+<span class="c1">// users, such as during a gradual feature rollout or undocumented allow list.</span>
+<span class="c1">// If, instead, a request should be denied for specific sets of users, such as</span>
+<span class="c1">// through user-based access control, use `PermissionDenied` instead.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">NotFound</span><span class="p">()</span>
+
+<span class="c1">// AlreadyExists (gRPC code &quot;ALREADY_EXISTS&quot;) indicates the entity that a</span>
+<span class="c1">// caller attempted to create (such as file or directory) is already present.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">AlreadyExists</span><span class="p">()</span>
+
+<span class="c1">// PermissionDenied (gRPC code &quot;PERMISSION_DENIED&quot;) indicates that the caller</span>
+<span class="c1">// does not have permission to execute the specified operation. Note that this</span>
+<span class="c1">// error is different than an error due to an *un*authenticated user. This</span>
+<span class="c1">// error code does not imply the request is valid or the requested entity</span>
+<span class="c1">// exists or satisfies any other pre-conditions.</span>
+<span class="c1">//</span>
+<span class="c1">// `PermissionDenied` must not be used for rejections caused by exhausting</span>
+<span class="c1">// some resource. Instead, use `ResourceExhausted` for those errors.</span>
+<span class="c1">// `PermissionDenied` must not be used if the caller cannot be identified.</span>
+<span class="c1">// Instead, use `Unauthenticated` for those errors.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">PermissionDenied</span><span class="p">()</span>
+
+<span class="c1">// ResourceExhausted (gRPC code &quot;RESOURCE_EXHAUSTED&quot;) indicates some resource</span>
+<span class="c1">// has been exhausted, perhaps a per-user quota, or perhaps the entire file</span>
+<span class="c1">// system is out of space.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">ResourceExhausted</span><span class="p">()</span>
+
+<span class="c1">// FailedPrecondition (gRPC code &quot;FAILED_PRECONDITION&quot;) indicates that the</span>
+<span class="c1">// operation was rejected because the system is not in a state required for</span>
+<span class="c1">// the operation&#39;s execution. For example, a directory to be deleted may be</span>
+<span class="c1">// non-empty, an &quot;rmdir&quot; operation is applied to a non-directory, etc.</span>
+<span class="c1">//</span>
+<span class="c1">// Some guidelines that may help a service implementer in deciding between</span>
+<span class="c1">// `FailedPrecondition`, `Aborted`, and `Unavailable`:</span>
+<span class="c1">//</span>
+<span class="c1">//  (a) Use `Unavailable` if the client can retry just the failing call.</span>
+<span class="c1">//  (b) Use `Aborted` if the client should retry at a higher transaction</span>
+<span class="c1">//      level (such as when a client-specified test-and-set fails, indicating</span>
+<span class="c1">//      the client should restart a read-modify-write sequence).</span>
+<span class="c1">//  (c) Use `FailedPrecondition` if the client should not retry until</span>
+<span class="c1">//      the system state has been explicitly fixed. For example, if an &quot;rmdir&quot;</span>
+<span class="c1">//      fails because the directory is non-empty, `FailedPrecondition`</span>
+<span class="c1">//      should be returned since the client should not retry unless</span>
+<span class="c1">//      the files are deleted from the directory.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">FailedPrecondition</span><span class="p">()</span>
+
+<span class="c1">// Aborted (gRPC code &quot;ABORTED&quot;) indicates the operation was aborted,</span>
+<span class="c1">// typically due to a concurrency issue such as a sequencer check failure or a</span>
+<span class="c1">// failed transaction.</span>
+<span class="c1">//</span>
+<span class="c1">// See the guidelines above for deciding between `FailedPrecondition`,</span>
+<span class="c1">// `Aborted`, and `Unavailable`.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Aborted</span><span class="p">()</span>
+
+<span class="c1">// OutOfRange (gRPC code &quot;OUT_OF_RANGE&quot;) indicates the operation was</span>
+<span class="c1">// attempted past the valid range, such as seeking or reading past an</span>
+<span class="c1">// end-of-file.</span>
+<span class="c1">//</span>
+<span class="c1">// Unlike `InvalidArgument`, this error indicates a problem that may</span>
+<span class="c1">// be fixed if the system state changes. For example, a 32-bit file</span>
+<span class="c1">// system will generate `InvalidArgument` if asked to read at an</span>
+<span class="c1">// offset that is not in the range [0,2^32-1], but it will generate</span>
+<span class="c1">// `OutOfRange` if asked to read from an offset past the current</span>
+<span class="c1">// file size.</span>
+<span class="c1">//</span>
+<span class="c1">// There is a fair bit of overlap between `FailedPrecondition` and</span>
+<span class="c1">// `OutOfRange`.  We recommend using `OutOfRange` (the more specific</span>
+<span class="c1">// error) when it applies so that callers who are iterating through</span>
+<span class="c1">// a space can easily look for an `OutOfRange` error to detect when</span>
+<span class="c1">// they are done.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">OutOfRange</span><span class="p">()</span>
+
+<span class="c1">// Unimplemented (gRPC code &quot;UNIMPLEMENTED&quot;) indicates the operation is not</span>
+<span class="c1">// implemented or supported in this service. In this case, the operation</span>
+<span class="c1">// should not be re-attempted.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Unimplemented</span><span class="p">()</span>
+
+<span class="c1">// Internal (gRPC code &quot;INTERNAL&quot;) indicates an internal error has occurred</span>
+<span class="c1">// and some invariants expected by the underlying system have not been</span>
+<span class="c1">// satisfied. This error code is reserved for serious errors.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Internal</span><span class="p">()</span>
+
+<span class="c1">// Unavailable (gRPC code &quot;UNAVAILABLE&quot;) indicates the service is currently</span>
+<span class="c1">// unavailable and that this is most likely a transient condition. An error</span>
+<span class="c1">// such as this can be corrected by retrying with a backoff scheme. Note that</span>
+<span class="c1">// it is not always safe to retry non-idempotent operations.</span>
+<span class="c1">//</span>
+<span class="c1">// See the guidelines above for deciding between `FailedPrecondition`,</span>
+<span class="c1">// `Aborted`, and `Unavailable`.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Unavailable</span><span class="p">()</span>
+
+<span class="c1">// DataLoss (gRPC code &quot;DATA_LOSS&quot;) indicates that unrecoverable data loss or</span>
+<span class="c1">// corruption has occurred. As this error is serious, proper alerting should</span>
+<span class="c1">// be attached to errors such as this.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">DataLoss</span><span class="p">()</span>
+
+<span class="c1">// Unauthenticated (gRPC code &quot;UNAUTHENTICATED&quot;) indicates that the request</span>
+<span class="c1">// does not have valid authentication credentials for the operation. Correct</span>
+<span class="c1">// the authentication and try again.</span>
+<span class="n">Status</span><span class="o">::</span><span class="n">Unauthenticated</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>Some code may use all-caps status values such as <code class="docutils literal notranslate"><span class="pre">Status::UNKNOWN</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">Status::Unknown()</span></code>. These all-caps status codes are deprecated and will
+be removed in the future. Do not use them; use the functions above instead.</p>
+<p>The all-caps status aliases were deprecated because they do not comply with
+the style guide and potentially conflict with macro definitions. For example,
+projects might define an <code class="docutils literal notranslate"><span class="pre">INTERNAL</span></code> macro, which would prevent <code class="docutils literal notranslate"><span class="pre">status.h</span></code>
+or code that uses <code class="docutils literal notranslate"><span class="pre">Status::INTERNAL</span></code> from compiling.</p>
+<p>The Python tool <code class="docutils literal notranslate"><span class="pre">pw_status/update_style.py</span></code> may be used to migrate code in a
+Git repo to the new status style.</p>
+</div>
+<div class="section" id="c-compatibility">
+<h3>C compatibility<a class="headerlink" href="#c-compatibility" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pw_status</span></code> provides the C-compatible <code class="docutils literal notranslate"><span class="pre">pw_Status</span></code> enum for the status codes.
+For ease of use, <code class="docutils literal notranslate"><span class="pre">pw::Status</span></code> implicitly converts to and from <code class="docutils literal notranslate"><span class="pre">pw_Status</span></code>.
+However, the <code class="docutils literal notranslate"><span class="pre">pw_Status</span></code> enum should never be used in C++; instead use the
+<code class="docutils literal notranslate"><span class="pre">Status</span></code> class.</p>
+<p>The values of the <code class="docutils literal notranslate"><span class="pre">pw_Status</span></code> enum are all-caps and prefixed with
+<code class="docutils literal notranslate"><span class="pre">PW_STATUS_</span></code>. For example, <code class="docutils literal notranslate"><span class="pre">PW_STATUS_DATA_LOSS</span></code> corresponds with the C++
+<code class="docutils literal notranslate"><span class="pre">Status::DataLoss()</span></code>.</p>
+</div>
+</div>
+<div class="section" id="statuswithsize">
+<h2>StatusWithSize<a class="headerlink" href="#statuswithsize" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">pw::StatusWithSize</span></code> (<code class="docutils literal notranslate"><span class="pre">pw_status/status_with_size.h</span></code>) is a convenient,
-efficent class for reporting a status along with an unsigned integer value.</p>
-<p>The classes in pw_status are used extensively by other Pigweed modules.</p>
+efficient class for reporting a status along with an unsigned integer value.
+It is similar to the <code class="docutils literal notranslate"><span class="pre">pw::Result&lt;T&gt;</span></code> class, but it stores both a size and a
+status, regardless of the status value, and only supports a limited range (27
+bits).</p>
+<p><code class="docutils literal notranslate"><span class="pre">pw::StatusWithSize</span></code> values may be created with functions similar to
+<code class="docutils literal notranslate"><span class="pre">pw::Status</span></code>. For example,</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// An OK StatusWithSize with a size of 123.</span>
+<span class="n">StatusWithSize</span><span class="o">::</span><span class="n">Ok</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="c1">// A NOT_FOUND StatusWithSize with a size of 0.</span>
+<span class="n">StatusWithSize</span><span class="o">::</span><span class="n">NotFound</span><span class="p">()</span>
+
+<span class="c1">// A RESOURCE_EXHAUSTED StatusWithSize with a size of 10.</span>
+<span class="n">StatusWithSize</span><span class="o">::</span><span class="n">ResourceExhausted</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="pw-try">
+<h2>PW_TRY<a class="headerlink" href="#pw-try" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">PW_TRY</span></code> (<code class="docutils literal notranslate"><span class="pre">pw_status/try.h</span></code>) is a convenient set of macros for working
+with Status and StatusWithSize objects in functions that return Status or
+StatusWithSize. The PW_TRY and PW_TRY_WITH_SIZE macros call a function and
+do an early return if the function’s return status is not ok.</p>
+<p>Example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Status</span> <span class="nf">PwTryExample</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_TRY</span><span class="p">(</span><span class="n">FunctionThatReturnsStatus</span><span class="p">());</span>
+  <span class="n">PW_TRY</span><span class="p">(</span><span class="n">FunctionThatReturnsStatusWithSize</span><span class="p">());</span>
+
+  <span class="c1">// Do something, only executed if both functions above return OK.</span>
+<span class="p">}</span>
+
+<span class="n">StatusWithSize</span> <span class="nf">PwTryWithSizeExample</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">PW_TRY_WITH_SIZE</span><span class="p">(</span><span class="n">FunctionThatReturnsStatus</span><span class="p">());</span>
+  <span class="n">PW_TRY_WITH_SIZE</span><span class="p">(</span><span class="n">FunctionThatReturnsStatusWithSize</span><span class="p">());</span>
+
+  <span class="c1">// Do something, only executed if both functions above return OK.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>PW_TRY_ASSIGN is for working with StatusWithSize objects in in functions
+that return Status. It is similar to PW_TRY with the addition of assigning
+the size from the StatusWithSize on ok.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Status</span> <span class="nf">PwTryAssignExample</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">size_t</span> <span class="n">size_value</span>
+  <span class="n">PW_TRY_ASSIGN</span><span class="p">(</span><span class="n">size_value</span><span class="p">,</span> <span class="n">FunctionThatReturnsStatusWithSize</span><span class="p">());</span>
+
+  <span class="c1">// Do something that uses size_value. size_value is only assigned and this</span>
+  <span class="c1">// following code executed if the PW_TRY_ASSIGN function above returns OK.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="compatibility">
 <h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
 <p>C++11</p>

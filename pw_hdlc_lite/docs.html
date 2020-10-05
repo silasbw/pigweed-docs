@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pw_hex_dump" href="../pw_hex_dump/docs.html" />
+    <link rel="next" title="RPC over HDLC example project" href="rpc_example/docs.html" />
     <link rel="prev" title="pw_fuzzer" href="../pw_fuzzer/docs.html" /> 
 </head>
 
@@ -103,6 +103,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../module_guides.html">Module Guides</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../docker/docs.html">docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_allocator/docs.html">pw_allocator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_arduino_build/docs.html">pw_arduino_build</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert/docs.html">pw_assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_basic/docs.html">pw_assert_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_assert_log/docs.html">pw_assert_log</a></li>
@@ -122,11 +123,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_env_setup/docs.html">pw_env_setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_fuzzer/docs.html">pw_fuzzer</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pw_hdlc_lite</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#compatibility">Compatibility</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hdlc-lite-overview">HDLC-Lite Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#basic-overview">Basic Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rpc_example/docs.html">RPC over HDLC example project</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#protocol-description">Protocol Description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#frames">Frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#encoding-and-sending-data">Encoding and sending data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#decoding-received-bytes">Decoding received bytes</a></li>
 </ul>
@@ -136,11 +135,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#decoder">Decoder</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#features">Features</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pw-stream-serialwriter">pw::stream::SerialWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-features">Additional features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pw-stream-sysiowriter">pw::stream::SysIoWriter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hdlcrpcclient">HdlcRpcClient</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#roadmap-status">Roadmap &amp; Status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#roadmap">Roadmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compatibility">Compatibility</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_hex_dump/docs.html">pw_hex_dump</a></li>
@@ -148,6 +149,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_log/docs.html">pw_log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_basic/docs.html">pw_log_basic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_null/docs.html">pw_log_null</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_log_rpc/docs.html">pw_log_rpc</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_log_tokenized/docs.html">pw_log_tokenized</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_metric/docs.html">pw_metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_minimal_cpp_stdlib/docs.html">pw_minimal_cpp_stdlib</a></li>
@@ -166,6 +168,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../pw_stream/docs.html">pw_stream</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_string/docs.html">pw_string</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io/docs.html">pw_sys_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_arduino/docs.html">pw_sys_io_arduino</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_baremetal_stm32f429/docs.html">pw_sys_io_baremetal_stm32f429</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_sys_io_stdio/docs.html">pw_sys_io_stdio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pw_target_runner/docs.html">pw_target_runner</a></li>
@@ -244,86 +247,61 @@
            <div itemprop="articleBody">
             
   <div class="section" id="pw-hdlc-lite">
-<h1>pw_hdlc_lite<a class="headerlink" href="#pw-hdlc-lite" title="Permalink to this headline">¶</a></h1>
-<p>pw_hdlc_lite is a module that enables serial communication between devices
-using the HDLC-Lite protocol.</p>
-<div class="section" id="compatibility">
-<h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
-<p>C++17</p>
-</div>
-<div class="section" id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_bytes</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_log</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_preprocessor</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_result</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_status</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_span</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_stream</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pw_sys_io</span></code></p></li>
-</ul>
-</div>
-<div class="section" id="hdlc-lite-overview">
-<h2>HDLC-Lite Overview<a class="headerlink" href="#hdlc-lite-overview" title="Permalink to this headline">¶</a></h2>
-<p>High-Level Data Link Control (HDLC) is a data link layer protocol which uses
-synchronous serial transmissions for communication between two devices. Unlike
-the standard HDLC protocol which uses six fields of embedded information, the
-HDLC-Lite protocol is a minimal version that only uses the bare essentials.</p>
-<p>The HDLC-Lite data frame in <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> uses a start and end frame
-delimiter (0x7E), the escaped binary payload and the CCITT-CRC16 value.
-It looks like:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>                                    [More frames]
-_________________________________________   _______
-| |                              |  | | |...|   | |
-| |                              |  | | |...|   | |
-|_|______________________________|__|_|_|...|___|_|
- F         Payload               CRC F F     CRC F
-</pre></div>
-</div>
-</div>
-<div class="section" id="basic-overview">
-<h2>Basic Overview<a class="headerlink" href="#basic-overview" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> module provides a simple, reliable packet-oriented
-transport that uses the HDLC-Lite protocol to send and receive data to and from
-embedded devices. This is especially needed for making RPC calls on devices
-during testing because the <code class="docutils literal notranslate"><span class="pre">pw_rpc</span></code> module does not handle the transmission of
-RPCs. This module enables the transmission of RPCs and other bytes through a
-serial connection.</p>
-<p>There are essentially two main functions of the <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> module:</p>
+<span id="module-pw-hdlc-lite"></span><h1>pw_hdlc_lite<a class="headerlink" href="#pw-hdlc-lite" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/High-Level_Data_Link_Control">High-Level Data Link Control (HDLC)</a> is a data link
+layer protocol intended for serial communication between devices. HDLC is
+standardized as <a class="reference external" href="https://www.iso.org/standard/37010.html">ISO/IEC 13239:2002</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> module provides a simple, robust frame-oriented
+transport that uses a subset of the HDLC protocol. <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> supports
+sending between embedded devices or the host. It can be used with
+<a class="reference internal" href="../pw_rpc/docs.html#module-pw-rpc"><span class="std std-ref">pw_rpc</span></a> to enable remote procedure calls (RPCs) on embedded on
+devices.</p>
+<p><strong>Why use the pw_hdlc_lite module?</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>Encoding</strong> the data by escaping the bytes of the payload, calculating the
-CCITT-CRC16 value, constructing a data frame and sending the
-resulting data packet through serial.</p></li>
-<li><p><strong>Decoding</strong> the data by unescaping the received bytes, verifying the
-CCITT-CRC16 value and returning the successfully decoded packets.</p></li>
+<li><p>Enables the transmission of RPCs and other data between devices over serial.</p></li>
+<li><p>Detects corruption and data loss.</p></li>
+<li><p>Light-weight, simple, and easy to use.</p></li>
+<li><p>Supports streaming to transport without buffering, since the length is not
+encoded.</p></li>
 </ul>
 </div></blockquote>
-<p><strong>Why use the ``pw_hdlc_lite`` module?</strong></p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Enables the transmission of RPCs and other data between devices over serial</p></li>
-<li><p>Resilient to corruption and data loss.</p></li>
-<li><p>Light-weight, simple and easy to use.</p></li>
-<li><p>Supports streaming to transport without buffering - e.g. protocol buffers
-have length-prefix.</p></li>
-</ul>
-</div></blockquote>
+<div class="admonition-try-it-out admonition">
+<p class="admonition-title">Try it out!</p>
+<p>For an example of how to use HDLC with <a class="reference internal" href="../pw_rpc/docs.html#module-pw-rpc"><span class="std std-ref">pw_rpc</span></a>, see the
+<a class="reference internal" href="rpc_example/docs.html#module-pw-hdlc-lite-rpc-example"><span class="std std-ref">RPC over HDLC example project</span></a>.</p>
+</div>
+<div class="toctree-wrapper compound">
 </div>
 <div class="section" id="protocol-description">
 <h2>Protocol Description<a class="headerlink" href="#protocol-description" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="frames">
+<h3>Frames<a class="headerlink" href="#frames" title="Permalink to this headline">¶</a></h3>
+<p>The HDLC implementation in <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> supports only HDLC information
+frames. These frames are encoded as follows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>_________________________________________
+| | | |                          |    | |...
+| | | |                          |    | |... [More frames]
+|_|_|_|__________________________|____|_|...
+ F A C       Payload              FCS  F
+
+ F = flag byte (0x7e, the ~ character)
+ A = address field
+ C = control field
+ FCS = frame check sequence (CRC-32)
+</pre></div>
+</div>
+</div>
 <div class="section" id="encoding-and-sending-data">
 <h3>Encoding and sending data<a class="headerlink" href="#encoding-and-sending-data" title="Permalink to this headline">¶</a></h3>
 <p>This module first writes an initial frame delimiter byte (0x7E) to indicate the
 beginning of the frame. Before sending any of the payload data through serial,
-the special bytes are escaped accordingly:</p>
+the special bytes are escaped:</p>
 <blockquote>
 <div><table class="docutils align-default">
 <colgroup>
-<col style="width: 51%" />
-<col style="width: 49%" />
+<col style="width: 52%" />
+<col style="width: 48%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Unescaped Special Bytes</p></th>
@@ -331,133 +309,142 @@ the special bytes are escaped accordingly:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>0x7E</p></td>
-<td><p>0x7D5E</p></td>
+<tr class="row-even"><td><p>7E</p></td>
+<td><p>7D 5E</p></td>
 </tr>
-<tr class="row-odd"><td><p>0x7D</p></td>
-<td><p>0x7D5D</p></td>
+<tr class="row-odd"><td><p>7D</p></td>
+<td><p>7D 5D</p></td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
 <p>The bytes of the payload are escaped and written in a single pass. The
-CCITT-CRC16 value is calculated, escaped and written after. After this, a final
-frame delimiter byte (0x7E) is written to mark the end of the frame.</p>
+frame check sequence is calculated, escaped, and written after. After this, a
+final frame delimiter byte (0x7E) is written to mark the end of the frame.</p>
 </div>
 <div class="section" id="decoding-received-bytes">
 <h3>Decoding received bytes<a class="headerlink" href="#decoding-received-bytes" title="Permalink to this headline">¶</a></h3>
-<p>Packets may be received in multiple parts, so we need to store the received data
+<p>Frames may be received in multiple parts, so we need to store the received data
 in a buffer until the ending frame delimiter (0x7E) is read. When the
-pw_hdlc_lite decoder receives data, it unescapes it and adds it to a buffer.
-When the frame is complete, it calculates and verifies the CCITT-CRC16 bytes and
-does the following:</p>
+<code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> decoder receives data, it unescapes it and adds it to a buffer.
+When the frame is complete, it calculates and verifies the frame check sequence
+and does the following:</p>
 <ul class="simple">
-<li><p>If correctly verified, the decoder returns the decoded packet.</p></li>
-<li><p>If the checksum verification fails, the data packet is discarded.</p></li>
+<li><p>If correctly verified, the decoder returns the decoded frame.</p></li>
+<li><p>If the checksum verification fails, the frame is discarded and an error is
+reported.</p></li>
 </ul>
-<p>During the decoding process, the decoder essentially transitions between 3
-states, where each state indicates the method of decoding that particular byte:</p>
-<p>NO_PACKET –&gt; PACKET_ACTIVE –&gt; (ESCAPE | NO_PACKET).</p>
 </div>
 </div>
 <div class="section" id="api-usage">
 <h2>API Usage<a class="headerlink" href="#api-usage" title="Permalink to this headline">¶</a></h2>
+<p>There are two primary functions of the <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> module:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Encoding</strong> data by constructing a frame with the escaped payload bytes and
+frame check sequence.</p></li>
+<li><p><strong>Decoding</strong> data by unescaping the received bytes, verifying the frame
+check sequence, and returning successfully decoded frames.</p></li>
+</ul>
+</div></blockquote>
 <div class="section" id="encoder">
 <h3>Encoder<a class="headerlink" href="#encoder" title="Permalink to this headline">¶</a></h3>
-<p>The Encoder API invloves a single function that encodes the data using the
-HDLC-Lite protocol and sends the data through the serial.</p>
+<p>The Encoder API provides a single function that encodes data as an HDLC
+information frame.</p>
 <div class="section" id="c">
 <h4>C++<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h4>
-<p>In C++, this function is called <code class="docutils literal notranslate"><span class="pre">EncodeAndWritePayload</span></code> and it accepts a
-ConstByteSpan called payload and an object of type Writer&amp; as arguments. It
-returns a Status object that indicates if the write was successful. This
-implementation uses the <code class="docutils literal notranslate"><span class="pre">pw_checksum</span></code> module to compute the CRC16 value. Since
-the function writes a starting and ending frame delimiter byte at the beginnning
-and the end of frames, it is safe to encode multiple spans. The usage of this
-function is as follows:</p>
+<dl class="function">
+<dt id="_CPPv4N2pw9hdlc_lite21WriteInformationFrameE7uint8_t13ConstByteSpanRN6stream6WriterE">
+<span id="_CPPv3N2pw9hdlc_lite21WriteInformationFrameE7uint8_t13ConstByteSpanRN6stream6WriterE"></span><span id="_CPPv2N2pw9hdlc_lite21WriteInformationFrameE7uint8_t13ConstByteSpanRN6stream6WriterE"></span><span id="pw::hdlc_lite::WriteInformationFrame__uint8_t.ConstByteSpan.stream::WriterR"></span>Status <code class="sig-prename descclassname">hdlc_lite<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">WriteInformationFrame</code><span class="sig-paren">(</span>uint8_t <em>address</em>, ConstByteSpan <em>data</em>, stream::Writer &amp;<em>writer</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw9hdlc_lite21WriteInformationFrameE7uint8_t13ConstByteSpanRN6stream6WriterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Writes a span of data to a <a class="reference internal" href="../pw_stream/docs.html#module-pw-stream"><span class="std std-ref">pw::stream::Writer</span></a> and
+returns the status. This implementation uses the <a class="reference internal" href="../pw_checksum/docs.html#module-pw-checksum"><span class="std std-ref">pw_checksum</span></a>
+module to compute the CRC-32 frame check sequence.</p>
+</dd></dl>
+
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_hdlc_lite/encoder.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;pw_hdlc_lite/sys_io_stream.h&quot;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">pw</span><span class="o">::</span><span class="n">stream</span><span class="o">::</span><span class="n">SerialWriter</span> <span class="n">serial_writer</span><span class="p">;</span>
-    <span class="k">constexpr</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">byte</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span> <span class="n">test_array</span> <span class="o">=</span> <span class="p">{</span> <span class="n">byte</span><span class="p">(</span><span class="mh">0x41</span><span class="p">)</span> <span class="p">};</span>
-    <span class="k">auto</span> <span class="n">status</span> <span class="o">=</span> <span class="n">EncodeAndWritePayload</span><span class="p">(</span><span class="n">test_array</span><span class="p">,</span> <span class="n">serial_writer</span><span class="p">);</span>
+  <span class="n">pw</span><span class="o">::</span><span class="n">stream</span><span class="o">::</span><span class="n">SysIoWriter</span> <span class="n">serial_writer</span><span class="p">;</span>
+  <span class="n">Status</span> <span class="n">status</span> <span class="o">=</span> <span class="n">WriteInformationFrame</span><span class="p">(</span><span class="mi">123</span> <span class="cm">/* address */</span><span class="p">,</span>
+                                        <span class="n">data</span><span class="p">,</span>
+                                        <span class="n">serial_writer</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">status</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">PW_LOG_INFO</span><span class="p">(</span><span class="s">&quot;Writing frame failed! %s&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">.</span><span class="n">str</span><span class="p">());</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the example above, we expect the encoder to send the following bytes:</p>
-<ul class="simple">
-<li><p><strong>0x7E</strong> - Initial Frame Delimiter</p></li>
-<li><p><strong>0x41</strong> - Payload</p></li>
-<li><p><strong>0x15</strong> - LSB of the CCITT-CRC16 value</p></li>
-<li><p><strong>0xB9</strong> - MSB of the CCITT-CRC16 value</p></li>
-<li><p><strong>0x7E</strong> - End Frame Delimiter</p></li>
-</ul>
 </div>
-<div class="section" id="python">
-<h4>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h4>
-<p>In Python, the function is called <code class="docutils literal notranslate"><span class="pre">encode_and_write_payload</span></code> and it accepts
-the payload as a byte object and a callable to which is used to write the data.
-This function does not return anything, and uses the binascii library function
-called crc_hqx to compute the CRC16 bytes. Like the C++ function, the Python
-function also writes a frame delimiter at the beginnning and the end of frames
-so it is safe to encode multiple spans consecutively. The usage of this function
-is as follows:</p>
+<div class="section" id="module-pw_hdlc_lite.encode">
+<span id="python"></span><h4>Python<a class="headerlink" href="#module-pw_hdlc_lite.encode" title="Permalink to this headline">¶</a></h4>
+<p>The encode module supports encoding HDLC frames.</p>
+<dl class="function">
+<dt id="pw_hdlc_lite.encode.information_frame">
+<code class="sig-prename descclassname">pw_hdlc_lite.encode.</code><code class="sig-name descname">information_frame</code><span class="sig-paren">(</span><em class="sig-param">address: int</em>, <em class="sig-param">data: bytes</em><span class="sig-paren">)</span> &#x2192; bytes<a class="headerlink" href="#pw_hdlc_lite.encode.information_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encodes an HDLC I-frame with a CRC-32 frame check sequence.</p>
+</dd></dl>
+
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">serial</span>
-<span class="kn">from</span> <span class="nn">pw_hdlc_lite</span> <span class="kn">import</span> <span class="n">encoder</span>
+<span class="kn">from</span> <span class="nn">pw_hdlc_lite</span> <span class="kn">import</span> <span class="n">encode</span>
 
 <span class="n">ser</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">()</span>
-<span class="n">encoder</span><span class="o">.</span><span class="n">encode_and_write_payload</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">ser</span><span class="o">.</span><span class="n">write</span><span class="p">)</span>
+<span class="n">ser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">encode</span><span class="o">.</span><span class="n">information_frame</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;your data here!&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>We expect this example to give us the same result as the C++ example above since
-it encodes the same payload.</p>
 </div>
 </div>
 <div class="section" id="decoder">
 <h3>Decoder<a class="headerlink" href="#decoder" title="Permalink to this headline">¶</a></h3>
-<p>The Decoder API involves a Decoder class whose main functionality is a function
-that unescapes the received bytes, adds them to a buffer and returns the
-successfully decoded packets. A class is used so that the user can call the
-decoder object’s adding bytes functionality on the currently received bytes
-instead of waiting on the entire packet to arrive.</p>
+<p>The decoder class unescapes received bytes and adds them to a buffer. Complete,
+valid HDLC frames are yielded as they are received.</p>
 <div class="section" id="id1">
 <h4>C++<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<p>The main functionality of the C++ <code class="docutils literal notranslate"><span class="pre">Decoder</span></code> class is the ‘AddByte’ function
-which accepts a single byte as an argument, unescapes it and adds it to the
-buffer. If the byte is the ending frame delimiter flag (0x7E) it attempts to
-decode the packet and returns a <code class="docutils literal notranslate"><span class="pre">Result</span></code> object indicating the success of the
-operation:</p>
+<dl class="class">
+<dt id="_CPPv4N2pw2pw9hdlc_lite7DecoderE">
+<span id="_CPPv3N2pw2pw9hdlc_lite7DecoderE"></span><span id="_CPPv2N2pw2pw9hdlc_lite7DecoderE"></span><span id="pw::pw::hdlc_lite::Decoder"></span><em class="property">class </em><code class="sig-prename descclassname">pw::hdlc_lite<code class="sig-prename descclassname">::</code></code><code class="sig-name descname">Decoder</code><a class="headerlink" href="#_CPPv4N2pw2pw9hdlc_lite7DecoderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="function">
+<dt id="_CPPv4N2pw2pw9hdlc_lite7Decoder7ProcessENSt4byteE">
+<span id="_CPPv3N2pw2pw9hdlc_lite7Decoder7ProcessENSt4byteE"></span><span id="_CPPv2N2pw2pw9hdlc_lite7Decoder7ProcessENSt4byteE"></span><span id="pw::pw::hdlc_lite::Decoder::Process__std::byte"></span>pw::Result&lt;Frame&gt; <code class="sig-name descname">Process</code><span class="sig-paren">(</span>std::byte <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw2pw9hdlc_lite7Decoder7ProcessENSt4byteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses a single byte of an HDLC stream. Returns a Result with the complete
+frame if the byte completes a frame. The status is the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>The returned <code class="docutils literal notranslate"><span class="pre">pw::Result</span></code> object will have status <code class="docutils literal notranslate"><span class="pre">Status::OK</span></code> and
-value ConstByteSpan containing the most recently decoded packet if it finds
-the end of the data-frame and successfully verifies the CRC.</p></li>
-<li><p>The returned <code class="docutils literal notranslate"><span class="pre">pw::Result</span></code> object will have status <code class="docutils literal notranslate"><span class="pre">Status::UNAVAILABLE</span></code>
-if it doesnt find the end of the data-frame during that function call.</p></li>
-<li><p>The returned <code class="docutils literal notranslate"><span class="pre">pw::Result</span></code> object will have status <code class="docutils literal notranslate"><span class="pre">Status::DATA_LOSS</span></code>
-if it finds the end of the data-frame, but the CRC-verification fails. It
-also returns this status if the packet in question does not have the
-2-byte CRC in it.</p></li>
-<li><p>The returned <code class="docutils literal notranslate"><span class="pre">pw::Result</span></code> object will have status
-<code class="docutils literal notranslate"><span class="pre">Status::RESOURCE_EXHAUSTED</span></code> if the decoder buffer runs out of space.</p></li>
+<li><p>OK - A frame was successfully decoded. The Result contains the Frame,
+which is invalidated by the next Process call.</p></li>
+<li><p>UNAVAILABLE - No frame is available.</p></li>
+<li><p>RESOURCE_EXHAUSTED - A frame completed, but it was too large to fit in
+the decoder’s buffer.</p></li>
+<li><p>DATA_LOSS - A frame completed, but it was invalid. The frame was
+incomplete or the frame check sequence verification failed.</p></li>
 </ul>
 </div></blockquote>
-<p>Here’s a C++ example of reading individual bytes from serial and then using the
-decoder object to decode the received data:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N2pw2pw9hdlc_lite7Decoder7ProcessEN2pw13ConstByteSpanERR1FDpRR4Args">
+<span id="_CPPv3N2pw2pw9hdlc_lite7Decoder7ProcessEN2pw13ConstByteSpanERR1FDpRR4Args"></span><span id="_CPPv2N2pw2pw9hdlc_lite7Decoder7ProcessEN2pw13ConstByteSpanERR1FDpRR4Args"></span><span id="pw::pw::hdlc_lite::Decoder::Process__pw::ConstByteSpan.FRR.ArgsRRDp"></span>void <code class="sig-name descname">Process</code><span class="sig-paren">(</span>pw::ConstByteSpan <em>data</em>, F &amp;&amp;<em>callback</em>, Args&amp;&amp;... <em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N2pw2pw9hdlc_lite7Decoder7ProcessEN2pw13ConstByteSpanERR1FDpRR4Args" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Processes a span of data and calls the provided callback with each frame or
+error.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>This example demonstrates reading individual bytes from <code class="docutils literal notranslate"><span class="pre">pw::sys_io</span></code> and
+decoding HDLC frames:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pw_hdlc_lite/decoder.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;pw_sys_io/sys_io.h&quot;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">byte</span> <span class="n">data</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">byte</span> <span class="n">data</span><span class="p">;</span>
   <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">pw</span><span class="o">::</span><span class="n">sys_io</span><span class="o">::</span><span class="n">ReadByte</span><span class="p">(</span><span class="o">&amp;</span><span class="n">data</span><span class="p">).</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
       <span class="c1">// Log serial reading error</span>
     <span class="p">}</span>
-    <span class="k">auto</span> <span class="n">decoded_packet</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">.</span><span class="n">AddByte</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">Result</span><span class="o">&lt;</span><span class="n">Frame</span><span class="o">&gt;</span> <span class="n">decoded_frame</span> <span class="o">=</span> <span class="n">decoder</span><span class="p">.</span><span class="n">Process</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">decoded_packet</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
-     <span class="c1">// Use decoded_packet to get access to the most recently decoded packet</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">decoded_frame</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+      <span class="c1">// Handle the decoded frame</span>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">}</span>
@@ -466,53 +453,87 @@ decoder object to decode the received data:</p>
 </div>
 <div class="section" id="id2">
 <h4>Python<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>The main functionality of the Python <code class="docutils literal notranslate"><span class="pre">Decoder</span></code> class is the <code class="docutils literal notranslate"><span class="pre">add_bytes</span></code>
-generator which unescapes the bytes object argument and adds them to a buffer
-until it encounters the ending frame delimiter (0x7E) flag. The generator yields
-the decoded packets as byte objects upon successfully verification of the CRC16
-value of the received bytes. If the CRC verification fails it raises a
-CrcMismatchError exception.</p>
-<p>Below is an example of the usage of the decoder class to decode bytes read from
-serial:</p>
+<dl class="class">
+<dt id="pw_hdlc_lite.decode.FrameDecoder">
+<em class="property">class </em><code class="sig-prename descclassname">pw_hdlc_lite.decode.</code><code class="sig-name descname">FrameDecoder</code><a class="headerlink" href="#pw_hdlc_lite.decode.FrameDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes one or more HDLC frames from a stream of data.</p>
+<dl class="method">
+<dt id="pw_hdlc_lite.decode.FrameDecoder.process">
+<code class="sig-name descname">process</code><span class="sig-paren">(</span><em class="sig-param">data: bytes</em><span class="sig-paren">)</span> &#x2192; Iterator[pw_hdlc_lite.decode.Frame]<a class="headerlink" href="#pw_hdlc_lite.decode.FrameDecoder.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes and yields HDLC frames, including corrupt frames.</p>
+<p>The ok() method on Frame indicates whether it is valid or represents a
+frame parsing error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields</dt>
+<dd class="field-odd"><p>Frames, which may be valid (frame.ok()) or corrupt (!frame.ok())</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pw_hdlc_lite.decode.FrameDecoder.process_valid_frames">
+<code class="sig-name descname">process_valid_frames</code><span class="sig-paren">(</span><em class="sig-param">data: bytes</em><span class="sig-paren">)</span> &#x2192; Iterator[pw_hdlc_lite.decode.Frame]<a class="headerlink" href="#pw_hdlc_lite.decode.FrameDecoder.process_valid_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decodes and yields valid HDLC frames, logging any errors.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Below is an example using the decoder class to decode data read from serial:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">serial</span>
-<span class="kn">from</span> <span class="nn">pw_hdlc_lite</span> <span class="kn">import</span> <span class="n">decoder</span>
+<span class="kn">from</span> <span class="nn">pw_hdlc_lite</span> <span class="kn">import</span> <span class="n">decode</span>
 
 <span class="n">ser</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">()</span>
-<span class="n">decode</span> <span class="o">=</span> <span class="n">decoder</span><span class="o">.</span><span class="n">Decoder</span><span class="p">()</span>
+<span class="n">decoder</span> <span class="o">=</span> <span class="n">decode</span><span class="o">.</span><span class="n">FrameDecoder</span><span class="p">()</span>
 
-<span class="k">while</span> <span class="n">true</span><span class="p">:</span>
-  <span class="n">byte</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-  <span class="k">for</span> <span class="n">decoded_packet</span> <span class="ow">in</span> <span class="n">decode</span><span class="o">.</span><span class="n">add_bytes</span><span class="p">(</span><span class="n">byte</span><span class="p">):</span>
-    <span class="c1"># Do something with the decoded packet</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">decoder</span><span class="o">.</span><span class="n">process_valid_frames</span><span class="p">(</span><span class="n">ser</span><span class="o">.</span><span class="n">read</span><span class="p">()):</span>
+        <span class="c1"># Handle the decoded frame</span>
 </pre></div>
 </div>
-<p>Like the C++ example, this reads individual bytes and adds them to the decoder.</p>
 </div>
 </div>
 </div>
-<div class="section" id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="pw-stream-serialwriter">
-<h3>pw::stream::SerialWriter<a class="headerlink" href="#pw-stream-serialwriter" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">SerialWriter</span></code> class implements the <code class="docutils literal notranslate"><span class="pre">Writer</span></code> interface by using sys_io
-to write data over a serial connection. This Writer object is used by the C++
-encoder to send the encoded bytes to the device.</p>
+<div class="section" id="additional-features">
+<h2>Additional features<a class="headerlink" href="#additional-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pw-stream-sysiowriter">
+<h3>pw::stream::SysIoWriter<a class="headerlink" href="#pw-stream-sysiowriter" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">SysIoWriter</span></code> C++ class implements the <code class="docutils literal notranslate"><span class="pre">Writer</span></code> interface with
+<code class="docutils literal notranslate"><span class="pre">pw::sys_io</span></code>. This Writer may be used by the C++ encoder to send HDLC frames
+over serial.</p>
+</div>
+<div class="section" id="hdlcrpcclient">
+<h3>HdlcRpcClient<a class="headerlink" href="#hdlcrpcclient" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pw_hdlc_lite.rpc.HdlcRpcClient">
+<em class="property">class </em><code class="sig-prename descclassname">pw_hdlc_lite.rpc.</code><code class="sig-name descname">HdlcRpcClient</code><span class="sig-paren">(</span><em class="sig-param">device: BinaryIO, proto_paths_or_modules: Iterable[Union[str, pathlib.Path, module]], output: BinaryIO = &lt;_io.BufferedWriter name='&lt;stdout&gt;'&gt;, channels: Iterable[pw_rpc.descriptors.Channel] = None, client_impl: pw_rpc.client.ClientImpl = None</em><span class="sig-paren">)</span><a class="headerlink" href="#pw_hdlc_lite.rpc.HdlcRpcClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>An RPC client configured to run over HDLC.</p>
+<dl class="method">
+<dt id="pw_hdlc_lite.rpc.HdlcRpcClient.rpcs">
+<code class="sig-name descname">rpcs</code><span class="sig-paren">(</span><em class="sig-param">channel_id: int = None</em><span class="sig-paren">)</span> &#x2192; pw_rpc.client.Services<a class="headerlink" href="#pw_hdlc_lite.rpc.HdlcRpcClient.rpcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns object for accessing services on the specified channel.</p>
+<p>This skips some intermediate layers to make it simpler to invoke RPCs
+from an HdlcRpcClient. If only one channel is in use, the channel ID is
+not necessary.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
-<div class="section" id="roadmap-status">
-<h2>Roadmap &amp; Status<a class="headerlink" href="#roadmap-status" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="roadmap">
+<h2>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><strong>Additional fields</strong> - As it currently stands, <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> uses only
-three fields of control bytes: starting frame delimiter, 2-byte CRC and an
-ending frame delimiter. However, if we decided to send larger, more
-complicated RPCs and if wanted to stream log debug and error messages, we will
-require additional fields of data to ensure the different packets are sent
-correctly. Thus, in the future, we plan to add additional channel and sequence
-byte fields that could enable separate channels for pw_rpc, QoS etc.</p></li>
+<li><p><strong>Expanded protocol support</strong> - <code class="docutils literal notranslate"><span class="pre">pw_hdlc_lite</span></code> currently only supports
+information frames with a single address byte and control byte. Support for
+different frame types and extended address or control fields may be added in
+the future.</p></li>
 <li><p><strong>Higher performance</strong> - We plan to improve the overall performance of the
 decoder and encoder implementations by using SIMD/NEON.</p></li>
 </ul>
+</div>
+<div class="section" id="compatibility">
+<h2>Compatibility<a class="headerlink" href="#compatibility" title="Permalink to this headline">¶</a></h2>
+<p>C++17</p>
 </div>
 </div>
 
@@ -524,7 +545,7 @@ decoder and encoder implementations by using SIMD/NEON.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../pw_hex_dump/docs.html" class="btn btn-neutral float-right" title="pw_hex_dump" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rpc_example/docs.html" class="btn btn-neutral float-right" title="RPC over HDLC example project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../pw_fuzzer/docs.html" class="btn btn-neutral float-left" title="pw_fuzzer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
